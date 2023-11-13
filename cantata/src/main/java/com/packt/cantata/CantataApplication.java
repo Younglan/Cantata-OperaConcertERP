@@ -12,7 +12,7 @@ public class CantataApplication {
 		System.out.println("hellooooooo영란aa");
 		System.out.println("재호2");
 		System.out.println("성재성재");
-		System.out.println("aaaaaaaaaa");
+		System.out.println("수정수정");
 	}
 
 }
