@@ -8,7 +8,7 @@ public class CantataApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CantataApplication.class, args);
-		System.out.println("hellooooooo");
+		System.out.println("hellooooooo영란");
 		System.out.println("재호");
 	}
 
