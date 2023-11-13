@@ -10,7 +10,7 @@ public class CantataApplication {
 		SpringApplication.run(CantataApplication.class, args);
 
 		System.out.println("hellooooooo영란aa");
-		System.out.println("재호");
+		System.out.println("재호2");
 		System.out.println("성재성재");
 	}
 
