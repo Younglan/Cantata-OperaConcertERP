@@ -11,7 +11,7 @@ public class CantataApplication {
 
 		System.out.println("hellooooooo영란aa");
 		System.out.println("재호");
-		System.out.println("강성재입니다sssa");
+		System.out.println("성재성재");
 	}
 
 }
