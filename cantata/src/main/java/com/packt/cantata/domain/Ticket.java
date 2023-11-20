@@ -26,7 +26,7 @@ public class Ticket {
 	 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pt_no")
-	private perform_time pt_no;
+	private Perform_time pt_no;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id")
 	private User id;
@@ -36,7 +36,7 @@ public class Ticket {
 	private String tic_status;
 	private String tic_pay;
 	
-	public Ticket(perform_time pt_no, User id, String seat_no, Date tic_date, String tic_status, String tic_pay) { 
+	public Ticket(Perform_time pt_no, User id, String seat_no, Date tic_date, String tic_status, String tic_pay) { 
 			super();
 			this.pt_no = pt_no;
 			this.id = id;
