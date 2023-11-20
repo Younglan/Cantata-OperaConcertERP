@@ -1,5 +1,8 @@
 package com.packt.cantata.domain;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -50,7 +53,9 @@ public class Plant {
 		this.plant_status = plant_status;
 		this.floor = floor;
 	}
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "plant_no")
-	private Plant Plant;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "rent_no")
+	private List<Rental> rentals;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pf_no")
+	private List<Performance> performs;
 }
