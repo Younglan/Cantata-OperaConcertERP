@@ -1,7 +1,7 @@
 package com.packt.cantata.domain;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PerformanceRepository  extends CrudRepository<Corporation, String> {
+public interface PerformanceRepository  extends JpaRepository<Reply, Long> {
 
 }

@@ -1,7 +1,9 @@
 package com.packt.cantata.domain;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,9 +12,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.packt.cantata.domain.Plant;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import lombok.Builder;
 import lombok.Getter;
@@ -41,9 +45,15 @@ public class Performance {
 	@JoinColumn(name = "plant_no")
 	private Plant plant;
 
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "performance")
+	private List<Perform_time> perform_time;
+
+
 	public Performance(int pf_code, String pf_cate, String pf_title, String agency, String pf_poster, String pf_eximg,
 			String pf_explan, Date pf_start, Date pf_end, Date pf_runtime, int costR, int costA, int costB, int costC,
-			int costD, String pf_status, Plant plant) {
+			int costD, String pf_status, Plant plant, List<Perform_time> perform_time) {
 		super();
 		this.pf_code = pf_code;
 		this.pf_cate = pf_cate;
@@ -62,5 +72,8 @@ public class Performance {
 		this.costD = costD;
 		this.pf_status = pf_status;
 		this.plant = plant;
+		this.perform_time = perform_time;
 	}
+	
+	
 }
