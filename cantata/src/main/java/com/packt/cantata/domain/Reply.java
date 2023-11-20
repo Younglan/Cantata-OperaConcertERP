@@ -24,7 +24,7 @@ public class Reply {
     private Brd_post post_no; //글번호
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JsonManagedReference(value = "user-posts")
+	@JsonManagedReference(value = "user-reply")
 	@JoinColumn(name = "id")
 	private User id; //회원ID
 	

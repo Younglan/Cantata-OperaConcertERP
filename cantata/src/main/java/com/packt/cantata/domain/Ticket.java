@@ -23,15 +23,20 @@ public class Ticket {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(nullable=false, updatable=false) 
 	private String tic_no; 	
-	@Column(nullable=false) 
-	private Long pt_no;
-	private String id;
+	 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pt_no")
+	private Perform_time pt_no;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id")
+	private User id;
+	@Column(nullable=false)
 	private String seat_no;
 	private Date tic_date;
 	private String tic_status;
 	private String tic_pay;
 	
-	public Ticket(Long pt_no, String id, String seat_no, Date tic_date, String tic_status, String tic_pay) { 
+	public Ticket(Perform_time pt_no, User id, String seat_no, Date tic_date, String tic_status, String tic_pay) { 
 			super();
 			this.pt_no = pt_no;
 			this.id = id;
@@ -40,10 +45,5 @@ public class Ticket {
 			this.tic_status = tic_status;
 			this.tic_pay = tic_pay;
 		}
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pt_no")
-	private perform_time perform_time;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id")
-	private User user;
+	
 }
