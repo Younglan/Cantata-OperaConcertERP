@@ -26,43 +26,32 @@ import lombok.NoArgsConstructor;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(nullable = false, updatable = false)
 	private String id;
 	@Column(nullable = false)
 	private String password;
-	@Column(nullable = false)
 	private String name;
-	@Column(nullable = false)
-	private int birth;
-	@Column(nullable = false)
+	private int birth;	
 	private String gender;
-	@Column(nullable = false)
-	private String carrier;
-	@Column(nullable = false)
-	private long tel;
-	@Column(nullable = false)
-	private String email;
-	@Column(nullable = false)
+	private String carrier;	
+	private long tel;	
+	private String email;	
 	private String address;
-	@Column(nullable = false)
 	private int sms_check;
-	@Column(nullable = false)
 	private Date recent_date;
-	@Column(nullable = false)
 	private Date join_date;
-	@Column(nullable = false)
 	private String Auth;
-	@Column(nullable = false)
 	private int user_status;
-
+	public User(String id, String password, String Auth) {
+		this.id = id;
+		this.password = password;
+		this.Auth = Auth;
+	}
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "User")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
 	private List<Reply> replies;
 	private List<Brd_post> brd_posts;
 	private List<Ticket> tickets;
 	private List<Corporation> corporations;
 
-
-	
 }
