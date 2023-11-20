@@ -10,8 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.opera.main.domain.Perform;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,7 +33,7 @@ public class Rental {
 	private String rent_pay;
 	
 	@Builder
-	public rental(long cp_no, long plant_no,
+	public Rental(long cp_no, long plant_no,
 			Date rent_start, Date rent_end, Date rent_date, Date rent_status, String rent_pay) {
 		this.cp_no = cp_no;
 		this.plant_no = plant_no;
