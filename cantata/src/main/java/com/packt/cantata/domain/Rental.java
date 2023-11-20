@@ -34,6 +34,7 @@ public class Rental {
 	private Date rent_status;		
 	private String rent_pay;
 	
+	
 	@Builder
 	public Rental(long cp_no, long plant_no,
 			Date rent_start, Date rent_end, Date rent_date, Date rent_status, String rent_pay) {
