@@ -53,9 +53,7 @@ public class Plant {
 		this.plant_status = plant_status;
 		this.floor = floor;
 	}
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "rent_no")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plant_no")
 	private List<Rental> rentals;
-	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pf_no")
 	private List<Performance> performs;
 }
