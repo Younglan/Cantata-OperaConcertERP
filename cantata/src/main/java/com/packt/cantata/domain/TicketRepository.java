@@ -1,4 +1,4 @@
-package com.opera.main.domain;
+package com.packt.cantata.domain;
 
 import org.springframework.data.repository.CrudRepository;
 
