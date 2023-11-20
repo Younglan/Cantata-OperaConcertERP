@@ -35,7 +35,7 @@ public class Brd_post {
 	private Brd_division brd_no;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JsonManagedReference(value = "user-posts")
+	@JsonManagedReference(value = "user-Brd_post")
 	@JoinColumn(name = "id")
 	private User id; //회원ID
 
