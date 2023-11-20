@@ -47,13 +47,13 @@ public class Performance {
 
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "performance")
-	private List<Perform_time> perform_time;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pf_code")
+	private List<Perform_time> performts;
 
 
 	public Performance(int pf_code, String pf_cate, String pf_title, String agency, String pf_poster, String pf_eximg,
 			String pf_explan, Date pf_start, Date pf_end, Date pf_runtime, int costR, int costA, int costB, int costC,
-			int costD, String pf_status, Plant plant, List<Perform_time> perform_time) {
+			int costD, String pf_status, Plant plant) {
 		super();
 		this.pf_code = pf_code;
 		this.pf_cate = pf_cate;
@@ -71,9 +71,6 @@ public class Performance {
 		this.costC = costC;
 		this.costD = costD;
 		this.pf_status = pf_status;
-		this.plant = plant;
-		this.perform_time = perform_time;
+		this.plant = plant;	
 	}
-	
-	
 }

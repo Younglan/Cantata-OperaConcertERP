@@ -52,5 +52,5 @@ public class User {
 	private List<Brd_post> brd_posts;
 	private List<Ticket> tickets;
 	private List<Corporation> corporations;
-
+	
 }
