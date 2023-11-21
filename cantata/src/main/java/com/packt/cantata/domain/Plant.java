@@ -55,5 +55,6 @@ public class Plant {
 	}
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plant_no")
 	private List<Rental> rentals;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plant_no")
 	private List<Performance> performs;
 }

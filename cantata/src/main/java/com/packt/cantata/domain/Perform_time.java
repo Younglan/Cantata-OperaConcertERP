@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,6 @@ import com.packt.cantata.domain.Performance;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "perform_time")
 public class Perform_time {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -33,27 +33,23 @@ public class Perform_time {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pf_code")
-	private Performance performance;
+	private Performance pf_code;
 	
+	@Column(nullable=false)
 	private Date pt_date, pt_time;
 	
-	private String pt_status;
+	private Boolean pt_status;
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "perform_time")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pt_no")
 	private List<Ticket> ticket;
 
-	public Perform_time(int pt_no, Performance performance, Date pt_date, Date pt_time, String pt_status,
-			List<Ticket> ticket) {
+	public Perform_time(int pt_no, Performance pf_code, Date pt_date, Date pt_time, Boolean pt_status) {
 		super();
 		this.pt_no = pt_no;
-		this.performance = performance;
+		this.pf_code = pf_code;
 		this.pt_date = pt_date;
 		this.pt_time = pt_time;
 		this.pt_status = pt_status;
-		this.ticket = ticket;
 	}
-
-	
-
 }

@@ -27,33 +27,26 @@ import lombok.NoArgsConstructor;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "performance")
 public class Performance {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int pf_code;
-	
-	private String pf_cate,pf_title, agency, pf_poster, pf_eximg, pf_explan;
+	@Column(nullable = false)
+	private String pf_cate,pf_title, agency, pf_poster, pf_eximg, pf_explan, pf_notice;
 	
 	private Date pf_start, pf_end, pf_runtime;
 	
 	private int costR, costA, costB, costC, costD;
 	
-	private String pf_status;
+	private Boolean pf_status;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "plant_no")
-	private Plant plant;
-
-	
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pf_code")
-	private List<Perform_time> performts;
-
+	private Plant plant_no;
 
 	public Performance(int pf_code, String pf_cate, String pf_title, String agency, String pf_poster, String pf_eximg,
 			String pf_explan, Date pf_start, Date pf_end, Date pf_runtime, int costR, int costA, int costB, int costC,
-			int costD, String pf_status, Plant plant) {
+			int costD, Boolean pf_status, Plant plant_no,String pf_notice) {
 		super();
 		this.pf_code = pf_code;
 		this.pf_cate = pf_cate;
@@ -62,6 +55,7 @@ public class Performance {
 		this.pf_poster = pf_poster;
 		this.pf_eximg = pf_eximg;
 		this.pf_explan = pf_explan;
+		this.pf_notice = pf_notice;
 		this.pf_start = pf_start;
 		this.pf_end = pf_end;
 		this.pf_runtime = pf_runtime;
@@ -71,6 +65,9 @@ public class Performance {
 		this.costC = costC;
 		this.costD = costD;
 		this.pf_status = pf_status;
-		this.plant = plant;	
+		this.plant_no = plant_no;	
 	}
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pf_code")
+	private List<Perform_time> perform_times;
 }

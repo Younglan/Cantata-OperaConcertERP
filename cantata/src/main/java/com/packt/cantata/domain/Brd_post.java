@@ -3,7 +3,9 @@ package com.packt.cantata.domain;
 
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,7 +14,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
@@ -30,19 +34,16 @@ public class Brd_post {
 	private Long post_no; // 글 번호
 
 	// JsomManagedReference 에 있는 것들은 전부 임시
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JsonManagedReference(value = "brd_division-brd_post")
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "brd_no")
 	private Brd_division brd_no;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JsonManagedReference(value = "user-Brd_post")
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id")
 	private User id; //회원ID
 
-
 	@Column(nullable = false)
-	private String post_name; // 글제목
+	private String post_title; // 글제목
 
 	@Column(nullable = false)
 	private String post_sub; // 글내용
@@ -64,4 +65,8 @@ public class Brd_post {
 
 	@Column
 	private Date post_deadline; // 게시표시일자
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post_no")
+	private List<Reply> replies;
 }

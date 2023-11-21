@@ -22,7 +22,7 @@ public class Ticket {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(nullable=false, updatable=false) 
-	private String tic_no; 	
+	private Long tic_no; 	
 	 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "pt_no")

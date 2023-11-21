@@ -20,7 +20,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "User")
 public class User {
 
 	@Id
@@ -35,11 +34,11 @@ public class User {
 	private long tel;	
 	private String email;	
 	private String address;
-	private int sms_check;
+	private Boolean sms_check;
 	private Date recent_date;
 	private Date join_date;
 	private String Auth;
-	private int user_status;
+	private Boolean user_status;
 	public User(String id, String password, String Auth) {
 		super();
 		this.id = id;
@@ -48,9 +47,16 @@ public class User {
 	}
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
-	private List<Reply> replies;
-	private List<Brd_post> brd_posts;
-	private List<Ticket> tickets;
 	private List<Corporation> corporations;
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+	private List<Reply> replies;
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+	private List<Brd_post> brd_posts;
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id")
+	private List<Ticket> tickets;
+	
 	
 }

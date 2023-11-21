@@ -1,40 +1,40 @@
 package com.packt.cantata.domain;
 
-import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.OneToMany;
 
-import org.apache.catalina.User;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+@Setter
 @NoArgsConstructor
-@Table(name = "Corporation")
 public class Corporation {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(nullable = false, updatable=false)
 	private String cp_no;
-	private String id;
+	@Column(nullable = false)
 	private String cp_name;
 	private String cp_addre;
 	private String ceo;
 	
-	public Corporation(String cp_no, String id, String cp_name, String cp_addre, String ceo) { 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id")
+	private User id;
+	
+	public Corporation(String cp_no, User id, String cp_name, String cp_addre, String ceo) { 
 		super();
 		this.cp_no = cp_no;
 		this.id = id;
@@ -42,7 +42,8 @@ public class Corporation {
 		this.cp_addre = cp_addre;
 		this.ceo = ceo;
 	}
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id")
-	private User user;
+	
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cp_no")
+	private List<Rental> rentals;
 }
