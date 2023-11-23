@@ -1,0 +1,12 @@
+.aaa{
+    border: 1px solid red;
+    
+    
+}
+.customQEdit{
+    width: 80%; /* 가로 길이 조절 */
+    height: 500px; /* 세로 길이 조절 */
+    margin: 0 auto;
+    margin-bottom: 50px;
+
+}
