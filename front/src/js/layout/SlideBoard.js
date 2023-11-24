@@ -1,12 +1,22 @@
 import React from 'react';
 import cantataLogo from '../../img/cantataLogoBlack.png';
+import {useNavigate} from "react-router-dom";
 import "../../css/SlideBoard.css"
 
 const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     const handleToggle = () => {
         toggleBoard();
     };
-
+    const navigate = useNavigate();
+    const goToMain = () =>{
+        navigate("/");
+    }
+    const goToCenterInfo = () =>{
+        navigate("/센터소개");
+    }
+    const goToCenterNews = () =>{
+        navigate("/센터소식");
+    }
     return (
         <div className={`slide_board ${isOpen ? 'open' : 'close'}`}>
             <div className='slide_Header'>
@@ -16,7 +26,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                     <div className="slide_bar"></div>
                 </div>  {/*햄버거 메뉴버튼 아이콘*/}
                 <div className="slide_title">
-                    <img src={cantataLogo} alt="Cantata Logo" />
+                    <img src={cantataLogo} alt="Cantata Logo" onClick={ ()=>{goToMain(); handleToggle();}}/>
                 </div>
                 <div className="slide_right">
                     <div className="slide_login">
@@ -57,7 +67,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                 <div className = "center_board menu_list">
                     <ul>
                         <h2>소식/고객센터</h2>
-                        <li><h1>센터소식</h1></li>
+                        <li onClick = {() => {goToCenterNews(); handleToggle();}}><h1>센터소식</h1></li>
                         <li><h1>이벤트</h1></li>
                         <li><h1>자주하는 질문</h1></li>
                         <li><h1>1:1 문의</h1></li>
@@ -66,7 +76,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                 <div className = "intro_board menu_list">
                     <ul>
                         <h2>기관소개</h2>
-                        <li><h1>센터소개</h1></li>
+                        <li onClick = {()=>{goToCenterInfo(); handleToggle();}}><h1>센터소개</h1></li>
                         <li><h1>시설소개</h1></li>
                     </ul>
                 </div>

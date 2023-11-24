@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {useNavigate} from "react-router-dom";
 import cantataLogo from '../../img/cantataLogo.png';
 import SlideBoard from './SlideBoard';
 import "../../css/Header.css";
@@ -10,6 +11,12 @@ const Header = () => {
         setIsBoardOpen(!isBoardOpen);
     };
 
+    const navigate = useNavigate();
+
+    const goToMain = () =>{
+        navigate("/");
+    }
+
     return (
         <div className='Header'>
             <div className='header_menu' onClick = {toggleBoard}> 
@@ -18,7 +25,7 @@ const Header = () => {
                 <div className = "bar"></div>
             </div>  {/*햄버거 메뉴버튼 아이콘*/}
             <div className="header_title">
-                <img src={cantataLogo} alt="Cantata Logo" />
+                <img src={cantataLogo} alt="Cantata Logo" onClick={goToMain} />
             </div>
             <div className="header_right">
                 <div className="login">
