@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.packt.cantata.CantataApplication;
 import com.packt.cantata.domain.Performance;
 import com.packt.cantata.domain.PerformanceRepository;
-import com.packt.cantata.service.PerformanceService;
+//import com.packt.cantata.service.PerformanceService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,8 +29,8 @@ public class PerformanceController {
 		
 	@Autowired
 	private PerformanceRepository pfRepository;
-	@Autowired
-	private PerformanceService pfService; 
+//	@Autowired
+//	private PerformanceService pfService; 
 	
 	
 	public Iterable<Performance> getPerforms(){
@@ -55,4 +55,5 @@ public class PerformanceController {
 //		}
 	}
 	
+
 
