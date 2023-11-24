@@ -32,8 +32,8 @@ public class Perform_time {
 	private int pt_no;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pf_code")
-	private Performance pf_code;
+	@JoinColumn(name = "pfCode")
+	private Performance pfCode;
 	
 	@Column(nullable=false)
 	private Date pt_date, pt_time;
@@ -44,10 +44,10 @@ public class Perform_time {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pt_no")
 	private List<Ticket> ticket;
 
-	public Perform_time(int pt_no, Performance pf_code, Date pt_date, Date pt_time, Boolean pt_status) {
+	public Perform_time(int pt_no, Performance pfCode, Date pt_date, Date pt_time, Boolean pt_status) {
 		super();
 		this.pt_no = pt_no;
-		this.pf_code = pf_code;
+		this.pfCode = pfCode;
 		this.pt_date = pt_date;
 		this.pt_time = pt_time;
 		this.pt_status = pt_status;
