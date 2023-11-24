@@ -1,6 +1,7 @@
 package com.packt.cantata.service;
 
 import java.text.SimpleDateFormat;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,7 +14,9 @@ public class PerformanceService {
 	
 	SimpleDateFormat dtFormat = new SimpleDateFormat ("yyyy-MM-dd");
 	
-	public void createPerform(Performance performance) {
+	public void createPerform(Map postData) {
+		Performance newPf = new Performance();
+//		Date stDate = dtFormat.parse(postData.get(newPf))
         
     }
 	
