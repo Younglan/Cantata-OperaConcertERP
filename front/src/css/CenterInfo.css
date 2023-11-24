@@ -1,0 +1,56 @@
+.Background{
+    position:absolute;
+    width: 100%;
+    height: 100%;
+    background:#071a52;
+    display:flex;
+    padding-top:0;
+    align-items: center;
+    /* margin: center; */
+}
+
+.Background .textground{
+    position: relative;
+    width: 90%;
+    height: 90%;
+    background-color: white;
+    margin-left: 5%;
+}
+
+.title{
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid rgb(204, 203, 203);
+    animation:title 3s forwards;
+}
+
+.title h1{
+    animation:titleT 4s forwards;
+}
+
+@keyframes title {
+    from{
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes titleT {
+    0%{
+        transform: translateY(150%);
+        opacity: 0;
+    }
+    30%{
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

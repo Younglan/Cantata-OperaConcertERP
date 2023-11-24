@@ -3,10 +3,11 @@
     left: 0;
     width: 100%;
     max-height: 100%;
-    /* animation: move 0.7s forwards; 내려올 때 작동 */
+    animation: move 0.7s forwards; /* 내려올 때 작동 */
     background-color: rgb(232, 241, 245);
     display: flex;
     flex-direction: column; /* 자식 div(slide_Header, Board)를 아래로 정렬 */
+    z-index: 100;
 }
 
 .slide_board.open{
@@ -45,8 +46,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding-top: 27px;
-    padding-bottom: 27px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     width: 100%;
     background-color: rgb(232, 241, 245);
 }
@@ -111,13 +112,16 @@
     background-color: rgb(232, 241, 245);
     text-align: left;
     display:flex;
-    animation-fill-mode: forwards;
+}
+
+.Board ul{
+    /* animation-fill-mode: forwards; */
     animation: slide 3s forwards;
 }
 
 @keyframes slide {
     from{
-        transform: translateX(-50%);
+        transform: translateX(-100%);
         opacity: 0;
     }
     to{

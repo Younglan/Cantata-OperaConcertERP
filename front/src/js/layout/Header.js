@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import cantataLogo from '../../img/cantataLogo.png';
 import SlideBoard from './SlideBoard';
-import "./Header.css";
+import "../../css/Header.css";
 
 const Header = () => {
     const [isBoardOpen, setIsBoardOpen] = useState(false);
-    const [userRole, setUserRole] = useState('member'); //특정권한 확인용 임시코드 'admin'으로 바꾸면 관리자 메뉴가 나타난다.
+    const [userRole, setUserRole] = useState('user'); //특정권한 확인용 임시코드 'admin'으로 바꾸면 관리자 메뉴가 나타난다.
     const toggleBoard = () => {
         setIsBoardOpen(!isBoardOpen);
     };

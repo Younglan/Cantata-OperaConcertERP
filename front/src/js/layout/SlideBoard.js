@@ -1,6 +1,6 @@
 import React from 'react';
 import cantataLogo from '../../img/cantataLogoBlack.png';
-import "./SlideBoard.css"
+import "../../css/SlideBoard.css"
 
 const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     const handleToggle = () => {
