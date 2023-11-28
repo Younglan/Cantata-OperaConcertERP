@@ -1,9 +1,6 @@
 import React, {useState} from "react";
-// import Button from "@mui/material/Button";
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 
 import './NewPerform.css';
@@ -22,26 +19,25 @@ const SERVER_URL='http://localhost:8090';
 function NewPerform(props) {
     //네비게이터
     const navigate = useNavigate();
-
    // const [open, setOpen] = useState(false);
    const [content, setContent] = React.useState('');
 
     const [perform, setPerform] = useState({
-        pfCate : '',
+        pfCate : '공연',
         pfTitle : '',
         agency : '',
-        // pfPoster : '',
-        // pfEximg : '',
-        // pfExplan : '',
-        // pfNotice : '',
-        // pfStart : '',
-        // pfEnd : '',
-        pfRuntime : ''
-        // costR : '',
-        // costA: '',
-        // costB: '',
-        // costC : '',
-        // costD : ''
+        pfPoster : '',
+        pfEximg : '',
+        pfExplan : '',
+        pfNotice : '',
+        pfStart : '',
+        pfEnd : '',
+        pfRuntime : '',
+        costR : '',
+        costA: '',
+        costB: '',
+        costC : '',
+        costD : ''
     });
 
         
@@ -92,6 +88,7 @@ const toolbarOptions = [
 
   useEffect(() => {
     if (quillRef.current) {
+        
       const {getEditor} = quillRef.current;
       const toolbar = quillRef.current.getEditor().getModule("toolbar");
       // toolbar.addHandler("image", handleImage);
@@ -109,7 +106,7 @@ const toolbarOptions = [
         [event.target.name]:event.target.value});
 }
   //새로운 공연 등록
-  function newPerformSave(perform){
+  function newPerformSave(){
     fetch(SERVER_URL+'/performances',
     {
         method:'POST',
@@ -118,7 +115,9 @@ const toolbarOptions = [
     })
     .then(response =>{
         if(response.ok){
+            alert('저장완료.');
             navigate("/performList");
+            
         }else{
             alert('저장되지않았습니다.');
         }
@@ -130,7 +129,7 @@ const toolbarOptions = [
     return (
         <div className='contentsArea'>
             <div className='contents'>
-        
+                {/* <form> */}
                 <div>
                     <h1>공연등록 폼</h1>
                 </div>
@@ -138,7 +137,7 @@ const toolbarOptions = [
                     <div className="formHeader">공연 카테고리</div>
                     <div className="divcolscont">
                     <Form.Select aria-label="Default select example" className="fullwidth" name="pfCate" value={perform.pfCate}onChange={handleChange} >
-                        <option value="공연">공연</option>
+                        <option value="공연" selected>공연</option>
                         <option value="전시">전시</option>
                         <option value="음악">음악</option>
                     </Form.Select>
@@ -251,6 +250,8 @@ const toolbarOptions = [
                 <div className="divrows formTxtArea">
                     <Button  onClick={newPerformSave} variant="secondary">등록</Button>    
                 </div>
+
+                {/* </form> */}
             </div>    
             
         </div>

@@ -32,7 +32,7 @@ public class Perform_time {
 	private int pt_no;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pfCode")
+	@JoinColumn(name = "pf_code")
 	private Performance pfCode;
 	
 	@Column(nullable=false)

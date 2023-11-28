@@ -41,6 +41,7 @@ function PerformanceList(){
     };
 
     const onDelClick = (url) => {
+    console.log(" url확인 : "+url);
         if (window.confirm("정말로 해당 컨텐츠를 삭제하시겠습니까?")){
             fetch(url, {method: 'DELETE'})
             .then(response => {
@@ -74,20 +75,6 @@ function PerformanceList(){
                     onClose={() => setOpen(false)}
                     message="공연이 삭제되었습니다."
                 />
-
-                {/* <table>
-                    <tbody>
-                        {
-                           performances.map((performance,index) => 
-                           <tr key={index}>
-                                <td>{performance.pfCate}</td>
-                                <td>{performance.pfCode}</td>
-                                <td>{performance.pfTitle}</td>
-                           </tr>
-                           ) 
-                        }
-                    </tbody>
-                </table> */}
 
             </div>
         </div>
