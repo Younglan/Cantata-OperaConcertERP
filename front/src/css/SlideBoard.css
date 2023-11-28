@@ -1,0 +1,143 @@
+.slide_board{
+    position:absolute;
+    left: 0;
+    width: 100%;
+    max-height: 100%;
+    animation: move 0.7s forwards; /* 내려올 때 작동 */
+    background-color: rgb(232, 241, 245);
+    display: flex;
+    flex-direction: column; /* 자식 div(slide_Header, Board)를 아래로 정렬 */
+    z-index: 100;
+}
+
+.slide_board.open{
+    top: 0px;
+    animation: move 0.7s forwards; /*내려올 때 작동*/
+}
+
+@keyframes move{
+    from{
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to{
+        transform: translateY(0);
+        opacity:1;
+    }
+}
+
+
+.slide_board.close{
+    animation: close 0.7s forwards;
+}
+
+@keyframes close{
+    from{
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to{
+        transform: translateY(-100%);
+        opacity:0;
+    }
+}
+
+.slide_Header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+    background-color: rgb(232, 241, 245);
+}
+
+.slide_Header > div{
+    display: flex;
+}
+
+.slide_Header .slide_title{
+    width: 38%;
+    justify-content: center;
+}
+.slide_Header .slide_title img{
+    cursor: pointer;
+}
+
+.slide_Header .slide_menu{
+    width: 25%;
+    cursor: pointer;
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 24px;
+}
+
+.slide_bar{
+    width: 30px;
+    height: 4px;
+    background-color: black;
+}
+
+
+.slide_Header .slide_right{
+    width: 30%;
+    justify-content: end;
+    color: black;
+}
+
+
+.slide_Header .slide_right .slide_login{
+    width: 10%;
+}
+
+.slide_Header .slide_right .slide_search{
+    width: 20%;
+}
+
+.slide_Header .slide_right .slide_calender{
+    width: 10%;
+}
+
+.slide_Header .slide_right svg{
+    cursor: pointer;
+} 
+
+.Board {
+    margin: auto;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    width: 100%;
+    background-color: rgb(232, 241, 245);
+    text-align: left;
+    display:flex;
+}
+
+.Board ul{
+    /* animation-fill-mode: forwards; */
+    animation: slide 3s forwards;
+}
+
+@keyframes slide {
+    from{
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    to{
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.Board li{
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.menu_list{
+    margin: 0 auto;
+    /* border: 1px solid red; */
+}
+
+
