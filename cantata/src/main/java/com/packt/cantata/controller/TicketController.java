@@ -1,4 +1,4 @@
-package com.packt.cantata.web;
+package com.packt.cantata.controller;
 
 import java.time.LocalDate;
 import java.util.Date;
