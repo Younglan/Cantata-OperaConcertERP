@@ -30,14 +30,9 @@ import lombok.Setter;
 public class Performance {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int pfCode;
-	
-	@Column(nullable = true)
-	private String pfCate, pfTitle, agency, pfPoster, pfEximg, pfExplan, pfNotice;
-	
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-	private Date pfStart;
+	private int pf_code;
+	@Column(nullable = false)
+	private String pf_cate,pf_title, agency, pf_poster, pf_eximg, pf_explan, pf_notice;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -51,14 +46,13 @@ public class Performance {
 	@JoinColumn(name = "plant_no")
 	private Plant plant_no;
 
-	
-	
-	public Performance( String pfCate, String pfTitle, String agency, String pfPoster, String pfEximg,
-			String pfExplan, String pfNotice, Date pfStart, Date pfEnd, int pfRuntime, int costRa, int costA, int costB, int costC,
-			int costD, Boolean pfStatus) {
+	public Performance(int pf_code, String pf_cate, String pf_title, String agency, String pf_poster, String pf_eximg,
+			String pf_explan, Date pf_start, Date pf_end, Date pf_runtime, int costR, int costA, int costB, int costC,
+			int costD, Boolean pf_status, Plant plant_no,String pf_notice) {
 		super();
-		this.pfCate = pfCate;
-		this.pfTitle = pfTitle;
+		this.pf_code = pf_code;
+		this.pf_cate = pf_cate;
+		this.pf_title = pf_title;
 		this.agency = agency;
 		this.pfPoster = pfPoster;
 		this.pfEximg = pfEximg;
@@ -83,6 +77,7 @@ public class Performance {
 		this.pfPoster = pfPoster;
 		this.pfExplan = pfExplan;
 	}
+
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pfCode")
 	private List<Perform_time> perform_times;
