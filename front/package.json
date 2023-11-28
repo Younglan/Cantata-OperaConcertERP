@@ -20,7 +20,13 @@
     "react-quill": "^2.0.0",
     "react-router-dom": "^6.19.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@fontsource/roboto": "^5.0.8",   
+    "@mui/x-date-pickers": "^6.18.1",
+    "dayjs": "^1.11.10",
+    "moment": "^2.29.4",
+    "react-calendar": "^4.6.1",
+    "react-window": "^1.8.10"
   },
   "scripts": {
     "start": "react-scripts start",
