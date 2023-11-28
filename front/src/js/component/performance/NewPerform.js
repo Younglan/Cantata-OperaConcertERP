@@ -13,11 +13,16 @@ import ReactQuill, {Quill} from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
 import "react-quill/dist/quill.snow.css";
 import { useRef, useEffect } from "react";
-Quill.register("modules/imageResize", ImageResize);
+import { useNavigate } from "react-router-dom";
 
+Quill.register("modules/imageResize", ImageResize);
+const SERVER_URL='http://localhost:8090';
 
 
 function NewPerform(props) {
+    //네비게이터
+    const navigate = useNavigate();
+
    // const [open, setOpen] = useState(false);
    const [content, setContent] = React.useState('');
 
@@ -25,18 +30,18 @@ function NewPerform(props) {
         pfCate : '',
         pfTitle : '',
         agency : '',
-        pfPoster : '',
-        pfEximg : '',
-        pfExplan : '',
-        pfNotice : '',
-        pfStart : '',
-        pfEnd : '',
-        pfRuntime : '',
-        costR : '',
-        costA: '',
-        costB: '',
-        costC : '',
-        costD : ''
+        // pfPoster : '',
+        // pfEximg : '',
+        // pfExplan : '',
+        // pfNotice : '',
+        // pfStart : '',
+        // pfEnd : '',
+        pfRuntime : ''
+        // costR : '',
+        // costA: '',
+        // costB: '',
+        // costC : '',
+        // costD : ''
     });
 
         
@@ -70,9 +75,7 @@ const toolbarOptions = [
     "indent",
     "background",
     "color",
-
     "image",
- 
     "width",
   ];
    //<QuillEditor> 
@@ -88,8 +91,6 @@ const toolbarOptions = [
   };
 
   useEffect(() => {
-    
-    
     if (quillRef.current) {
       const {getEditor} = quillRef.current;
       const toolbar = quillRef.current.getEditor().getModule("toolbar");
@@ -108,9 +109,21 @@ const toolbarOptions = [
         [event.target.name]:event.target.value});
 }
   //새로운 공연 등록
-  const newPerformSave = () => {
-    props.updateCar(perform, props.data.id);
-    // handleClose();
+  function newPerformSave(perform){
+    fetch(SERVER_URL+'/performances',
+    {
+        method:'POST',
+        headers: {'Content-Type':'application/json'},
+        body:JSON.stringify(perform)
+    })
+    .then(response =>{
+        if(response.ok){
+            navigate("/performList");
+        }else{
+            alert('저장되지않았습니다.');
+        }
+    })
+    .catch(err => console.error(err))
 }
 
 
@@ -124,7 +137,7 @@ const toolbarOptions = [
                 <div className="divrows">
                     <div className="formHeader">공연 카테고리</div>
                     <div className="divcolscont">
-                    <Form.Select aria-label="Default select example" className="fullwidth" name="pfCate" onChange={handleChange} >
+                    <Form.Select aria-label="Default select example" className="fullwidth" name="pfCate" value={perform.pfCate}onChange={handleChange} >
                         <option value="공연">공연</option>
                         <option value="전시">전시</option>
                         <option value="음악">음악</option>
@@ -134,36 +147,36 @@ const toolbarOptions = [
                 <div className="divrows">
                     <div className="formHeader">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</div>
                     <div className="divcolscont">
-                        <Form.Control type="text" placeholder=""  className="fullwidth" name="pfTitle" onChange={handleChange} />
+                        <Form.Control type="text" placeholder=""  className="fullwidth" name="pfTitle" value={perform.pfTitle} onChange={handleChange} />
                     </div>
                 </div>
                 <div className="divrows">
-                    <div className="formHeader">시작일</div>
+                    <div className="formHeader">시&nbsp;&nbsp;&nbsp;&nbsp;작&nbsp;&nbsp;&nbsp;&nbsp;일</div>
                     <div className="divcolscont">
                         <Form.Control type="text" placeholder=""  className="fullwidth"/>
                     </div>
-                    <div className="formHeader">마침일</div>
+                    <div className="formHeader">마&nbsp;&nbsp;&nbsp;&nbsp;침&nbsp;&nbsp;&nbsp;&nbsp;일</div>
                     <div className="divcolscont">
                         <Form.Control type="text" placeholder=""  className="fullwidth"/>
                     </div>
-                    <div className="formHeader">런타임(분)</div>
+                    <div className="formHeader">런 타 임 (분)</div>
                     <div className="divcolscont">
-                        <Form.Control type="text" placeholder=""  className="fullwidth"/>
+                        <Form.Control type="text" placeholder=""  className="fullwidth" name="pfRuntime" value={perform.pfRuntime} onChange={handleChange} />
                     </div>
                 </div>
                 <div className="divrows">
-                    <div className="formHeader">장소</div>
+                    <div className="formHeader">장&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</div>
                     <div className="divcolscont">
                     <Form.Select aria-label="Default select example" className="fullwidth">
                         <option value="오디토리움">오디토리움</option>
                         <option value="퍼포먼스홀">퍼포먼스홀</option>
                     </Form.Select>
                     </div>
-                    <div className="formHeader">기획사</div>
+                    <div className="formHeader">기&nbsp;&nbsp;&nbsp;&nbsp;획&nbsp;&nbsp;&nbsp;&nbsp;사</div>
                     <div className="divcolscont">
-                        <Form.Control type="text" placeholder=""  className="fullwidth"/>
+                        <Form.Control type="text" placeholder=""  className="fullwidth" name="agency" value={perform.agency} onChange={handleChange} />
                     </div>
-                    <div className="formHeader">문의처</div>
+                    <div className="formHeader">문&nbsp;&nbsp;&nbsp;&nbsp;의&nbsp;&nbsp;&nbsp;&nbsp;처</div>
                     <div className="divcolscont">
                         <Form.Control type="text" placeholder="전화번호를 입력하세요"  className="fullwidth"/>
                     </div>
