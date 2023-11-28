@@ -1,0 +1,19 @@
+.contentsArea{
+    background-color: #071a52;
+}
+
+.contents{
+    background-color: white;
+    margin: 0 auto;
+    width: 90%;
+    min-height: 800px;
+    padding-top: 50px;
+    /* border: 1px solid red; */
+}
+
+.pfList{
+    margin: 0 auto;
+    width: 80%;
+    max-width: 1000px;
+    text-align: center;
+}
