@@ -1,33 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import "../../css/Board.css";
 
-const Board = () => {
-    const [data, setData] = useState([]);
+const SERVER_URL='http://localhost:8090';
+
+function Board() {
+    const [boards, setBoards] = useState([]);
+
     useEffect(() => {
-        fetch('http://localhost:8090/api/brd_divisions')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('HTTP error! Status: ${response.status}');
-                }
-                return response.json();
-            })
-            .then(data => {
-                setData(data);
-            })
-            .catch(error => {
-                console.error('Error fetching data: ', error);
-            });
+        fetch(SERVER_URL + '/brd_divisions', {method : "GET"})
+            .then(response => response.json())
+            .then(data => setBoards(data._embedded.brd_divisions))
+            .catch(err => console.error(err));
     }, []);
 
     return (
         <div id="Board">
             <div className='background'>
-                {data.map(brd => (
-                    <div className="Board_title" key={brd.no}>
-                        <h2>{brd.name}</h2>
-                        {/* 얘도 마리아DB와 연동해서 게시판 이름 알아야함 */}
+                    <div className="Board_title">
+                       {boards.map((brd_division) =>(
+                        <h2 key = {3}>{brd_division.brdName}</h2>
+                        ))}
                     </div>
-                ))}
                 <div className="brd_post">
                     <div className="post_num">
 
@@ -44,7 +37,7 @@ const Board = () => {
                 </div>
                 <div className="line"></div>{/* 이름 그대로 선 긋는 용도 */}
                 <div>
-                    {/* crud...도전!!!!! */}
+
                 </div>
             </div>
         </div>
