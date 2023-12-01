@@ -8,7 +8,7 @@ import PerformanceList from './js/component/performance/PerformanceList';
 import NewPerform from './js/component/performance/NewPerform';
 import CenterInfo from './js/page/CenterInfo';
 import CenterNews from './js/page/CenterNews';
-
+import EventPage from './js/page/EventPage';
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
           <Route path="/performList/newPerform" element={<NewPerform />} />
           <Route path='/센터소개' element={<CenterInfo />} />
           <Route path='/센터소식' element={<CenterNews/>}/>
-
+          <Route path='/Event' element={<EventPage/>}/>
         </Routes>
       </Router>
       <Footer />

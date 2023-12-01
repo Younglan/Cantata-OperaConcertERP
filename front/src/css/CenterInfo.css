@@ -10,11 +10,14 @@
 }
 
 .Background .textground{
-    position: relative;
+    position:absolute;
+    margin: auto;
     width: 90%;
     height: 90%;
     background-color: white;
     margin-left: 5%;
+    /* text-align: left; */
+    /* display: flex; */
 }
 
 .title{
@@ -53,4 +56,23 @@
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+.postSub{
+    margin: auto;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    width: 100%;
+    text-align: left;
+    display:flex;
+}
+
+.postSub .image{
+    width: 50%;
+    text-align: center;
+}
+
+.postSub .text{
+    width: 50%;
+    text-align: center;
 }
