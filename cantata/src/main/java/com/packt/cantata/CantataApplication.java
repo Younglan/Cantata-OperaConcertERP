@@ -34,19 +34,31 @@ public class CantataApplication implements CommandLineRunner {
 		Performance pf1 = new Performance("전시", 
 				"20주년 기념 상상아트 전시회", 
 				"상상극단", 
+				"042-222-5555",
 				"posterURI", 
 				"exIMG",
 				"상세설명이에요",
 				"공연공지사항",
 				dtFormat.parse("2023-11-23"), dtFormat.parse("2023-12-01"),
 				3,
-				50000,30000,10000,5000,1000,
-				true);
+				50000,40000,30000,10000,5000,1000);
+		Performance pf2 = new Performance("공연", 
+				"행복한왕자", 
+				"상상극단", 
+				"042-222-5555",
+				"posterURI", 
+				"exIMG",
+				"상세설명이에요",
+				"공연공지사항",
+				dtFormat.parse("2023-11-23"), dtFormat.parse("2023-12-01"),
+				3,
+				50000,40000,30000,10000,5000,1000);
 
-		pfRepository.saveAll(Arrays.asList(pf1));
+		pfRepository.saveAll(Arrays.asList(pf1,pf2));
 		
 		for (Performance pf : pfRepository.findAll()) {
-			logger.info(pf.getPfCate() + " " + pf.getPfTitle());
+			logger.info(pf.getPfCode() + " " +pf.getPfCate() + " " + pf.getPfTitle());
+			System.out.println(pf.getPfCode());
 		}
 		
 
