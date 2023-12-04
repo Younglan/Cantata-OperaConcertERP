@@ -1,15 +1,12 @@
 package com.packt.cantata.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,10 +29,19 @@ public class PerformanceController {
 //	@Autowired
 //	private PerformanceService pfService; 
 	
-	
-	public Iterable<Performance> getPerforms(){
+//	@GetMapping
+	public List<Performance> getPerforms(){
 		//전체공연 검색 및 반환
 		return pfRepository.findAll();
+	}
+	@GetMapping("/lastPfCode")
+	public ResponseEntity<Long> getLastPostNum() {
+		Performance lastPerformNum = pfRepository.findTopByOrderByPfCodeDesc();
+        logger.info("Last Perform Code: " + lastPerformNum);
+        if (lastPerformNum != null) {
+            return ResponseEntity.ok().body(lastPerformNum.getPfCode());
+        }
+        return ResponseEntity.ok().body(0L);  // 0을 반환하거나 다른 기본값을 반환할 수 있습니다.
 	}
 	
 //	@PostMapping("/new")
