@@ -130,7 +130,7 @@ function NewPerform(props) {
             files.forEach(file => {
                 formData.append('file', file);
             });
-            console.log(pfCode);
+            
             formData.append('tableName', 'performance');
             formData.append('number', pfCode + 1);
 
