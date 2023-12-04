@@ -1,5 +1,6 @@
 package com.packt.cantata.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,12 +12,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -34,7 +36,11 @@ public class Performance {
 	private long pfCode;
 		
 	@Column(nullable = true)
-	private String pfCate, pfTitle, agency, pfPoster, pfEximg, pfExplan, pfNotice;
+	private String pfCate, pfTitle, agency, agencyTel, pfPoster, pfEximg;
+	
+	@Column(nullable = true)
+	@Lob
+	private String	pfExplan, pfNotice;
 	
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -44,7 +50,7 @@ public class Performance {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date pfEnd;
 	
-	private int pfRuntime, costR, costA, costB, costC, costD;
+	private int pfRuntime, costR, costS, costA, costB, costC, costD;
 	
 //	@ColumnDefault("1")
 	@Column(columnDefinition = "boolean default true",nullable = false)
@@ -54,15 +60,20 @@ public class Performance {
 	@JoinColumn(name = "plant_no")
 	private Plant plant_no;
 
+	@OneToMany(mappedBy = "performance", cascade = CascadeType.REMOVE)
+    @JsonBackReference(value = "performance-files")
+    private List<File> files = new ArrayList<>();
 	
 	
-	public Performance(String pfCate, String pfTitle, String agency, String pfPoster, String pfEximg,
-			String pfExplan, String pfNotice, Date pfStart, Date pfEnd, int pfRuntime, int costR, int costA, int costB, int costC,
+	public Performance( String pfCate, String pfTitle, String agency,String agencyTel, String pfPoster, String pfEximg,
+			String pfExplan, String pfNotice, Date pfStart, Date pfEnd, int pfRuntime, int costR, int costS,int costA, int costB, int costC,
 			int costD) {
 		super();
+		
 		this.pfCate = pfCate;
 		this.pfTitle = pfTitle;
 		this.agency = agency;
+		this.agencyTel = agencyTel;
 		this.pfPoster = pfPoster;
 		this.pfEximg = pfEximg;
 		this.pfExplan = pfExplan;
@@ -71,6 +82,7 @@ public class Performance {
 		this.pfEnd = pfEnd;
 		this.pfRuntime = pfRuntime;
 		this.costR = costR;
+		this.costS = costS;
 		this.costA = costA;
 		this.costB = costB;
 		this.costC = costC;
