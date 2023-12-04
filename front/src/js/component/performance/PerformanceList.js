@@ -31,6 +31,7 @@ function PerformanceList(){
 
     useEffect(() => {
         fetchPerforms();
+        
     }, []);
 
     const fetchPerforms= () => {
