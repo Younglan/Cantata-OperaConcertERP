@@ -33,10 +33,14 @@ import lombok.Setter;
 public class Performance {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="pf_code")
 	private long pfCode;
-		
+	
 	@Column(nullable = true)
-	private String pfCate, pfTitle, agency, agencyTel, pfPoster, pfEximg;
+	private String pfTitle;
+	
+	@Column(nullable = true)
+	private String pfCate, agency, agencyTel, pfPoster, pfEximg;
 	
 	@Column(nullable = true)
 	@Lob
