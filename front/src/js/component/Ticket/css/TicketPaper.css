@@ -1,0 +1,42 @@
+.paper_sec{
+    display:grid;
+    
+    
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+.paper{
+    text-align: center;
+
+
+    border: 1px solid black;
+}
+.paper_header{
+    text-align: left;
+    background-color:#BB2649;
+    color:white;
+    font-size: 16px;
+    font-weight:bold;
+    padding: 8px 0 8px 10px;
+}
+.paper_pf{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 200px; */
+}
+
+.paper_table{
+    padding : 10px;
+
+}
+
+.paper_table > div{
+    margin : 10px 0 0 0 ;
+
+}
+
+.paper_qr{
+    margin: auto;
+}
+

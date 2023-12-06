@@ -1,0 +1,80 @@
+.tick_status {
+    color: antiquewhite;
+    background-color : black;
+    border-radius: 10px;
+    min-width: 15%;
+    width: 270px;
+    height: 500px;
+  }
+
+.ts_title{
+  margin : 10px 15px 10px 15px;
+  padding : 0 0 10px 0;
+  border-bottom: 1px solid;
+  }
+  
+.ts_main{
+    display: flex;
+    justify-content: center;
+    margin: 0px 15px 0 15px;
+    padding: 0 0 5px 0;
+    border-bottom: 1px solid;
+  }
+
+.ts_poster{ 
+  margin : 0 5px 0 0;
+  width: 50%;
+  height: 150px;
+  
+  }
+.ts_sub{
+  margin : 0 0 0 5px;
+  width: 50%;
+  height: 150px;
+  
+  }
+
+.ts_seat{
+  margin: 10px 15px 50px 15px;
+  height: 150px;
+  border: 1px solid white;
+  border-radius: 6px;
+  display:flex;
+  text-align: left;
+  }
+
+.ts_pay{
+  display: flex;
+  justify-content: center;
+  margin : 0 0 5px 0;
+  font-size : 16px;
+ }
+
+.ts_payment{
+  width:60%;
+  text-align: right;
+  
+ }
+
+ .ts_payment em{
+  margin: 0 3px 0 0;
+  color: #6667AB;
+  font-size: 20px;
+  font-weight: bold;
+ }
+ .ts_seat_1{
+    width:50%;
+    margin:10px;
+ }
+ .ts_seat_2{
+    display: grid;
+    grid-template-columns: 45px 45px;
+    grid-template-rows: 45px 45px 45px;
+    margin:7px;
+ }
+ .ts_seat_2 > div{
+  
+  border: 1px solid white;
+}
+
+ 
