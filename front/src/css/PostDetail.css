@@ -1,0 +1,22 @@
+/* PostDetail.css */
+
+.post-detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .post-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .post-info {
+    margin-bottom: 20px;
+  }
+  
+  .post-date {
+    font-size: 14px;
+    color: #666;
+  }
+  

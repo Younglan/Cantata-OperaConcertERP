@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-
 import "../../css/Board.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const SERVER_URL = 'http://localhost:8090';
 
@@ -10,7 +9,9 @@ function Board({ BoardType }) {
     const [boardName, setBoardName] = useState('');
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 10;
+    const pageSize = 10; //게시물이 10개 이상 넘어가면 다음 게시물로
+
+
 
     useEffect(() => {
         // 게시판 이름 가져오기
@@ -81,7 +82,7 @@ function Board({ BoardType }) {
                         {currentPosts.map((post, index) => (
                             <div key={index} className='postItem'>
                                 <div className='postNumber'>{index + 1}</div>
-                                <div className='postTitle'>{post.postTitle}</div>
+                                <Link to={`/postDetail/${post.postNo}`} className='postTitle'>{post.postTitle} {post.postNo}</Link>
                                 <div className='postDate'>{post.postDate}</div>
                                 {/* 작성자 이름 추가 예정 */}
                             </div>

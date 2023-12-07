@@ -10,6 +10,7 @@ import CenterInfo from './js/page/CenterInfo';
 import CenterNews from './js/page/CenterNews';
 import EventPage from './js/page/EventPage';
 import NewPost from './js/component/NewPost';
+import PostDetail from './js/component/PostDetail';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/센터소식' element={<CenterNews/>}/>
           <Route path='/Event' element={<EventPage/>}/>
           <Route path='/NewPost/:BoardType' element={<NewPost/>}/>
+          <Route path='/postDetail/:postNo' element={<PostDetail/>}/>
         </Routes>
       </Router>
       <Footer />

@@ -81,6 +81,8 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     border-right: 1px solid #ccc;
+    text-decoration: none;
+    color: inherit;
 }
 
 .postDate {
