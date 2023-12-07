@@ -1,0 +1,22 @@
+
+.tf_main{
+    display: flex;
+}
+.tf_left{
+    margin : 5px;
+    
+    width:100%;
+}
+.tf_left_top{
+    
+    width: 100%;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 100%;
+}
+.tf_left_top > div,.tf_left_bot{
+    padding: 10px;
+    
+}
+
+

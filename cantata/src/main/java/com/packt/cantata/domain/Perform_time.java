@@ -13,14 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.packt.cantata.domain.Performance;
+
 
 @Entity
 @Getter
@@ -36,7 +35,7 @@ public class Perform_time {
 	private Performance pfCode;
 	
 	@Column(nullable=false)
-	private Date pt_date, pt_time;
+	private Date pt_date;
 	
 	private Boolean pt_status;
 	
@@ -44,12 +43,12 @@ public class Perform_time {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pt_no")
 	private List<Ticket> ticket;
 
-	public Perform_time(int pt_no, Performance pfCode, Date pt_date, Date pt_time, Boolean pt_status) {
+	public Perform_time(int pt_no, Performance pfCode, Date pt_date, Boolean pt_status) {
 		super();
 		this.pt_no = pt_no;
 		this.pfCode = pfCode;
 		this.pt_date = pt_date;
-		this.pt_time = pt_time;
+
 		this.pt_status = pt_status;
 	}
 }

@@ -1,0 +1,22 @@
+.tp_header{
+    margin: 15px 0 0 15px;
+    text-align: left;
+}
+.tp_cont{
+    margin-top: 15px;
+    padding : 0px;
+    width:auto;
+    height: 400px;
+    border: 1px solid gray;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+}
+
+.tp_cont_sel{
+    padding: 15px 0 15px 0;
+    border-bottom: 1px solid gray;
+}
+
+.tp_cont_main{
+    padding: 10px 0 10px 0;
+}
