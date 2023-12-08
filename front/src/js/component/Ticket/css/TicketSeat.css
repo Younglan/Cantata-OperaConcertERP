@@ -1,0 +1,102 @@
+.SeatStage{
+    margin: 10px;
+}
+.SeatAll{
+    display: flex;
+    justify-content: center;
+    margin: 30px 40px 0 0;
+}
+
+.SeatCenter{
+    display: flex;
+    margin : 5px;
+    justify-content: center;
+}
+
+.SeatLeft{
+    margin: auto 20px;
+}
+.SeatLeft > div{
+    margin: 60px 0 60px;
+    border : 1px solid skyblue;
+    background-color: azure;
+    width: 60px;
+    height: 120px;
+    
+}
+.SeatLeft > div > button{
+    margin: 17px;
+}
+.SeatRight{
+    margin: auto 0 auto 40px;
+}
+.SeatRight > div{
+    margin: 60px 0 60px;
+    border : 1px solid skyblue;
+    background-color: azure;
+    width: 60px;
+    height: 120px;
+}
+.SeatRight > div > button{
+    margin: 17px;
+}
+.SeatcenLeft{
+    margin : 10px;
+}
+.SeatcenCenter{
+    margin : 10px;
+}
+.SeatcenRight{
+    margin : 10px;
+}
+.SeatcenRow{
+    
+    margin : 10px 20px 0 0;
+    
+}
+.SeatcenRow > div > button{
+    border: 1px solid black;
+    font-weight: bold;
+    color: black;
+}
+.ts_seat_2{
+    text-align: center;
+    margin-top: auto;
+    font-weight: bold;
+    color: whitesmoke;
+}
+.ts_seat_2 > div{
+   
+   padding-top: 8px;
+    
+}
+
+.R{
+    background-color:#4d377b;
+    
+}
+
+.S{
+    background-color:#79EDFF;
+ 
+}
+
+.A{
+    background-color:#3CB371;
+    
+}
+
+.B{
+    background-color:#FF7F00;
+   
+}
+
+.C{
+    background-color:#E9BD15;
+    
+}
+
+.D{
+    background-color:#964B00;
+   
+}

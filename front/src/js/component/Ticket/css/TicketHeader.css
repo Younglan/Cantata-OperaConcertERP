@@ -1,0 +1,11 @@
+.tick_header {
+    display: flex;
+    justify-content: center;
+    
+    padding: 20px;
+  }
+
+.tick_header > div{
+    margin: auto;
+    
+  }

@@ -1,0 +1,23 @@
+.tick_main{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.tick_main > div{
+    margin: auto;
+}
+
+  
+.react-calendar__navigation__label > span {
+    font-size:  18px;
+    font-weight: bold;
+    color: black;
+  }
+.react-calendar__month-view__days button {
+    background-color: #66b294;
+}
+
+
+
+  
+ 

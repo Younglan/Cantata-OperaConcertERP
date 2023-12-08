@@ -1,0 +1,15 @@
+.ticket_main{
+    width: 100%;
+    height: 56.25%;
+    min-width: 1270px;
+}
+.tick_cont{
+    display: flex;
+    justify-content: center;
+}
+.tick_canvas{
+    width: 70%;
+    margin: 0 20px 0 20px;
+    padding: 10px;
+    border-top: 3px solid #909090;
+}
