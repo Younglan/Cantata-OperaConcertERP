@@ -14,6 +14,11 @@
 .pfList{
     margin: 0 auto;
     width: 80%;
-    max-width: 900px;
+    max-width: 870px;
     text-align: center;
 }
+/* .btnbox > button {
+    background-color: aqua;
+    height: 20px;
+    clear: both;
+} */

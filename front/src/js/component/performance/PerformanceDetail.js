@@ -23,6 +23,11 @@ function PerformanceDetail(){
         })
         .catch(err => console.error(err));
     };
+
+    const pfTimeManage = (pfCode) =>{
+        navigate("/timeList/"+pfCode);
+    };
+
     return(
     <div className='contentsArea'>
         <div className='contentsHeader'>
@@ -36,7 +41,9 @@ function PerformanceDetail(){
             a
             a
             aaa</div>
-                    <button>예매하기</button>
+
+            <button>예매하기</button>
+            <button onClick={() => pfTimeManage(pfCode)}>회차관리</button>                    
         </div>
         <div className='contents'>
                 
