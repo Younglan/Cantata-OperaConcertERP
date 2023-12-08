@@ -28,8 +28,8 @@ function PerformanceList(){
                 </div>
         ),
     }, 
-        {field: 'pfStart', headerName: '공연기간(시작일)', width: 120}, 
-        {field: 'pfEnd', headerName: '공연기간(종료일)', width: 120}, 
+        {field: 'pfStart', headerName: '공연 시작일', width: 100}, 
+        {field: 'pfEnd', headerName: '공연 종료일', width: 100}, 
         {field: 'agency', headerName: '배급사', width: 100}, 
         {field: '_links.self.href',
          headerName: '',
@@ -46,21 +46,29 @@ function PerformanceList(){
     }, []);
 
     const fetchPerforms= () => {
-        fetch(SERVER_URL+'/performances')
+        fetch(SERVER_URL+'/performances/allPerform')
         .then(response => response.json())
-        .then(data => setPerformances(data._embedded.performances))
+        .then(data => {
+            //상태 체크 후 pfStatus가 ture인것만 표시
+            const filteredPerforms = data.filter((perform) => perform.pfStatus === true);
+            setPerformances(filteredPerforms)})
         .catch(err => console.error(err));
     };
 
-    const onRowClick = (url) => {
-        console.log(url.substr(35));
-        navigate("/PerformanceDetail/"+url.substr(35));
+    const onRowClick = (pfCode) => {
+        navigate("/PerformanceDetail/"+pfCode);
     };
 
-    const onDelClick = (url) => {
-    console.log(" url확인 : "+url);
+    const onDelClick = (pfCode) => {
+        const updatedSatusData = {pfStatus : 'false'};
         if (window.confirm("정말로 해당 컨텐츠를 삭제하시겠습니까?")){
-            fetch(url, {method: 'DELETE'})
+            fetch(SERVER_URL+'/performances/'+pfCode,
+                 {method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        },
+                    body: JSON.stringify(updatedSatusData)
+                 })
             .then(response => {
                 if(response.ok){
                     fetchPerforms();
