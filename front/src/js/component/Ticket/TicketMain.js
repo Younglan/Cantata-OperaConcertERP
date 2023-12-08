@@ -4,10 +4,14 @@ import { FixedSizeList } from 'react-window';
 import Calendar from 'react-calendar';
 import moment from 'moment/moment';
 
+
+
+
 import { leftSeat } from './seatClass';
 import 'react-calendar/dist/Calendar.css';
 import "./css/TicketMain.css";
 import { TicketContext } from './Ticket';
+import styled from '@emotion/styled';
 
 
 function TicketMain(){
@@ -101,7 +105,7 @@ function TicketMain(){
     return(
         <div className="tick_main">
             <div>
-                <Typography>관람일</Typography>
+                <Typograph>관람일</Typograph>
                 <Calendar 
                     locale="kr"
                     onChange={onChange} 
@@ -121,7 +125,7 @@ function TicketMain(){
                 
             </div>
             <div>
-                <Typography>공연</Typography>
+                <Typograph>공연</Typograph>
                 <FixedSizeList
                     height={300}
                     width={200}
@@ -134,7 +138,7 @@ function TicketMain(){
                 </FixedSizeList>
             </div>
             <div>
-                <Typography>시간</Typography>
+                <Typograph>시간</Typograph>
                 <FixedSizeList
                     height={300}
                     width={200}
@@ -147,7 +151,7 @@ function TicketMain(){
                 </FixedSizeList>
             </div>
             <div>
-                <Typography>잔여석</Typography>
+                <Typograph>잔여석</Typograph>
                 <FixedSizeList
                     height={300}
                     width={200}
@@ -163,3 +167,11 @@ function TicketMain(){
 }
 
 export default TicketMain;
+
+const Typograph = styled(Typography)(({ theme }) => ({
+    fontFamily: 'Nanum Gothic', 
+    fontWeight:"bold", 
+    fontSize:"20px",
+    marginBottom:"10px",
+    
+  }));
