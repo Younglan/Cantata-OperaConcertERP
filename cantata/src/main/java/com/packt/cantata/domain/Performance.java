@@ -33,10 +33,14 @@ import lombok.Setter;
 public class Performance {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="pf_code")
 	private long pfCode;
-		
+	
 	@Column(nullable = true)
-	private String pfCate, pfTitle, agency, agencyTel, pfPoster, pfEximg;
+	private String pfTitle;
+	
+	@Column(nullable = true)
+	private String pfCate, agency, agencyTel, pfPoster, pfEximg;
 	
 	@Column(nullable = true)
 	@Lob
@@ -50,7 +54,7 @@ public class Performance {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date pfEnd;
 	
-	private int pfRuntime, costR, costS, costA, costB, costC, costD;
+	private int pfRuntime, R, S, A, B, C, D;
 	
 //	@ColumnDefault("1")
 	@Column(columnDefinition = "boolean default true",nullable = false)
@@ -66,7 +70,7 @@ public class Performance {
 	
 	
 	public Performance( String pfCate, String pfTitle, String agency,String agencyTel, String pfPoster, String pfEximg,
-			String pfExplan, String pfNotice, Date pfStart, Date pfEnd, int pfRuntime, int costR, int costS,int costA, int costB, int costC,
+			String pfExplan, String pfNotice, Date pfStart, Date pfEnd, int pfRuntime, int R, int S,int A, int B, int C,
 			int costD) {
 		super();
 		
@@ -81,12 +85,12 @@ public class Performance {
 		this.pfStart = pfStart;
 		this.pfEnd = pfEnd;
 		this.pfRuntime = pfRuntime;
-		this.costR = costR;
-		this.costS = costS;
-		this.costA = costA;
-		this.costB = costB;
-		this.costC = costC;
-		this.costD = costD;
+		this.R = R;
+		this.S = S;
+		this.A = A;
+		this.B = B;
+		this.C = C;
+		this.D = D;
 //		this.pfStatus = pfStatus;
 //		this.plant_no = plant_no;	
 	}
@@ -112,8 +116,8 @@ public class Performance {
 	public String toString() {
 		return "Performance [pfCode=" + pfCode + ", pfCate=" + pfCate + ", pfTitle=" + pfTitle + ", agency=" + agency
 				+ ", pfPoster=" + pfPoster + ", pfEximg=" + pfEximg + ", pfExplan=" + pfExplan + ", pfNotice="
-				+ pfNotice + ", pfStart=" + pfStart + ", pfEnd=" + pfEnd + ", pfRuntime=" + pfRuntime + ", costR="
-				+ costR + ", costA=" + costA + ", costB=" + costB + ", costC=" + costC + ", costD=" + costD
+				+ pfNotice + ", pfStart=" + pfStart + ", pfEnd=" + pfEnd + ", pfRuntime=" + pfRuntime + ", R="
+				+ R + ", S=" + S + ", A=" + A + ", B=" + B + ", C=" + C + ", D=" + D
 				+ ", pfStatus=" + pfStatus + ", plant_no=" + plant_no + ", perform_times=" + perform_times + "]";
 	}
 	public Performance(String pfCate, String pfTitle, String agency, int pfRuntime) {
