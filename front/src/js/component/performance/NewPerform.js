@@ -41,12 +41,12 @@ function NewPerform(props) {
         pfStart : '',
         pfEnd : '',
         pfRuntime : '',
-        costR : '',
-        costS : '',
-        costA: '',
-        costB: '',
-        costC : '',
-        costD : ''
+        R : '',
+        S : '',
+        A: '',
+        B: '',
+        C : '',
+        D : ''
     });
 
     // 연결된 파일 번호 리스트
@@ -301,19 +301,19 @@ function NewPerform(props) {
                     <div className="divcolscont">
                         <div className="seatprices">
                             <span className="seatprice">R석</span>
-                            <Form.Control type="text" placeholder="" className="seatprice"name="costR"  value={perform.costR} onChange={handleChange} />
+                            <Form.Control type="text" placeholder="" className="seatprice"name="R"  value={perform.costR} onChange={handleChange} />
                             <span className="seatprice">S석</span>
-                            <Form.Control type="text" placeholder="" className="seatprice"name="costS"  value={perform.costS} onChange={handleChange}/>
+                            <Form.Control type="text" placeholder="" className="seatprice"name="S"  value={perform.costS} onChange={handleChange}/>
                             <span className="seatprice">A석</span>
-                            <Form.Control type="text" placeholder="" className="seatprice"name="costA"  value={perform.costA} onChange={handleChange}/>
+                            <Form.Control type="text" placeholder="" className="seatprice"name="A"  value={perform.costA} onChange={handleChange}/>
                             </div>
                             <div className="seatprices">
                             <span  className="seatprice">B석</span>
-                            <Form.Control type="text" placeholder=""  className="seatprice"name="costB"  value={perform.costB} onChange={handleChange}/>
+                            <Form.Control type="text" placeholder=""  className="seatprice"name="B"  value={perform.costB} onChange={handleChange}/>
                             <span className="seatprice">C석</span>
-                            <Form.Control type="text" placeholder=""  className="seatprice"name="costC"  value={perform.costC} onChange={handleChange}/>
+                            <Form.Control type="text" placeholder=""  className="seatprice"name="C"  value={perform.costC} onChange={handleChange}/>
                             <span className="seatprice">D석</span>
-                            <Form.Control type="text" placeholder=""  className="seatprice"name="costD"  value={perform.costD} onChange={handleChange}/>
+                            <Form.Control type="text" placeholder=""  className="seatprice"name="D"  value={perform.costD} onChange={handleChange}/>
                         </div>
                     </div>
                 </div>
