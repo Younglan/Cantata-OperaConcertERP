@@ -56,7 +56,7 @@ function PerformanceList(){
     };
 
     const onRowClick = (pfCode) => {
-        navigate("/PerformanceDetail/"+pfCode);
+        navigate("/performanceDetail/"+pfCode);
     };
 
     const onDelClick = (pfCode) => {

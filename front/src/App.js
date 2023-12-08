@@ -21,7 +21,7 @@ function App() {
           <Route path="/pageTest" element={<PageTest />} />
           <Route path="/performList" element={<PerformanceList />} />
           <Route path="/performList/newPerform" element={<NewPerform />} />
-          <Route path="/PerformanceDetail/:pfCode" element={<PerformanceDetail />} />
+          <Route path="/performanceDetail/:pfCode" element={<PerformanceDetail />} />
           <Route path='/센터소개' element={<CenterInfo />} />
           <Route path='/센터소식' element={<CenterNews/>}/>
           <Route path='/Event' element={<EventPage/>}/>

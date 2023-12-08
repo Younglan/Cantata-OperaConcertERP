@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate,useParams  } from "react-router-dom";
+import './PerformanceDetail.css';
 
 const SERVER_URL='http://localhost:8090';
 
@@ -23,10 +24,22 @@ function PerformanceDetail(){
         .catch(err => console.error(err));
     };
     return(
-        <div className='contentsArea'>
-            <div className='contents'>
-                <h1>{perform.pfTitle}</h1>
-                <button>예매하기</button>
+    <div className='contentsArea'>
+        <div className='contentsHeader'>
+            <h1>{perform.pfTitle}</h1>
+            <div>
+            a
+            a
+            a
+            a
+            a
+            a
+            a
+            aaa</div>
+                    <button>예매하기</button>
+        </div>
+        <div className='contents'>
+                
                 <p>{perform.pfCate}</p>
                 <p>{perform.agency}</p>
                 <p>{perform.agencyTel}</p>
@@ -45,8 +58,8 @@ function PerformanceDetail(){
                 <p>{perform.d}</p>
 
 
-            </div>
         </div>
+    </div>
     )
 }
 
