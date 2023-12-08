@@ -15,11 +15,22 @@ function PerformanceList(){
     const columns = [ 
         {field: 'pfCode', headerName: '공연 코드',headerAlign: 'center'}, 
         {field: 'pfCate', headerName: '종류', width: 50,headerAlign: 'center'}, 
-        {field: 'pfTitle', headerName: '공연 제목', width: 200,headerAlign: 'center'}, 
+        {   field: 'pfTitle', 
+            headerName: '공연 제목', 
+            width: 300,
+            headerAlign: 'center',
+        renderCell : row => (
+            <div 
+                style={{cursor:'pointer'}}
+                onClick={() => onRowClick(row.id)}
+                >
+                    {row.value}
+                </div>
+        ),
+    }, 
         {field: 'pfStart', headerName: '공연기간(시작일)', width: 120}, 
         {field: 'pfEnd', headerName: '공연기간(종료일)', width: 120}, 
         {field: 'agency', headerName: '배급사', width: 100}, 
-        {field: 'pfStatus', headerName: '등록상태', width: 100}, 
         {field: '_links.self.href',
          headerName: '',
          sortable:false,
@@ -39,6 +50,11 @@ function PerformanceList(){
         .then(response => response.json())
         .then(data => setPerformances(data._embedded.performances))
         .catch(err => console.error(err));
+    };
+
+    const onRowClick = (url) => {
+        console.log(url.substr(35));
+        navigate("/PerformanceDetail/"+url.substr(35));
     };
 
     const onDelClick = (url) => {
@@ -68,7 +84,7 @@ function PerformanceList(){
                     rows={performances} 
                     columns={columns}
                     disableRowSelectionOnClick={true}
-                     getRowId={row => row._links.self.href}/> 
+                     getRowId={row => row.pfCode}/> 
 
                 <Snackbar
                     open={open}
