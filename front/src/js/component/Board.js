@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "../../css/Board.css";
 import { useNavigate, Link } from "react-router-dom";
-
 const SERVER_URL = 'http://localhost:8090';
 
 function Board({ BoardType }) {
@@ -22,7 +21,7 @@ function Board({ BoardType }) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                setBoardName(data.brdName);
+                setBoardName(data.brdName); //게시판 이름 저장
             } catch (error) {
                 console.error('Error fetching brdName:', error);
             }
@@ -45,8 +44,8 @@ function Board({ BoardType }) {
                 // 데이터가 존재하면 정렬 후 처리
                 if (data._embedded && data._embedded.brd_posts) {
                     const sortedPosts = data._embedded.brd_posts
-                        .sort((a, b) => b.postNo - a.postNo)
-                        .map((post, index) => ({ ...post, postNumber: index + 1 }))
+                        // .sort((a, b) => b.postNo - a.postNo)
+                        // .map((post, index) => ({ ...post, postNumber: index + 1 }))
                         .reverse();//큰 수부터 정렬
                     setPosts(sortedPosts);
                 } else {
@@ -82,7 +81,7 @@ function Board({ BoardType }) {
                         {currentPosts.map((post, index) => (
                             <div key={index} className='postItem'>
                                 <div className='postNumber'>{index + 1}</div>
-                                <Link to={`/postDetail/${post.postNo}`} className='postTitle'>{post.postTitle} {post.postNo}</Link>
+                                <Link to={`/postDetail/${post.postNum}`} className='postTitle'>{post.postTitle}</Link>
                                 <div className='postDate'>{post.postDate}</div>
                                 {/* 작성자 이름 추가 예정 */}
                             </div>

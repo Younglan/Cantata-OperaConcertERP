@@ -26,7 +26,7 @@ function App() {
           <Route path='/센터소식' element={<CenterNews/>}/>
           <Route path='/Event' element={<EventPage/>}/>
           <Route path='/NewPost/:BoardType' element={<NewPost/>}/>
-          <Route path='/postDetail/:postNo' element={<PostDetail/>}/>
+          <Route path='/postDetail/:postNum' element={<PostDetail/>}/>
         </Routes>
       </Router>
       <Footer />
