@@ -18,7 +18,7 @@ public class File {
     private Long fileNum;
 	
 	@ManyToOne
-	@JsonManagedReference(value = "performance-files")
+//	@JsonManagedReference(value = "performance-files")
 	@JoinColumn(name = "pf_code", nullable=true)
 	private Performance performance;	
 	
