@@ -71,7 +71,7 @@ public class Performance {
 	
 	public Performance( String pfCate, String pfTitle, String agency,String agencyTel, String pfPoster, String pfEximg,
 			String pfExplan, String pfNotice, Date pfStart, Date pfEnd, int pfRuntime, int R, int S,int A, int B, int C,
-			int costD) {
+			int D) {
 		super();
 		
 		this.pfCate = pfCate;
@@ -127,4 +127,5 @@ public class Performance {
 		this.agency = agency;
 		this.pfRuntime = pfRuntime;
 	}
+
 }
