@@ -65,7 +65,7 @@ public class Performance {
 	private Plant plant_no;
 
 	@OneToMany(mappedBy = "performance", cascade = CascadeType.REMOVE)
-    @JsonBackReference(value = "performance-files")
+//    @JsonBackReference(value = "performance-files")
     private List<File> files = new ArrayList<>();
 	
 	
