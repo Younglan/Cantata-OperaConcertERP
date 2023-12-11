@@ -11,6 +11,8 @@ import CenterInfo from './js/page/CenterInfo';
 import CenterNews from './js/page/CenterNews';
 import EventPage from './js/page/EventPage';
 import Ticket from './js/component/Ticket/Ticket';
+import RentalApps from './js/component/rental/rental';
+import RentalList from './js/component/rental/RentalList';
 
 function App() {
   return (
@@ -27,11 +29,12 @@ function App() {
           <Route path='/센터소식' element={<CenterNews/>}/>
           <Route path='/Event' element={<EventPage/>}/>
           <Route path='/ticket' element={<Ticket/>}/>
+          <Route path='/RentApp' element={<RentalApps/>}/>
+          <Route path='/RentList' element={<RentalList/>}/>
         </Routes>
       </Router>
       <Footer />
     </div>
   );
 }
-
 export default App;
