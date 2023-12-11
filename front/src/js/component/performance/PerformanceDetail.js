@@ -22,11 +22,15 @@ function PerformanceDetail(){
         })
         .catch(err => console.error(err));
     };
+
+    const ticketDetail = () =>{
+        navigate( '/ticket', {state:{perform:perform, pfcode:pfCode}} )
+    };
     return(
         <div className='contentsArea'>
             <div className='contents'>
                 <h1>{perform.pfTitle}</h1>
-                <button>예매하기</button>
+                <button onClick={ticketDetail}>예매하기</button>
                 <p>{perform.pfCate}</p>
                 <p>{perform.agency}</p>
                 <p>{perform.agencyTel}</p>
