@@ -17,7 +17,7 @@ function PerformanceList(){
         {field: 'pfCate', headerName: '종류', width: 50,headerAlign: 'center'}, 
         {   field: 'pfTitle', 
             headerName: '공연 제목', 
-            width: 300,
+            width: 350,
             headerAlign: 'center',
         renderCell : row => (
             <div 
@@ -32,7 +32,7 @@ function PerformanceList(){
         {field: 'pfEnd', headerName: '공연 종료일', width: 100}, 
         {field: 'agency', headerName: '배급사', width: 100}, 
         {field: '_links.self.href',
-         headerName: '',
+         headerName: '관리메뉴',
          sortable:false,
          filterable: false,
          renderCell: row =>
@@ -56,7 +56,7 @@ function PerformanceList(){
     };
 
     const onRowClick = (pfCode) => {
-        navigate("/PerformanceDetail/"+pfCode);
+        navigate("/performanceDetail/"+pfCode);
     };
 
     const onDelClick = (pfCode) => {

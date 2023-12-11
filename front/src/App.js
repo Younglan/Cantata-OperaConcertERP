@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './js/layout/Header';
 import Footer from './js/layout/Footer';
 import Main from './js/page/Main';
-import PageTest from './js/page/pageTest';
+import PageTest from './js/page/PageTest';
 import PerformanceDetail from './js/component/performance/PerformanceDetail';
 import PerformanceList from './js/component/performance/PerformanceList';
 import NewPerform from './js/component/performance/NewPerform';
+import TimeList from './js/component/performTime/TimeList';
 import CenterInfo from './js/page/CenterInfo';
 import CenterNews from './js/page/CenterNews';
 import EventPage from './js/page/EventPage';
@@ -22,7 +23,8 @@ function App() {
           <Route path="/pageTest" element={<PageTest />} />
           <Route path="/performList" element={<PerformanceList />} />
           <Route path="/performList/newPerform" element={<NewPerform />} />
-          <Route path="/PerformanceDetail/:pfCode" element={<PerformanceDetail />} />
+          <Route path="/performanceDetail/:pfCode" element={<PerformanceDetail />} />
+          <Route path="/timeList/:pfCode" element={<TimeList />} />
           <Route path='/센터소개' element={<CenterInfo />} />
           <Route path='/센터소식' element={<CenterNews/>}/>
           <Route path='/Event' element={<EventPage/>}/>
