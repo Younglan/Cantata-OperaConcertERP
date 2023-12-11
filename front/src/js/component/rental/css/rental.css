@@ -1,0 +1,55 @@
+.title{
+    border-bottom: 1px gray solid;
+}
+.applicant{
+    text-align: left;
+}
+.Box.test1{
+    color: gray;
+    margin-top: 10px;
+}
+
+.applicant2{
+    margin-right: 85%;
+    margin-bottom: 25px;
+}
+
+.model{
+    display: flex;
+    /* margin-right: 47%; */
+}
+.Datename{
+    font-size: 1rem;
+    background: white;
+}
+/*배경*/
+.apparea{
+    background-color: #071a52;
+}
+.contentarea{
+    background-color: white;
+    margin: 0 auto;
+    width: 90%;
+    min-height: 800px;
+    padding-top: 10px;
+}
+
+
+.rental .button1 {
+    margin-right: 10px;
+    margin-top: 50px;
+    border-radius: 10px;
+    background-color: rgb(187, 38, 73);
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+}
+
+.rental .button2 {
+    margin-right: 10px;
+    margin-top: 50px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100px;
+    height: 40px;
+}
