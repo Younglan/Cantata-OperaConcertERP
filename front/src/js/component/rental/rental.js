@@ -27,7 +27,7 @@ export default function RentalApps() {
     rent_end:`${moment(new Date()).format("yyyy-MM-DD")}`,
     // payment:0,
   });
-    const SERVER_URL='http://localhost:8090';
+    // const SERVER_URL='http://localhost:8090';
 
     const navigate = useNavigate();
 
@@ -48,15 +48,11 @@ export default function RentalApps() {
 
     function newRentalSave(){
       console.log(text)
-      fetch(SERVER_URL+'/rental',
+      fetch('http://localhost:8090/rental',
       {
           method:'POST',
           headers: {'Content-Type':'application/json'},
-          body:JSON.stringify({ 
-          rent_name:"",
-          rent_start:"",
-          rent_end:""
-          ,})
+          body:JSON.stringify(text)
       })
       .then(response => response.json())
       .then(response =>{console.log(response)
