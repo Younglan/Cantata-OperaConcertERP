@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -65,5 +67,16 @@ public class TicketController {
         return ResponseEntity.status(HttpStatus.OK).body(ticketi);
     }
 	
+	@RequestMapping(value="/pftimeDtl") 
+	public List<Date> getTimesDetail(@RequestParam("pfCode") String pfCode){
+		return pftrepo.findByPfCode(pfCode);
+	}
+	@Transactional
+	@RequestMapping(value="/ticketcheck") 
+	public void updateTicketCheck(@RequestParam("ticket") Long ticket){
+		Ticket tick = ticrep.findByTicno(ticket);
+		tick.setTic_status("검표");
+		
+	}
 	
 }

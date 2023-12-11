@@ -18,8 +18,12 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
         navigate("/센터소식");
     }
     const goToEventPage = () =>{
-        navigate("/Event")
+        navigate("/Event");
     }
+    const goToPerformanceList = () =>{
+        navigate("/performList");
+    }
+    
 
     return (
         <div className={`slide_board ${isOpen ? 'open' : 'close'}`}>
@@ -56,8 +60,8 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                 <div className = "perform_board menu_list">
                     <ul>
                         <h2>공연</h2>
-                        <li><h1>공연일정</h1></li>
-                        <li><h1>온라인예약</h1></li>
+                        <li onClick = {() => {goToPerformanceList(); handleToggle();}}><h1>공연일정</h1></li>
+                        <li onClick={()=> {navigate("/ticket"); handleToggle();}}><h1>온라인예약</h1></li>
                     </ul>
                 </div>
                 <div className = "rental_board menu_list">
