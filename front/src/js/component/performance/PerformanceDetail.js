@@ -23,8 +23,17 @@ function PerformanceDetail(){
         })
         .catch(err => console.error(err));
     };
+
+    const pfTimeManage = (pfCode) =>{
+        navigate("/timeList/"+pfCode);
+    };
+
+
+    const ticketDetail = () =>{
+        navigate( '/ticket', {state:{perform:perform, pfcode:pfCode}} )
+    };
     return(
-    <div className='contentsArea'>
+        <div className='contentsArea'>
         <div className='contentsHeader'>
             <h1>{perform.pfTitle}</h1>
             <div>
@@ -36,10 +45,11 @@ function PerformanceDetail(){
             a
             a
             aaa</div>
-                    <button>예매하기</button>
-        </div>
+
+                <button onClick={ticketDetail}>예매하기</button>
+                <button onClick={() => pfTimeManage(pfCode)}>회차관리</button>   
+            </div>
         <div className='contents'>
-                
                 <p>{perform.pfCate}</p>
                 <p>{perform.agency}</p>
                 <p>{perform.agencyTel}</p>
