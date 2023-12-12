@@ -12,6 +12,7 @@ import CenterInfo from './js/page/CenterInfo';
 import CenterNews from './js/page/CenterNews';
 import EventPage from './js/page/EventPage';
 import Ticket from './js/component/Ticket/Ticket';
+import TicketFind from './js/component/Ticket/TicketFind';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path='/센터소식' element={<CenterNews/>}/>
           <Route path='/Event' element={<EventPage/>}/>
           <Route path='/ticket' element={<Ticket/>}/>
+          <Route path='/myticket' element={<TicketFind/>}/>
         </Routes>
       </Router>
       <Footer />
