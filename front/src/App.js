@@ -12,6 +12,8 @@ import CenterInfo from './js/page/CenterInfo';
 import CenterNews from './js/page/CenterNews';
 import EventPage from './js/page/EventPage';
 import Ticket from './js/component/Ticket/Ticket';
+import RentalApps from './js/component/rental/rental';
+import RentalList from './js/component/rental/RentalList';
 import TicketFind from './js/component/Ticket/TicketFind';
 
 function App() {
@@ -30,6 +32,8 @@ function App() {
           <Route path='/센터소식' element={<CenterNews/>}/>
           <Route path='/Event' element={<EventPage/>}/>
           <Route path='/ticket' element={<Ticket/>}/>
+          <Route path='/RentApp' element={<RentalApps/>}/>
+          <Route path='/RentList' element={<RentalList/>}/>
           <Route path='/myticket' element={<TicketFind/>}/>
         </Routes>
       </Router>
@@ -37,5 +41,4 @@ function App() {
     </div>
   );
 }
-
 export default App;
