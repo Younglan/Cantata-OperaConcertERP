@@ -14,6 +14,7 @@ import EventPage from './js/page/EventPage';
 import Ticket from './js/component/Ticket/Ticket';
 import RentalApps from './js/component/rental/rental';
 import RentalList from './js/component/rental/RentalList';
+import TicketFind from './js/component/Ticket/TicketFind';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path='/ticket' element={<Ticket/>}/>
           <Route path='/RentApp' element={<RentalApps/>}/>
           <Route path='/RentList' element={<RentalList/>}/>
+          <Route path='/myticket' element={<TicketFind/>}/>
         </Routes>
       </Router>
       <Footer />

@@ -14,6 +14,7 @@ import com.packt.cantata.domain.Performance;
 import com.packt.cantata.domain.PerformanceRepository;
 
 @SpringBootApplication
+@EnableJpaAuditing
 public class CantataApplication implements CommandLineRunner {
 
 	private static final Logger logger = LoggerFactory.getLogger(CantataApplication.class);
