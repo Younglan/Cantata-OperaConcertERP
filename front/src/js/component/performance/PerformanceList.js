@@ -13,7 +13,7 @@ function PerformanceList(){
     const [open, setOpen] = useState(false);
 
     const columns = [ 
-        {field: 'pfCode', headerName: '공연 코드',headerAlign: 'center'}, 
+        {field: 'pfCode', headerName: '공연 코드',width: 80, headerAlign: 'center'}, 
         {field: 'pfCate', headerName: '종류', width: 50,headerAlign: 'center'}, 
         {   field: 'pfTitle', 
             headerName: '공연 제목', 
@@ -50,7 +50,8 @@ function PerformanceList(){
         .then(response => response.json())
         .then(data => {
             //상태 체크 후 pfStatus가 ture인것만 표시
-            const filteredPerforms = data.filter((perform) => perform.pfStatus === true);
+            const filteredPerforms 
+                = data.filter((perform) => perform.pfStatus === true).reverse();
             setPerformances(filteredPerforms)})
         .catch(err => console.error(err));
     };
@@ -91,6 +92,9 @@ function PerformanceList(){
                 <DataGrid className='pfList'
                     rows={performances} 
                     columns={columns}
+                    pageSize={5}
+                    pagination
+                    paginationMode="client" 
                     disableRowSelectionOnClick={true}
                      getRowId={row => row.pfCode}/> 
 

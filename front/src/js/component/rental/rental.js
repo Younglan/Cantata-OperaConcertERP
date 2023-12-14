@@ -25,6 +25,7 @@ export default function RentalApps() {
     rent_name:"",
     rent_start:`${moment(new Date()).format("yyyy-MM-DD")}`,
     rent_end:`${moment(new Date()).format("yyyy-MM-DD")}`,
+    rent_date:`${moment(new Date()).format("yyyy-MM-DD")}`,
     // payment:0,
   });
     // const SERVER_URL='http://localhost:8090';
@@ -48,7 +49,7 @@ export default function RentalApps() {
 
     function newRentalSave(){
       console.log(text)
-      fetch('http://localhost:8090/rental',
+      fetch('http://localhost:8090/rentals/rentalapp',
       {
           method:'POST',
           headers: {'Content-Type':'application/json'},
@@ -58,7 +59,7 @@ export default function RentalApps() {
       .then(response =>{console.log(response)
           if(response){
               alert('저장완료.');
-              navigate("/RentList");
+              navigate("/Rentcom");
               
           }else{
               alert('저장되지않았습니다.');
@@ -248,7 +249,7 @@ export default function RentalApps() {
     </Box>
     </Box>
     <div className="rental">
-            <button type='button' className="button1" onClick={newRentalSave} >신청</button>
+            <button type='button'className='button1' name="rent_date" onClick={newRentalSave} onChange={onChange} >신청</button>
             <button type='button' value='취소' className="button2" onClick={handleRedirect} >취소</button>
         </div>
       </div>
