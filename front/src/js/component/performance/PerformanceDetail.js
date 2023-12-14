@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate,useParams  } from "react-router-dom";
 import './PerformanceDetail.css';
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 
 const SERVER_URL='http://localhost:8090';
 
 function PerformanceDetail(){
     // pfCode : URL로부터 가져옴
     const { pfCode: pfCodeFromParams } = useParams();
-    const [pfCode, setpfCode] = useState(pfCodeFromParams);
+    const [pfCode, setPfCode] = useState(pfCodeFromParams);
     const navigate = useNavigate();
     //데이터호출
     const[perform, setPerform] = useState([]);
@@ -50,12 +52,17 @@ function PerformanceDetail(){
                 <button onClick={() => pfTimeManage(pfCode)}>회차관리</button>   
             </div>
         <div className='contents'>
+            <ButtonGroup aria-label="Basic example">
+                <Button variant="secondary">공연 공지사항</Button>
+                <Button variant="secondary">공연 정보</Button>
+                <Button variant="secondary">환불 안내</Button>
+            </ButtonGroup>
                 <p>{perform.pfCate}</p>
                 <p>{perform.agency}</p>
                 <p>{perform.agencyTel}</p>
                 <p>{perform.pfPoster}</p>
                 <p>{perform.pfEximg}</p>
-                <p>{perform.pfExplan}</p>
+                <p dangerouslySetInnerHTML={{ __html: perform.pfExplan }} ></p>
                 <p dangerouslySetInnerHTML={{ __html: perform.pfNotice }} ></p>
                 <p>{perform.pfStart}</p>
                 <p>{perform.pfEnd}</p>

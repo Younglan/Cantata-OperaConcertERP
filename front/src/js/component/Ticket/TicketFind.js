@@ -1,6 +1,7 @@
 import { Pagination, PaginationItem } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import MyTicket from "./MyTicket";
 
 function TicketFind(){
     const [currentPage, setCurrentPage] = useState(1);
@@ -12,6 +13,7 @@ function TicketFind(){
         
         setCurrentPage(Number(e.target.innerText));
     };
+
     async function resTicketfind(){
         
             try{
@@ -23,14 +25,21 @@ function TicketFind(){
                 console.error(e);
             }
     }
-        
+    async function reqTicketCancle(ele){
+        try{
+            await fetch(`http://localhost:8090/ticketcancle/?no=${ele}`);
+        }catch(e){
+            console.error(e);
+        }
+       resTicketfind();
+    };  
     
     useEffect(()=>{
         resTicketfind();
     },[]);
     useEffect(()=>{
         setSliceData(ticketingData.slice((currentPage-1)*5,currentPage*5));
-        
+       
     },[currentPage,ticketingData]);
     
     return(
@@ -38,11 +47,9 @@ function TicketFind(){
             {sliceData.map((ele)=>{
                 return(
                     <div key={ele.tic_no}>
-                        {ele.pt_no.pfCode.pfTitle}<br/>
-                        {moment(ele.pt_no.pt_date).format("yyyy년 MM월 DD일 HH시 mm분")}<br/>
-                        {ele.seat_no}
-                        
+                        <MyTicket info={ele} cancle={reqTicketCancle}/>
                     </div>
+                   
                 );
             })}
             
