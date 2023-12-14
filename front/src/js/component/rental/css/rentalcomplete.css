@@ -22,7 +22,7 @@
     height: 800px;
   }
   .rentalcom{
-    background-image: url(../img/background.jpg);
+    background-image: url(../../../../img/background.jpg);
     background-size: cover;
     /* background-color: white; */
     height: 300px;
