@@ -1,6 +1,7 @@
 import { Pagination, PaginationItem } from "@mui/material";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
+import MyTicket from "./MyTicket";
 
 function TicketFind(){
     const [currentPage, setCurrentPage] = useState(1);
@@ -30,7 +31,7 @@ function TicketFind(){
     },[]);
     useEffect(()=>{
         setSliceData(ticketingData.slice((currentPage-1)*5,currentPage*5));
-        
+        console.log(ticketingData);
     },[currentPage,ticketingData]);
     
     return(
@@ -38,11 +39,9 @@ function TicketFind(){
             {sliceData.map((ele)=>{
                 return(
                     <div key={ele.tic_no}>
-                        {ele.pt_no.pfCode.pfTitle}<br/>
-                        {moment(ele.pt_no.pt_date).format("yyyy년 MM월 DD일 HH시 mm분")}<br/>
-                        {ele.seat_no}
-                        
+                        <MyTicket info={ele}/>
                     </div>
+                   
                 );
             })}
             
