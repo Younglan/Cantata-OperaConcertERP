@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true) 
 @NoArgsConstructor
 public class Perform_time {
 	@Id
