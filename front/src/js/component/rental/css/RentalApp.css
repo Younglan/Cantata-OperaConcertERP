@@ -1,0 +1,9 @@
+.background{
+    background-color:#071a52 ;
+  }
+  .background .page{
+    background-color: white;
+    height: 80%;
+    width: 80%;
+    margin: auto;
+  }

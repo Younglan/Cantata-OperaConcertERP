@@ -1,0 +1,31 @@
+
+.rentalcom .button1 {
+    margin-top: 150px;
+    margin-left: 100px;
+    border-radius: 10px;
+    background-color: rgb(187, 38, 73);
+    cursor: pointer;
+    width: 250px;
+    height: 40px;
+}
+
+.rentalcom .button2 {
+    margin-left: 100px;
+    margin-top: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 250px;
+    height: 40px;
+}
+.background{
+    background-color:#071a52 ;
+    height: 800px;
+  }
+  .rentalcom{
+    background-image: url(../img/background.jpg);
+    background-size: cover;
+    /* background-color: white; */
+    height: 300px;
+    width: 90%;
+    margin: auto;
+  }
