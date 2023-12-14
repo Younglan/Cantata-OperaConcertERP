@@ -6,8 +6,9 @@ import styled from "@emotion/styled";
 import ReactToPrint from "react-to-print";
 import TicketPaperOne from "./TicketPaperOne";
 
-function MyTicket({info}){
+function MyTicket({info, cancle}){
     const ref = useRef();
+    
     return(
         <div key={info.tic_no} className="Mytic_content">
             <div className="Mytic_poster">
@@ -36,7 +37,7 @@ function MyTicket({info}){
                     trigger={() => <ColorButton>발 권</ColorButton>}
                     content={() => ref.current}
                 />     
-                <Button style={{width: "95%",
+                <Button onClick={()=>cancle(info.tic_no)} style={{width: "95%",
                                 height: "30px",
                                 color: "black",
                                 backgroundColor: "lightgray",

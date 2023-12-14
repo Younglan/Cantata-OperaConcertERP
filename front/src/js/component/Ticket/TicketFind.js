@@ -13,6 +13,7 @@ function TicketFind(){
         
         setCurrentPage(Number(e.target.innerText));
     };
+
     async function resTicketfind(){
         
             try{
@@ -24,14 +25,21 @@ function TicketFind(){
                 console.error(e);
             }
     }
-        
+    async function reqTicketCancle(ele){
+        try{
+            await fetch(`http://localhost:8090/ticketcancle/?no=${ele}`);
+        }catch(e){
+            console.error(e);
+        }
+       resTicketfind();
+    };  
     
     useEffect(()=>{
         resTicketfind();
     },[]);
     useEffect(()=>{
         setSliceData(ticketingData.slice((currentPage-1)*5,currentPage*5));
-        console.log(ticketingData);
+       
     },[currentPage,ticketingData]);
     
     return(
@@ -39,7 +47,7 @@ function TicketFind(){
             {sliceData.map((ele)=>{
                 return(
                     <div key={ele.tic_no}>
-                        <MyTicket info={ele}/>
+                        <MyTicket info={ele} cancle={reqTicketCancle}/>
                     </div>
                    
                 );
