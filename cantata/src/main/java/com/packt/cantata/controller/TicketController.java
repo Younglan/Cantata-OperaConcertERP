@@ -21,6 +21,7 @@ import com.packt.cantata.domain.Perform_timeRepository;
 import com.packt.cantata.domain.PerformanceRepository;
 import com.packt.cantata.domain.Ticket;
 import com.packt.cantata.domain.TicketRepository;
+import com.packt.cantata.domain.User;
 import com.packt.cantata.dto.PerformDto;
 import com.packt.cantata.dto.Perform_timeDto;
 
@@ -61,11 +62,10 @@ public class TicketController {
 	
 	
 	@RequestMapping(value="/ticketing", method = RequestMethod.POST)
-//	@PostMapping()
-    public ResponseEntity<Ticket> pushTicket(@RequestBody Ticket ticket){
+	public ResponseEntity<Ticket> pushTicket(@RequestBody Ticket ticket){
 		Ticket ticketi = ticrep.save(ticket);	
-        return ResponseEntity.status(HttpStatus.OK).body(ticketi);
-    }
+	        return ResponseEntity.status(HttpStatus.OK).body(ticketi);
+	}
 	
 	@RequestMapping(value="/pftimeDtl") 
 	public List<Date> getTimesDetail(@RequestParam("pfCode") String pfCode){
@@ -76,7 +76,15 @@ public class TicketController {
 	public void updateTicketCheck(@RequestParam("ticket") Long ticket){
 		Ticket tick = ticrep.findByTicno(ticket);
 		tick.setTic_status("검표");
-		
+	}
+	
+	@RequestMapping(value="/ticketfind") 
+	public List<Ticket> getTicketUser(@RequestParam("id") String id){
+		return ticrep.findAllById(id);
+	}
+	@RequestMapping(value="/ticketcancle") 
+	public void delTicket(@RequestParam("no") Long id){
+		ticrep.deleteById(id);
 	}
 	
 }
