@@ -17,8 +17,17 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     const goToCenterNews = () => {
         navigate("/센터소식");
     }
-    const goToEventPage = () => {
-        navigate("/Event")
+    const goToEventPage = () =>{
+        navigate("/Event");
+    }
+    const goToFAQ = () =>{
+        navigate("/FAQ");
+    }
+    const goToQNA = () =>{
+        navigate("/QNA");
+    }
+    const goToPerformanceList = () =>{
+        navigate("/performList");
     }
 
     return (
@@ -53,55 +62,55 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                         </div>
                     </div>
                 </div>
-                <div className="Board">
-                    <div className="perform_board menu_list">
-                        <ul>
-                            <h2>공연</h2>
-                            <li><h1>공연일정</h1></li>
-                            <li><h1>온라인예약</h1></li>
-                        </ul>
-                    </div>
-                    <div className="rental_board menu_list">
-                        <ul>
-                            <h2>대관</h2>
-                            <li><h1>대관안내</h1></li>
-                            <li><h1>대관공고</h1></li>
-                            <li><h1>대관신청</h1></li>
-                        </ul>
-                    </div>
-                    <div className="center_board menu_list">
-                        <ul>
-                            <h2>소식/고객센터</h2>
-                            <li onClick={() => { goToCenterNews(); handleToggle(); }}><h1>센터소식</h1></li>
-                            <li onClick={() => { goToEventPage(); handleToggle(); }}><h1>이벤트</h1></li>
-                            <li><h1>자주하는 질문</h1></li>
-                            <li><h1>1:1 문의</h1></li>
-                        </ul>
-                    </div>
-                    <div className="intro_board menu_list">
-                        <ul>
-                            <h2>기관소개</h2>
-                            <li onClick={() => { goToCenterInfo(); handleToggle(); }}><h1>센터소개</h1></li>
-                            <li><h1>시설소개</h1></li>
-                        </ul>
-                    </div>
-                    {userRole === 'admin' && (//특정권한 확인 admin일 경우에만 보임
-                        <div className="manager_board menu_list">
-                            <ul>
-                                <h2>관리자메뉴</h2>
-                                <li><h1>공연관리</h1></li>
-                                <li><h1>예매관리</h1></li>
-                                <li><h1>대관관리</h1></li>
-                                <li><h1>회원관리</h1></li>
-                                <li><h1>홈페이지 컨텐츠 관리</h1></li>
-                            </ul>
-
-                        </div>
-                    )}
+            <div className = "Board">
+                <div className = "perform_board menu_list">
+                    <ul>
+                        <h2>공연</h2>
+                        <li onClick = {() => {goToPerformanceList(); handleToggle();}}><h1>공연일정</h1></li>
+                        <li><h1>온라인예약</h1></li>
+                    </ul>
                 </div>
+                <div className = "rental_board menu_list">
+                    <ul>
+                        <h2>대관</h2>
+                        <li><h1>대관안내</h1></li>
+                        <li><h1>대관공고</h1></li>
+                        <li><h1>대관신청</h1></li>
+                    </ul>
+                </div>
+                <div className = "center_board menu_list">
+                    <ul>
+                        <h2>소식/고객센터</h2>
+                        <li onClick = {() => {goToCenterNews(); handleToggle();}}><h1>센터소식</h1></li>
+                        <li onClick = {() => {goToEventPage(); handleToggle();}}><h1>이벤트</h1></li>
+                        <li onClick = {() => {goToFAQ(); handleToggle();}}><h1>자주하는 질문</h1></li>
+                        <li onClick = {() => {goToQNA(); handleToggle();}}><h1>1:1 문의</h1></li>
+                    </ul>
+                </div>
+                <div className = "intro_board menu_list">
+                    <ul>
+                        <h2>기관소개</h2>
+                        <li onClick = {()=>{goToCenterInfo(); handleToggle();}}><h1>센터소개</h1></li>
+                        <li><h1>시설소개</h1></li>
+                    </ul>
+                </div>
+                {userRole === 'admin' && (//특정권한 확인 admin일 경우에만 보임
+                <div className = "manager_board menu_list">
+                    <ul>
+                        <h2>관리자메뉴</h2>
+                        <li><h1>공연관리</h1></li>
+                        <li><h1>예매관리</h1></li>
+                        <li><h1>대관관리</h1></li>
+                        <li><h1>회원관리</h1></li>
+                        <li><h1>홈페이지 컨텐츠 관리</h1></li>
+                    </ul>
+                    
+                </div>
+                )}
             </div>
-            <div className='over' onClick={handleToggle}/>
         </div>
+        <div className='over' onClick={handleToggle}/>
+    </div>
     );
 };
 export default SlideBoard;

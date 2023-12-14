@@ -85,6 +85,11 @@
     color: inherit;
 }
 
+.postViews{
+    border-right: 1px solid #ccc;
+    flex-basis: 20%;
+}
+
 .postDate {
     flex-basis: 20%;
 }
@@ -93,4 +98,5 @@
     padding:center;
     flex-basis: 50%;
     align-items: center;
+    margin-left: 50%;
 }

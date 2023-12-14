@@ -9,7 +9,6 @@ import ReactQuill, { Quill } from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
 import "react-quill/dist/quill.snow.css";
 
-
 Quill.register("modules/imageResize", ImageResize);
 const SERVER_URL = 'http://localhost:8090';
 
@@ -28,11 +27,11 @@ function NewPost(props) {
     let postNo;
 
     const [post, setPost] = useState({
-        postTitle: '',
-        postFile1: '',
-        postSub: '',
-        postDeadline: '',
-        brdNo: `${BoardType}`
+        postTitle : '',
+        postFile1 : '',
+        postSub : '',
+        postDeadline : '',
+        brdNo : ''
     });
     const [postSub, setPostSub] = React.useState('');
     // const [selectedBrdNo, setSelectedBrdNo] = useState(null);
@@ -109,9 +108,8 @@ function NewPost(props) {
     function imageHandler() {
         fetch(SERVER_URL + '/brd_posts/lastPostNo')
             .then(response => response.json())
-            .then(data =>  postNo = data )
-            .catch(err => console.error(err))
-            .finally(() => {setImageLoading(false);});
+            .then(data =>  {postNo = data} )
+            .catch(err => console.error(err));
 
         const input = document.createElement('input');
         input.setAttribute('type', 'file');
@@ -224,33 +222,10 @@ function NewPost(props) {
     const quillRef1 = useRef(null);
     const quillRef2 = useRef(null);
 
-    //새로운 글 등록 구 버전, 만약을 대비해 남겨 둠 마지막까지 쓸모없으면 지워버릴 것
-    // function newPostSave() {
-
-    //     fetch(SERVER_URL + '/brd_posts/newPost',
-    //         {
-    //             method: 'POST',
-    //             headers: { 'Content-Type': 'application/json' },
-    //             body: JSON.stringify({
-    //                 ...post,
-    //                 brdNo: {brdNo: parseInt(BoardType)}
-    //             })
-    //         })
-    //         .then(response => {
-    //             if (response.ok) {
-    //                 alert('저장완료.');
-    //                 navigate(-1);
-    //             } else {
-    //                 alert('저장되지않았습니다.');
-    //             }
-    //         })
-    //         .catch(err => console.error(err))
-    // }
-
     //새로운 글 등록
     function newPostSave() {
         // postNum 서버로부터 가져오기
-        fetch(`${SERVER_URL}/brd_posts/lastPostNum`)
+        fetch(`${SERVER_URL}/brd_posts/lastPostNum/${BoardType}`)
             .then(response => response.json())
             .then(data => {
                 // postNum 값을 이용하여 새로운 글 저장
@@ -260,7 +235,7 @@ function NewPost(props) {
                     body: JSON.stringify({
                         ...post,
                         postNum: data + 1, // 마지막 postNum + 1
-                        brdNo: { brdNo: parseInt(BoardType) },
+                        brdNo: { brdNo: BoardType },
                     })
                 })
                     .then(response => {

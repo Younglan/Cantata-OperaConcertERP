@@ -11,7 +11,6 @@ function Board({ BoardType }) {
     const pageSize = 10; //게시물이 10개 이상 넘어가면 다음 게시물로
 
 
-
     useEffect(() => {
         // 게시판 이름 가져오기
         const fetchBrdName = async () => {
@@ -35,30 +34,46 @@ function Board({ BoardType }) {
         // 게시글 목록 가져오기
         const fetchPost = async () => {
             try {
-                const response = await fetch(`${SERVER_URL}/brd_posts/search/findByBrdNo?brdNo=brd_post/${BoardType}`);
+                const response = await fetch(`${SERVER_URL}/brd_posts/searchBrdNo/${BoardType}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
 
                 // 데이터가 존재하면 정렬 후 처리
-                if (data._embedded && data._embedded.brd_posts) {
-                    const sortedPosts = data._embedded.brd_posts
-                        // .sort((a, b) => b.postNo - a.postNo)
-                        // .map((post, index) => ({ ...post, postNumber: index + 1 }))
-                        .reverse();//큰 수부터 정렬
+                if (data && Array.isArray(data)) {
+                    const postsWithBrdNo = data.map(post => ({
+                        ...post,
+                        brdNo: { BoardType }
+                    }));
+                    const sortedPosts = postsWithBrdNo
+                        .reverse(); //큰 수부터 정렬
                     setPosts(sortedPosts);
                 } else {
-                    // 데이터가 없는 경우 빈 배열로 설정
+                    //데이터가 없는경우 빈 배열로 설정
                     setPosts([]);
                 }
             } catch (err) {
                 console.error(err);
             }
         };
-
         fetchPost();
     }, [BoardType]);
+
+    // 게시글 조회수 증가 함수
+    const postView = async (postNo) => {
+        try {
+            await fetch(`${SERVER_URL}/brd_posts/postView/${postNo}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            // console.log('View incremented successfully.');
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
@@ -76,12 +91,14 @@ function Board({ BoardType }) {
                         <div className='postList'>
                             <div className='postNumber'><h5>번호</h5></div>
                             <div className='postTitle'><h5>제목</h5></div>
-                            <div className='postDate'><h5>등제일</h5></div>
+                            <div className='postViews'><h5>조회수</h5></div>
+                            <div className='postDate'><h5>등록일</h5></div>
                         </div>
                         {currentPosts.map((post, index) => (
                             <div key={index} className='postItem'>
-                                <div className='postNumber'>{index + 1}</div>
-                                <Link to={`/postDetail/${post.postNum}`} className='postTitle'>{post.postTitle}</Link>
+                                <div className='postNumber'>{post.postNum}</div>
+                                <Link to={`/postDetail/${post.postNo}`} className='postTitle' onClick={() => postView(post.postNo)}>{post.postTitle}</Link>
+                                <div className='postViews'>{post.postViews}</div>
                                 <div className='postDate'>{post.postDate}</div>
                                 {/* 작성자 이름 추가 예정 */}
                             </div>
