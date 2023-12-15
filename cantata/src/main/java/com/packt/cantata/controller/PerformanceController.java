@@ -29,7 +29,7 @@ public class PerformanceController {
 //	@Autowired
 //	private PerformanceService pfService; 
 	
-//	@GetMapping
+	@RequestMapping("/allPerform")
 	public List<Performance> getPerforms(){
 		//전체공연 검색 및 반환
 		return pfRepository.findAll();
@@ -61,5 +61,3 @@ public class PerformanceController {
 //		}
 	}
 	
-
-

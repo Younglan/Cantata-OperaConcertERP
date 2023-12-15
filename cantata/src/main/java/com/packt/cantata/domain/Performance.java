@@ -18,7 +18,6 @@ import javax.persistence.OneToMany;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -33,8 +32,8 @@ import lombok.Setter;
 public class Performance {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="pf_code")
-	private long pfCode;
+	@Column(name="pfCode")
+	private Long pfCode;
 	
 	@Column(nullable = true)
 	private String pfTitle;
@@ -54,24 +53,28 @@ public class Performance {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date pfEnd;
 	
-	private int pfRuntime, costR, costS, costA, costB, costC, costD;
+	private int pfRuntime, R, S, A, B, C, D;
 	
-//	@ColumnDefault("1")
 	@Column(columnDefinition = "boolean default true",nullable = false)
 	private Boolean pfStatus = true;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "plant_no")
 	private Plant plant_no;
 
-	@OneToMany(mappedBy = "performance", cascade = CascadeType.REMOVE)
-    @JsonBackReference(value = "performance-files")
+	@JsonIgnore
+	@OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
+//    @JsonBackReference(value = "performance-files")
     private List<File> files = new ArrayList<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "pfCode", cascade = CascadeType.ALL)
+	private List<Perform_time> performTimes;
+
 	
 	public Performance( String pfCate, String pfTitle, String agency,String agencyTel, String pfPoster, String pfEximg,
-			String pfExplan, String pfNotice, Date pfStart, Date pfEnd, int pfRuntime, int costR, int costS,int costA, int costB, int costC,
-			int costD) {
+			String pfExplan, String pfNotice, Date pfStart, Date pfEnd, int pfRuntime, int R, int S,int A, int B, int C,
+			int D,Plant plant_no) {
 		super();
 		
 		this.pfCate = pfCate;
@@ -85,14 +88,14 @@ public class Performance {
 		this.pfStart = pfStart;
 		this.pfEnd = pfEnd;
 		this.pfRuntime = pfRuntime;
-		this.costR = costR;
-		this.costS = costS;
-		this.costA = costA;
-		this.costB = costB;
-		this.costC = costC;
-		this.costD = costD;
+		this.R = R;
+		this.S = S;
+		this.A = A;
+		this.B = B;
+		this.C = C;
+		this.D = D;
 //		this.pfStatus = pfStatus;
-//		this.plant_no = plant_no;	
+		this.plant_no = plant_no;	
 	}
 	public Performance(String pfCate, String pfTitle, String agency, String pfPoster, String pfExplan) {
 		super();
@@ -104,21 +107,14 @@ public class Performance {
 	}
 	
 	
-	
-	
-	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pfCode")
-	private List<Perform_time> perform_times;
-
-
 
 	@Override
 	public String toString() {
 		return "Performance [pfCode=" + pfCode + ", pfCate=" + pfCate + ", pfTitle=" + pfTitle + ", agency=" + agency
 				+ ", pfPoster=" + pfPoster + ", pfEximg=" + pfEximg + ", pfExplan=" + pfExplan + ", pfNotice="
-				+ pfNotice + ", pfStart=" + pfStart + ", pfEnd=" + pfEnd + ", pfRuntime=" + pfRuntime + ", costR="
-				+ costR + ", costA=" + costA + ", costB=" + costB + ", costC=" + costC + ", costD=" + costD
-				+ ", pfStatus=" + pfStatus + ", plant_no=" + plant_no + ", perform_times=" + perform_times + "]";
+				+ pfNotice + ", pfStart=" + pfStart + ", pfEnd=" + pfEnd + ", pfRuntime=" + pfRuntime + ", R="
+				+ R + ", S=" + S + ", A=" + A + ", B=" + B + ", C=" + C + ", D=" + D
+				+ ", pfStatus=" + pfStatus + ", plantNo=" + plant_no + ", perform_times=" + performTimes + "]";
 	}
 	public Performance(String pfCate, String pfTitle, String agency, int pfRuntime) {
 		super();
@@ -127,4 +123,6 @@ public class Performance {
 		this.agency = agency;
 		this.pfRuntime = pfRuntime;
 	}
+	
+
 }
