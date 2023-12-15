@@ -14,8 +14,11 @@ import EventPage from './js/page/EventPage';
 import Ticket from './js/component/Ticket/Ticket';
 import NewPost from './js/component/NewPost';
 import PostDetail from './js/component/PostDetail';
+import RentalComplete from './js/component/rental/RentalComplete';
 import FAQ from "./js/page/FAQ";
 import QNA from "./js/page/QNA";
+import PerformCalendar from './js/component/performance/PerformCalendar';
+import Newplant from './js/component/plant/NewPlant';
 
 function App() {
   return (
@@ -29,6 +32,7 @@ function App() {
           <Route path="/performList/newPerform" element={<NewPerform />} />
           <Route path="/performanceDetail/:pfCode" element={<PerformanceDetail />} />
           <Route path="/timeList/:pfCode" element={<TimeList />} />
+          <Route path="/performCalendar" element={<PerformCalendar />} />
           <Route path='/센터소개' element={<CenterInfo />} />
           <Route path='/센터소식' element={<CenterNews/>}/>
           <Route path='/FAQ' element={<FAQ />} />
@@ -36,7 +40,9 @@ function App() {
           <Route path='/Event' element={<EventPage/>}/>
           <Route path='/ticket' element={<Ticket/>}/>
           <Route path='/NewPost/:BoardType' element={<NewPost/>}/>
+          <Route path='/Rentcom' element={<RentalComplete/>}/>
           <Route path='/postDetail/:BoardType/:postNo' element={<PostDetail/>}/>
+          <Route path='/Newplant' element={<Newplant/>}/>
         </Routes>
       </Router>
       <Footer />
