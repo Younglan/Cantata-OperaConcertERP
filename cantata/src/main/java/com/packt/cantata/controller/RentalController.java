@@ -34,7 +34,7 @@ public class RentalController {
 		return rentalrepository.findAll();
 	}
 	
-	@RequestMapping(value="/rental", method = RequestMethod.POST)
+	@RequestMapping(value="/rentalapp", method = RequestMethod.POST)
 	public 	ResponseEntity<Rental> postrental(@RequestBody Rental rental ){
 		Rental tlt = rentalrepository.save(rental);
 		return ResponseEntity.status(HttpStatus.OK).body(tlt);

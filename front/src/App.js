@@ -14,8 +14,10 @@ import EventPage from './js/page/EventPage';
 import Ticket from './js/component/Ticket/Ticket';
 import RentalApps from './js/component/rental/rental';
 import RentalList from './js/component/rental/RentalList';
+import RentalComplete from './js/component/rental/RentalComplete';
 import TicketFind from './js/component/Ticket/TicketFind';
 import PerformCalendar from './js/component/performance/PerformCalendar';
+import Newplant from './js/component/plant/NewPlant';
 
 function App() {
   return (
@@ -36,7 +38,9 @@ function App() {
           <Route path='/ticket' element={<Ticket/>}/>
           <Route path='/RentApp' element={<RentalApps/>}/>
           <Route path='/RentList' element={<RentalList/>}/>
+          <Route path='/Rentcom' element={<RentalComplete/>}/>
           <Route path='/myticket' element={<TicketFind/>}/>
+          <Route path='/Newplant' element={<Newplant/>}/>
         </Routes>
       </Router>
       <Footer />
