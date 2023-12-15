@@ -16,7 +16,7 @@ import RentalApps from './js/component/rental/rental';
 import RentalList from './js/component/rental/RentalList';
 import RentalComplete from './js/component/rental/RentalComplete';
 import TicketFind from './js/component/Ticket/TicketFind';
-import PerformCalendar from './js/component/performance/PerformCalendar';
+import PerformCalendar from './js/component/calendar/PerformCalendar';
 import Newplant from './js/component/plant/NewPlant';
 
 function App() {
