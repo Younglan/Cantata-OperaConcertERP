@@ -27,9 +27,6 @@ function AddTime(props){
         const formatDate = new Date(moment(selectedDate).format("YYYY-MM-DDTHH:mm"));
         setTime({ ...time, ptDate: formatDate });
     }
-    // const handleChange = (event) => {
-    //     setTime({...time, [event.target.name]: event.target.value});
-    // }
     const handleSave = () => {
         props.addTime(time);
         handleClose();

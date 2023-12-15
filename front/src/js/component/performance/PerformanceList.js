@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridPagination   } from '@mui/x-data-grid';
 import './PerformanceList.css';
 import { Snackbar } from '@mui/material';
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ function PerformanceList(){
     //데이터호출
     const[performances, setPerformances] = useState([]);
     const [open, setOpen] = useState(false);
+
 
     const columns = [ 
         {field: 'pfCode', headerName: '공연 코드',width: 80, headerAlign: 'center'}, 
@@ -56,6 +57,7 @@ function PerformanceList(){
         .catch(err => console.error(err));
     };
 
+   
     const onRowClick = (pfCode) => {
         navigate("/performanceDetail/"+pfCode);
     };
@@ -84,28 +86,27 @@ function PerformanceList(){
         
     }
 
+    
     return(
         <div className='contentsArea'>
-            <div className='contents'>
-            
+        <div className='contents'>
             <button onClick={() => navigate("/performList/newPerform")}>새 컨텐츠 등록</button>
-                <DataGrid className='pfList'
-                    rows={performances} 
-                    columns={columns}
-                    pageSize={5}
-                    pagination
-                    paginationMode="client" 
-                    disableRowSelectionOnClick={true}
-                     getRowId={row => row.pfCode}/> 
+            <DataGrid
+            className='pfList'
+            rows={performances}
+            columns={columns}
 
-                <Snackbar
-                    open={open}
-                    autoHideDuration={2000}
-                    onClose={() => setOpen(false)}
-                    message="공연이 삭제되었습니다."
-                />
-
-            </div>
+            disableRowSelectionOnClick={true}
+            getRowId={row => row.pfCode} 
+            />
+            
+            <Snackbar
+            open={open}
+            autoHideDuration={2000}
+            onClose={() => setOpen(false)}
+            message="공연이 삭제되었습니다."
+            />
+        </div>
         </div>
     );
 }
