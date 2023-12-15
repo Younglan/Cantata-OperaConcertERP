@@ -1,0 +1,38 @@
+/* PostDetail.css */
+#PostDetail{
+  position: absolute;
+  background-color: #071a52;
+  width: 100%;
+  min-height: 800px;
+}
+
+.post-detail-container {
+    position: relative;
+    width: 90%;
+    min-height: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+  }
+  
+  .post-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .post-info {
+    margin-bottom: 20px;
+  }
+  
+  .post-date {
+    font-size: 14px;
+    color: #666;
+  }
+  
+
+  .customPost{
+    position: relative;
+    padding-left: 10%;
+    width: 90%;
+    min-height: 700px;
+  }

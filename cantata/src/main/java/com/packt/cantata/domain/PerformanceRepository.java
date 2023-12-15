@@ -22,7 +22,6 @@ public interface PerformanceRepository  extends JpaRepository<Performance, Long>
 	PerformDto findBypfcodequery(@Param("pf_title") String pf_title);	
 	
 	Performance findTopByOrderByPfCodeDesc();
-
 	Performance findByPfCode(Long pfCode);
 	
 }

@@ -6,6 +6,7 @@ import moment from "moment";
 import 'moment/locale/ko';
 function TicketPrint({ticket}){
     const ticketInfo = useContext(TicketContext);
+    console.log(ticket);
     return(
         <div className="tf_main">
           <div className="tf_left">

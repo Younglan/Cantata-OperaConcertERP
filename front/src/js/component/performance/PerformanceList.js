@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { DataGrid,GridPagination   } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 import './PerformanceList.css';
 import { Snackbar } from '@mui/material';
 import { useNavigate } from "react-router-dom";
@@ -12,28 +12,16 @@ function PerformanceList(){
     const[performances, setPerformances] = useState([]);
     const [open, setOpen] = useState(false);
 
-
     const columns = [ 
-        {field: 'pfCode', headerName: '공연 코드',width: 80, headerAlign: 'center'}, 
+        {field: 'pfCode', headerName: '공연 코드',headerAlign: 'center'}, 
         {field: 'pfCate', headerName: '종류', width: 50,headerAlign: 'center'}, 
-        {   field: 'pfTitle', 
-            headerName: '공연 제목', 
-            width: 350,
-            headerAlign: 'center',
-        renderCell : row => (
-            <div 
-                style={{cursor:'pointer'}}
-                onClick={() => onRowClick(row.id)}
-                >
-                    {row.value}
-                </div>
-        ),
-    }, 
-        {field: 'pfStart', headerName: '공연 시작일', width: 100}, 
-        {field: 'pfEnd', headerName: '공연 종료일', width: 100}, 
+        {field: 'pfTitle', headerName: '공연 제목', width: 200,headerAlign: 'center'}, 
+        {field: 'pfStart', headerName: '공연기간(시작일)', width: 120}, 
+        {field: 'pfEnd', headerName: '공연기간(종료일)', width: 120}, 
         {field: 'agency', headerName: '배급사', width: 100}, 
+        {field: 'pfStatus', headerName: '등록상태', width: 100}, 
         {field: '_links.self.href',
-         headerName: '관리메뉴',
+         headerName: '',
          sortable:false,
          filterable: false,
          renderCell: row =>
@@ -47,31 +35,16 @@ function PerformanceList(){
     }, []);
 
     const fetchPerforms= () => {
-        fetch(SERVER_URL+'/performances/allPerform')
+        fetch(SERVER_URL+'/performances')
         .then(response => response.json())
-        .then(data => {
-            //상태 체크 후 pfStatus가 ture인것만 표시
-            const filteredPerforms 
-                = data.filter((perform) => perform.pfStatus === true).reverse();
-            setPerformances(filteredPerforms)})
+        .then(data => setPerformances(data._embedded.performances))
         .catch(err => console.error(err));
     };
 
-   
-    const onRowClick = (pfCode) => {
-        navigate("/performanceDetail/"+pfCode);
-    };
-
-    const onDelClick = (pfCode) => {
-        const updatedSatusData = {pfStatus : 'false'};
+    const onDelClick = (url) => {
+    console.log(" url확인 : "+url);
         if (window.confirm("정말로 해당 컨텐츠를 삭제하시겠습니까?")){
-            fetch(SERVER_URL+'/performances/'+pfCode,
-                 {method: 'PATCH',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        },
-                    body: JSON.stringify(updatedSatusData)
-                 })
+            fetch(url, {method: 'DELETE'})
             .then(response => {
                 if(response.ok){
                     fetchPerforms();
@@ -86,27 +59,25 @@ function PerformanceList(){
         
     }
 
-    
     return(
         <div className='contentsArea'>
-        <div className='contents'>
-            <button onClick={() => navigate("/performList/newPerform")}>새 컨텐츠 등록</button>
-            <DataGrid
-            className='pfList'
-            rows={performances}
-            columns={columns}
-
-            disableRowSelectionOnClick={true}
-            getRowId={row => row.pfCode} 
-            />
+            <div className='contents'>
             
-            <Snackbar
-            open={open}
-            autoHideDuration={2000}
-            onClose={() => setOpen(false)}
-            message="공연이 삭제되었습니다."
-            />
-        </div>
+            <button onClick={() => navigate("/performList/newPerform")}>새 컨텐츠 등록</button>
+                <DataGrid className='pfList'
+                    rows={performances} 
+                    columns={columns}
+                    disableRowSelectionOnClick={true}
+                     getRowId={row => row._links.self.href}/> 
+
+                <Snackbar
+                    open={open}
+                    autoHideDuration={2000}
+                    onClose={() => setOpen(false)}
+                    message="공연이 삭제되었습니다."
+                />
+
+            </div>
         </div>
     );
 }

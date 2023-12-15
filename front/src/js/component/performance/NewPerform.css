@@ -50,20 +50,3 @@
     max-height: 300px;
 }
 
-.react-datepicker-wrapper{
-    width:100%;
-}
-.react-datepicker__input-container{
-    width:100%;
-}
-.datepick{
-    width:100%;
-    border-radius: 5px;
-    border: 1px solid #dee2e6;
-    padding: .375rem .75rem;
-}
-.datepick:focus {
-    border-color:#86b7fe;
-    box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
-    outline: 0px;
-}

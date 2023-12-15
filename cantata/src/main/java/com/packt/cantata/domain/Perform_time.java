@@ -1,6 +1,5 @@
 package com.packt.cantata.domain;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -15,11 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -29,33 +28,27 @@ import lombok.Setter;
 public class Perform_time {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int ptNo;
+	private int pt_no;
 	
-	@ManyToOne
-	@JoinColumn(name = "pfCode")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "pf_code")
 	private Performance pfCode;
 	
-	@Column
-	private Date ptDate;
+	@Column(nullable=false)
+	private Date pt_date;
 	
-	@Column(columnDefinition = "boolean default true",nullable = false)
-	private Boolean ptStatus = true;
+	private Boolean pt_status;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pt_no")
 	private List<Ticket> ticket;
 
-	public Perform_time(Performance pfCode, Date ptDate, Boolean ptStatus) {
+	public Perform_time(int pt_no, Performance pfCode, Date pt_date, Boolean pt_status) {
 		super();
+		this.pt_no = pt_no;
 		this.pfCode = pfCode;
-		this.ptDate = ptDate;
-		this.ptStatus = ptStatus;
-	}
+		this.pt_date = pt_date;
 
-	public Perform_time(Performance pfCode, Date ptDate) {
-		super();
-		this.pfCode = pfCode;
-		this.ptDate = ptDate;
+		this.pt_status = pt_status;
 	}
 }
-

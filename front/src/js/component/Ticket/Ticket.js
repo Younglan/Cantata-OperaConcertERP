@@ -9,28 +9,18 @@ import TicketPrint from "./TicketPrint";
 import "./css/Ticket.css";
 import TicketInfo from "./TicketInfo";
 import useDidMountEffect from "./useDidMountEffect";
-import TicketMainDetail from "./TicketMainDetail";
-import { useLocation } from "react-router-dom";
 
 
 export const TicketContext = createContext();
 export const SeatContext = createContext();
 function Ticket(){
     const [page, setPage] = useState(1);
-    const { state } = useLocation();
+
     const [ptno, setPtno] = useState("");
-    const [perform, setPerform] = useState(state?{
-        pf_title:state.perform.pfTitle,
-        pf_poster:state.perform.pfPoster,
-        pf_start:state.perform.pf_start,
-        pf_end:state.perform.pf_end,
-        r:state.perform.r,
-        s:state.perform.s,
-        a:state.perform.a,
-        b:state.perform.b,
-        c:state.perform.c,
-        d:state.perform.d
-    }:{pf_title:"공연을 선택해주세요."});
+    const [perform, setPerform] = useState({
+        pf_title:"공연을 선택해주세요",
+        
+    });
     const [seat, setSeat] = useState([]);
     const [seatno, setSeatno] = useState("");
     const [buttonon, setButtonOn] = useState(false);
@@ -45,7 +35,7 @@ function Ticket(){
         seat : "", 
         class : ""
     });
-    
+
     useEffect(()=>{
         setButtonOn(seatno.length!==0);
     }, [seatno]);
@@ -131,7 +121,6 @@ function Ticket(){
             
         }
         seatMax.current=seatno.length;
-        
     },[seatcat]);
    
     const seatChange=useCallback((selected, seatnum, styleSeat)=>{
@@ -163,14 +152,14 @@ function Ticket(){
                     category, setCategory,
                     page, pageNext,
                     timedate, setTimedate,
-                    state
+                  
                     
 
                 }}>
                 <TicketHeader page={page}/>
                 <div className="tick_cont">
                     <div className="tick_canvas">
-                        {page===1&&state?<TicketMainDetail/>:page===1&&!state?<TicketMain/>:page===2?<TicketSeat value={seatChange} seat={seat}/>:page===3?<TicketPay/>:<TicketPrint ticket={ticket.current}/>}
+                        {page===1?<TicketMain/>:page===2?<TicketSeat value={seatChange} seat={seat}/>:page===3?<TicketPay/>:<TicketPrint ticket={ticket.current}/>}
                     </div>
 
                     {page!==4?<TicketStatus/>:<TicketInfo ticket={ticket.current}/>}

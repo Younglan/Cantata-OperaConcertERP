@@ -10,8 +10,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.packt.cantata.domain.Perform_time;
-import com.packt.cantata.domain.Perform_timeRepository;
 import com.packt.cantata.domain.Performance;
 import com.packt.cantata.domain.PerformanceRepository;
 
@@ -24,8 +22,6 @@ public class CantataApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PerformanceRepository pfRepository;
-	@Autowired
-	private Perform_timeRepository timeRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CantataApplication.class, args);
@@ -45,7 +41,7 @@ public class CantataApplication implements CommandLineRunner {
 				"공연공지사항",
 				dtFormat.parse("2023-11-23"), dtFormat.parse("2023-12-01"),
 				3,
-				50000,40000,30000,10000,5000,1000,null);
+				50000,40000,30000,10000,5000,1000);
 		Performance pf2 = new Performance("공연", 
 				"행복한왕자", 
 				"상상극단", 
@@ -56,13 +52,9 @@ public class CantataApplication implements CommandLineRunner {
 				"공연공지사항",
 				dtFormat.parse("2023-11-23"), dtFormat.parse("2023-12-01"),
 				3,
-				50000,40000,30000,10000,5000,1000,null);
-		
-		Perform_time pt1 = new Perform_time(pf2,dtFormat.parse("2023-12-01"),true);
+				50000,40000,30000,10000,5000,1000);
 
 		pfRepository.saveAll(Arrays.asList(pf1,pf2));
-		timeRepository.saveAll(Arrays.asList(pt1));
-		
 		
 		for (Performance pf : pfRepository.findAll()) {
 			logger.info(pf.getPfCode() + " " +pf.getPfCate() + " " + pf.getPfTitle());

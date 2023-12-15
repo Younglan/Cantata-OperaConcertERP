@@ -12,9 +12,12 @@ import CenterInfo from './js/page/CenterInfo';
 import CenterNews from './js/page/CenterNews';
 import EventPage from './js/page/EventPage';
 import Ticket from './js/component/Ticket/Ticket';
-import RentalApps from './js/component/rental/rental';
-import RentalList from './js/component/rental/RentalList';
+import NewPost from './js/component/NewPost';
+import PostDetail from './js/component/PostDetail';
 import RentalComplete from './js/component/rental/RentalComplete';
+import FAQ from "./js/page/FAQ";
+import QNA from "./js/page/QNA";
+import PerformCalendar from './js/component/performance/PerformCalendar';
 import TicketFind from './js/component/Ticket/TicketFind';
 import PerformCalendar from './js/component/calendar/PerformCalendar';
 import Newplant from './js/component/plant/NewPlant';
@@ -34,12 +37,13 @@ function App() {
           <Route path="/performCalendar" element={<PerformCalendar />} />
           <Route path='/센터소개' element={<CenterInfo />} />
           <Route path='/센터소식' element={<CenterNews/>}/>
+          <Route path='/FAQ' element={<FAQ />} />
+          <Route path='/QNA' element={<QNA />}/>
           <Route path='/Event' element={<EventPage/>}/>
           <Route path='/ticket' element={<Ticket/>}/>
-          <Route path='/RentApp' element={<RentalApps/>}/>
-          <Route path='/RentList' element={<RentalList/>}/>
+          <Route path='/NewPost/:BoardType' element={<NewPost/>}/>
           <Route path='/Rentcom' element={<RentalComplete/>}/>
-          <Route path='/myticket' element={<TicketFind/>}/>
+          <Route path='/postDetail/:BoardType/:postNo' element={<PostDetail/>}/>
           <Route path='/Newplant' element={<Newplant/>}/>
         </Routes>
       </Router>
@@ -48,3 +52,5 @@ function App() {
   );
 }
 export default App;
+
+
