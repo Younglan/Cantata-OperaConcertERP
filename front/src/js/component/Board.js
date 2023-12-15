@@ -97,7 +97,7 @@ function Board({ BoardType }) {
                         {currentPosts.map((post, index) => (
                             <div key={index} className='postItem'>
                                 <div className='postNumber'>{post.postNum}</div>
-                                <Link to={`/postDetail/${post.postNo}`} className='postTitle' onClick={() => postView(post.postNo)}>{post.postTitle}</Link>
+                                <Link to={`/postDetail/${BoardType}/${post.postNo}`} brdNo = {BoardType} className='postTitle' onClick={() => postView(post.postNo)}>{post.postTitle}</Link>
                                 <div className='postViews'>{post.postViews}</div>
                                 <div className='postDate'>{post.postDate}</div>
                                 {/* 작성자 이름 추가 예정 */}

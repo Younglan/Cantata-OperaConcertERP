@@ -36,14 +36,13 @@ function App() {
           <Route path='/Event' element={<EventPage/>}/>
           <Route path='/ticket' element={<Ticket/>}/>
           <Route path='/NewPost/:BoardType' element={<NewPost/>}/>
-          <Route path='/postDetail/:postNo' element={<PostDetail/>}/>
+          <Route path='/postDetail/:BoardType/:postNo' element={<PostDetail/>}/>
         </Routes>
       </Router>
       <Footer />
     </div>
   );
 }
-
 export default App;
 
 

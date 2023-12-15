@@ -10,11 +10,13 @@ const SERVER_URL = 'http://localhost:8090';
 
 function PostDetail() {
   const { postNo } = useParams(); //board.js에서 postNo값을 보내주고 링크의 postNo값을 가져온다.
+  const { BoardType } = useParams();
   const [post, setPost] = useState({});
   const [replies, setReplies] = useState([]);
   const [newReply, setNewReply] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10; //게시물이 10개 이상 넘어가면 다음 게시물로
+
   useEffect(() => {
     const fetchPostDetail = async () => {
       try {
@@ -79,6 +81,7 @@ function PostDetail() {
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const currentreplies = replies.slice(startIndex, endIndex);
+
   return (
     <div id='PostDetail'>
       <div className="post-detail-container">
@@ -87,37 +90,39 @@ function PostDetail() {
           <span className="post-date">{post.postDate}</span>
         </div>
         <ReactQuill value={post.postSub || ''} modules={{ toolbar: false }} theme="snow" readOnly className='customPost' />
-        {/* 댓글 입력 폼 */}
-        <div className="reply-form">
-          <ReactQuill value={newReply} modules={{ toolbar: false }} onChange={handleReplyChange} theme="snow" />
-          <button onClick={handleAddReply}>댓글 작성</button>
-        </div>
 
-        <div className="reply">
-          <h3>댓글</h3>
-          {/* <ReactQuill value = {replies.repSub || ''} modules = {{tollbar:false}} them = "snow" readOnly className = 'replies-container'/> */}
-          {currentreplies.map((replies, index) => (
-            <div key={index} className='repliesItem'>
-              <ReactQuill value={replies.repSub || ''} modules={{ toolbar: false }} them="snow" readOnly className="repSub" />
-              {/* 작성자 이름 추가 예정 */}
+
+        {BoardType === '6' && (
+        //댓글 입력 폼
+        <div>
+            <div className="reply-form">
+              <ReactQuill value={newReply} modules={{ toolbar: false }} onChange={handleReplyChange} theme="snow" />
+              <button onClick={handleAddReply}>댓글 작성</button>
+            </div><div className="reply">
+              <h3>댓글</h3>
+              {currentreplies.map((replies, index) => (
+                <div key={index} className='repliesItem'>
+                  <ReactQuill value={replies.repSub || ''} modules={{ toolbar: false }} them="snow" readOnly className="repSub" />
+                  {/* 작성자 이름 추가 예정 */}
+                </div>
+              ))}
             </div>
-          ))}
-
-        </div>
-        {/* 페이지네이션 추가 */}
-        <div className="pagination">
-          {Array.from({ length: Math.ceil(replies.length / pageSize) }, (_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentPage(index + 1)}
-              className={currentPage === index + 1 ? 'active' : ''}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
+            {/* 페이지네이션 추가 */}
+            <div className="pagination">
+              {Array.from({ length: Math.ceil(replies.length / pageSize) }, (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentPage(index + 1)}
+                  className={currentPage === index + 1 ? 'active' : ''}
+                >
+                  {index + 1}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
-    </div>
+    </div >
   );
 }
 

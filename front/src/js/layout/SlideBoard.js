@@ -29,6 +29,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     const goToPerformanceList = () =>{
         navigate("/performList");
     }
+    
 
     return (
         <div className='Over_background'>
