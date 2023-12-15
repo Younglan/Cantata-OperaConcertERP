@@ -12,46 +12,30 @@ import 'react-calendar/dist/Calendar.css';
 import "./css/TicketMain.css";
 import { TicketContext } from './Ticket';
 import styled from '@emotion/styled';
+import { useLocation } from 'react-router-dom';
 
 
-function TicketMain(){
+function TicketMainDetail(){
+    
     const ticketInfo = useContext(TicketContext);
     const [value, onChange] = useState(""); 
     const [ticdate, setDate] = useState([]);
-    const [title, setTitle] = useState("");
     const [time, setTime] = useState("");
     const [lefseat, setLefSeat] = useState(0);
     const classSeat = ["R","S","A","B","C","D"];
     const leftS = [48, 32, 8, 48, 72, 80];
-    const fetchtime = () =>{
-        fetch("http://localhost:8090/pftdate")
-        .then(response => response.json())
-        .then(data => setDate(data.map((it)=>{
-          return String(new Date(moment(it).format('YYYY-MM-DD')))
-        })))
-        .catch(err => console.error(err));
-        
-    };
     
     useEffect(()=>{
-        fetchtime();
-        
+      console.log(ticketInfo.state)
+      fetch(`http://localhost:8090/pftimeDtl/?pfCode=${ticketInfo.state.pfcode}`)
+      .then(response => response.json())
+      .then(data => setDate(data.map((it)=>{
+        return String(new Date(moment(it).format('YYYY-MM-DD')))
+      })))
+      .catch(err => console.error(err));
+      
     }, []);
-    useEffect(()=>{
-        setTime(""); 
-    }, [value]);
-
-    const renderRowPerform = (props) => {
-        const { index, style } = props;
-        return (
-          <ListItem style={style} key={index} component="div" disablePadding>
-            <ListItemButton onClick={(event) => onClickTitle(title[index])}>
-              <ListItemText primary={`${title[index]}`} />
-            </ListItemButton>
-          </ListItem>
-        ); 
-      };
-
+    
       const renderRowTime = (props) => {
         const { index, style } = props;
         return (
@@ -75,24 +59,21 @@ function TicketMain(){
         ); 
       };
 
-    const onChangeClick = (event) =>{
-        const tmptitle = moment(event).format('YYYY-MM-DD');
-        fetch(`http://localhost:8090/tickdate/?date=${tmptitle}`)
-        .then(response => response.json())
-        .then(data => setTitle(data))
-        .catch(err => console.error(err));
-        ticketInfo.setButtonOn(false);
-    };
-    const onClickTitle = (title) => {
-        const tmptitle = moment(value).format('YYYY-MM-DD');
+      async function onChangeClick(title){
+        try{
+          const tmptitle = moment(title).format('YYYY-MM-DD');
         
-        fetch(`http://localhost:8090/pftime/?date=${tmptitle}&title=${title}`)
-        .then(response => response.json())
-        .then(data => setTime(data))
-        .catch(err => console.error(err));
-        ticketInfo.fetchPerformInfo(title);
-        ticketInfo.setButtonOn(false);
-    };
+          const response = await fetch(`http://localhost:8090/pftime/?date=${tmptitle}&title=${ticketInfo.state.perform.pfTitle}`);
+          const data = await response.json();
+          await setTime(data);
+          console.log(data);
+        }
+        catch(e){
+          console.error(e);
+        }
+      ticketInfo.setButtonOn(false);
+    }
+    
     const onClickTime = (time) => {
       fetch(`http://localhost:8090/seat/?num=${time}`)
       .then(response => response.json())
@@ -124,19 +105,7 @@ function TicketMain(){
                 />
                 
             </div>
-            <div>
-                <Typograph>공연</Typograph>
-                <FixedSizeList
-                    height={300}
-                    width={200}
-                    itemSize={46}
-                    itemCount={title.length}
-                    overscanCount={5}
-                    
-                >
-                    {renderRowPerform}
-                </FixedSizeList>
-            </div>
+            
             <div>
                 <Typograph>시간</Typograph>
                 <FixedSizeList
@@ -166,7 +135,7 @@ function TicketMain(){
     );
 }
 
-export default TicketMain;
+export default TicketMainDetail;
 
 const Typograph = styled(Typography)(({ theme }) => ({
     fontFamily: 'Nanum Gothic', 

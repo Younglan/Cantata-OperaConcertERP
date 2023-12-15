@@ -3,6 +3,10 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import moment from 'moment/moment';
+import ko from "date-fns/locale/ko";
 
 import './NewPerform.css';
 
@@ -21,6 +25,8 @@ function NewPerform(props) {
    // const [open, setOpen] = useState(false);
     const [pfNotice, setPfNotice] = React.useState('');
     const [pfExplan, setPfExplan] = React.useState('');
+    const [stDate, setStDate] = useState();
+    const [edDate, setEdDate] = useState();
    
     let pfCode ;
 
@@ -41,12 +47,12 @@ function NewPerform(props) {
         pfStart : '',
         pfEnd : '',
         pfRuntime : '',
-        costR : '',
-        costS : '',
-        costA: '',
-        costB: '',
-        costC : '',
-        costD : ''
+        r : '',
+        s : '',
+        a: '',
+        b: '',
+        c : '',
+        d : ''
     });
 
     // 연결된 파일 번호 리스트
@@ -65,9 +71,20 @@ function NewPerform(props) {
         setPerform({...perform,
             [event.target.name]:event.target.value});
     }
+    //날짜 변경 핸들러
+    const handleStartChange = (selectedDate) => {
+        setStDate(selectedDate);
+        const formatDate = new Date(moment(selectedDate).format("YYYY-MM-DD"));
+        setPerform({ ...perform, pfStart: formatDate });
+    }
+    const handleEndChange = (selectedDate) => {
+        setEdDate(selectedDate);
+        const formatDate = new Date(moment(selectedDate).format("YYYY-MM-DD"));
+        setPerform({ ...perform, pfEnd: formatDate });
+    }
 
     // Quill 에디터의 컨텐츠 변경 핸들러 (이미지 태그가 제거될 경우 관련 파일 번호도 제거)
-    const handleQuillChange = (pfNoticeValue) => {
+    const handleQuillChange1 = (pfNoticeValue) => {
         setPfNotice(pfNoticeValue);
         setPerform(prevState => ({ ...prevState, pfNotice: pfNoticeValue }));
 
@@ -88,16 +105,44 @@ function NewPerform(props) {
             return { ...prevMap };
         });
     };
+    const handleQuillChange2 = (pfExplanValue) => {
+        setPfExplan(pfExplanValue);
+        setPerform(prevState => ({ ...prevState, pfExplan: pfExplanValue }));
+
+        const imgTagPattern = /<img [^>]*src="([^"]+)"[^>]*>/g;
+        const currentSrcs = [];
+        let match;
+        while (match = imgTagPattern.exec(pfExplanValue)) {
+            currentSrcs.push(match[1]);
+        }
+
+        const missingSrcs = Object.keys(fileSrcToNumberMap).filter(src => !currentSrcs.includes(src));
+        const missingFileNumbers = missingSrcs.map(src => fileSrcToNumberMap[src]);
+
+        setFilesNumbers(prevNumbers => prevNumbers.filter(num => !missingFileNumbers.includes(num)));
+
+        setFileSrcToNumberMap(prevMap => {
+            missingSrcs.forEach(src => delete prevMap[src]);
+            return { ...prevMap };
+        });
+    };
 
 
     // Quill 에디터에 이미지를 삽입하는 함수
-    function insertToEditor(url) {
+    function insertToEditor1(url) {
         if (quillRef1.current) {
             const editor = quillRef1.current.getEditor();
             const range = editor.getSelection();
             editor.insertEmbed(range ? range.index : 0, 'image', url);
         }
-        else if(quillRef2.current) {
+        // else if(quillRef2.current) {
+        //     const editor = quillRef2.current.getEditor();
+        //     const range = editor.getSelection();
+        //     editor.insertEmbed(range ? range.index : 0, 'image', url);
+        // }
+    }
+    function insertToEditor2(url) {
+        if(quillRef2.current) {
             const editor = quillRef2.current.getEditor();
             const range = editor.getSelection();
             editor.insertEmbed(range ? range.index : 0, 'image', url);
@@ -105,7 +150,7 @@ function NewPerform(props) {
     }
 
     // Quill 에디터의 이미지 업로드 핸들러
-    function imageHandler(){
+    function imageHandler1(){
         fetch(SERVER_URL+'/performances/lastPfCode')
             .then(response => response.json())
             .then(data => {pfCode = data})
@@ -161,7 +206,75 @@ function NewPerform(props) {
 
                 // 이미지 삽입
                 urlsForFiles.forEach(url => {
-                    insertToEditor(url);
+                    insertToEditor1(url);
+                });
+            })
+            .catch(error => {
+                console.error("There was a problem with the fetch operation:", error.message);
+            })
+            .finally(() => {
+                setImageLoading(false);
+            });
+        };
+    }
+
+    function imageHandler2(){
+        fetch(SERVER_URL+'/performances/lastPfCode')
+            .then(response => response.json())
+            .then(data => {pfCode = data})
+            .catch(err => console.error(err));
+    
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.setAttribute('multiple', 'true');
+        input.click();
+
+        input.onchange = () => {
+            const files = Array.from(input.files);
+
+            if (files.length > 1) {
+                alert('한번에 한 사진만 업로드 가능합니다!');
+                return;
+            }
+     
+            const formData = new FormData();
+
+            files.forEach(file => {
+                formData.append('file', file);
+            });
+            
+            formData.append('tableName', 'performance');
+            formData.append('number', pfCode + 1);
+
+            fetch(`${SERVER_URL}/files/FileNums`, {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                setFilesNumbers(prevFilesNumbers => [...prevFilesNumbers, ...data]);
+
+                const storageBaseUrl = "https://storage.googleapis.com/cantata_opera/";
+                const urlsForFiles = files.map(file => {
+                    const postUrlPath = `performance/${pfCode + 1}/${file.name}`;
+                    return storageBaseUrl + postUrlPath;
+                });
+
+                const newFileSrcToNumberMap = {};
+                urlsForFiles.forEach((url, index) => {
+                    newFileSrcToNumberMap[url] = data[index];
+                });
+                setFileSrcToNumberMap(prevMap => ({ ...prevMap, ...newFileSrcToNumberMap }));
+
+                // 이미지 삽입
+                urlsForFiles.forEach(url => {
+                    insertToEditor2(url);
                 });
             })
             .catch(error => {
@@ -194,7 +307,7 @@ function NewPerform(props) {
     ];
 
 
-    const modules = useMemo(() => {
+    const modules1 = useMemo(() => {
         return {
             toolbar: {
                 container: [
@@ -212,7 +325,30 @@ function NewPerform(props) {
                     modules: ["Resize", "DisplaySize", "Toolbar"],
                 },
                 handlers: {
-                    image: imageHandler,
+                    image: imageHandler1,
+                },
+            }, 
+        };
+    }, []);
+    const modules2 = useMemo(() => {
+        return {
+            toolbar: {
+                container: [
+                    [{ header: [1, 2, 3, false] }],
+                    ["bold", "italic", "underline", "strike"],
+                    ["blockquote"],
+                    [{ list: "ordered" }, { list: "bullet" }],
+                    [{ color: [] }, { background: [] }],
+                    [{ align: [] }],
+                    ["image"],
+                ],
+                imageResize: {
+                    // https://www.npmjs.com/package/quill-image-resize-module-react 참고
+                    parchment: Quill.import("parchment"),
+                    modules: ["Resize", "DisplaySize", "Toolbar"],
+                },
+                handlers: {
+                    image: imageHandler2,
                 },
             }, 
         };
@@ -268,11 +404,28 @@ function NewPerform(props) {
                 <div className="divrows">
                     <div className="formHeader">시&nbsp;&nbsp;&nbsp;&nbsp;작&nbsp;&nbsp;&nbsp;&nbsp;일</div>
                     <div className="divcolscont">
-                        <Form.Control type="text" placeholder=""  className="fullwidth"/>
+                        <DatePicker
+                            locale={ ko }
+                            dateFormat='yyyy-MM-dd ' // 날짜 형태
+                            shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
+                            minDate={new Date()} // minDate 이전 날짜 선택 불가
+                            maxDate={edDate} // maxDate 이후 날짜 선택 불가
+                            selected={stDate}
+                            onChange={handleStartChange}
+                            className="datepick"
+                        />
                     </div>
                     <div className="formHeader">마&nbsp;&nbsp;&nbsp;&nbsp;침&nbsp;&nbsp;&nbsp;&nbsp;일</div>
                     <div className="divcolscont">
-                        <Form.Control type="text" placeholder=""  className="fullwidth"/>
+                        <DatePicker
+                            locale={ ko }
+                            dateFormat='yyyy-MM-dd' // 날짜 형태
+                            shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
+                            minDate={stDate} // minDate 이전 날짜 선택 불가
+                            selected={edDate}
+                            onChange={handleEndChange} 
+                            className="datepick"
+                        />
                     </div>
                     <div className="formHeader">런 타 임 (분)</div>
                     <div className="divcolscont">
@@ -293,7 +446,7 @@ function NewPerform(props) {
                     </div>
                     <div className="formHeader">문&nbsp;&nbsp;&nbsp;&nbsp;의&nbsp;&nbsp;&nbsp;&nbsp;처</div>
                     <div className="divcolscont">
-                        <Form.Control type="text" placeholder="전화번호를 입력하세요"  className="fullwidth"  name="agencyTel" value={perform.agencyTel} onChange={handleChange} />
+                        <Form.Control type="text" placeholder="전화번호를 입력하세요. ex)000-0000-0000"  className="fullwidth"  name="agencyTel" value={perform.agencyTel} onChange={handleChange} />
                     </div>
                 </div>
                 <div className="divrows">
@@ -301,19 +454,19 @@ function NewPerform(props) {
                     <div className="divcolscont">
                         <div className="seatprices">
                             <span className="seatprice">R석</span>
-                            <Form.Control type="text" placeholder="" className="seatprice"name="costR"  value={perform.costR} onChange={handleChange} />
+                            <Form.Control type="text" placeholder="" className="seatprice" name="r"  value={perform.r} onChange={handleChange} />
                             <span className="seatprice">S석</span>
-                            <Form.Control type="text" placeholder="" className="seatprice"name="costS"  value={perform.costS} onChange={handleChange}/>
+                            <Form.Control type="text" placeholder="" className="seatprice" name="s"  value={perform.s} onChange={handleChange}/>
                             <span className="seatprice">A석</span>
-                            <Form.Control type="text" placeholder="" className="seatprice"name="costA"  value={perform.costA} onChange={handleChange}/>
+                            <Form.Control type="text" placeholder="" className="seatprice" name="a"  value={perform.a} onChange={handleChange}/>
                             </div>
                             <div className="seatprices">
                             <span  className="seatprice">B석</span>
-                            <Form.Control type="text" placeholder=""  className="seatprice"name="costB"  value={perform.costB} onChange={handleChange}/>
+                            <Form.Control type="text" placeholder=""  className="seatprice" name="b"  value={perform.b} onChange={handleChange}/>
                             <span className="seatprice">C석</span>
-                            <Form.Control type="text" placeholder=""  className="seatprice"name="costC"  value={perform.costC} onChange={handleChange}/>
+                            <Form.Control type="text" placeholder=""  className="seatprice" name="c"  value={perform.c} onChange={handleChange}/>
                             <span className="seatprice">D석</span>
-                            <Form.Control type="text" placeholder=""  className="seatprice"name="costD"  value={perform.costD} onChange={handleChange}/>
+                            <Form.Control type="text" placeholder=""  className="seatprice" name="d"  value={perform.d} onChange={handleChange}/>
                         </div>
                     </div>
                 </div>
@@ -331,7 +484,7 @@ function NewPerform(props) {
                                 value={pfNotice}
                                 theme="snow"
                                 modules={{
-                                    ...modules,
+                                    ...modules1,
                                     imageResize: {
                                     parchment: Quill.import("parchment"),
                                     modules: ["Resize", "DisplaySize", "Toolbar"],
@@ -339,12 +492,12 @@ function NewPerform(props) {
                                 }}
                                 formats={formats}
                                 preserveWhitespace
-                                onChange={handleQuillChange}
+                                onChange={handleQuillChange1}
                                 className="customQuill"
                     ></ReactQuill>
                     </div>
                 </div>
-                {/* <div className="divrows formTxtArea">
+                <div className="divrows formTxtArea">
                     <div className="formHeader ">상 세 설 명</div>
                     <div className="divcolscont  ">
                     <ReactQuill
@@ -352,7 +505,7 @@ function NewPerform(props) {
                                 value={pfExplan}
                                 theme="snow"
                                 modules={{
-                                    ...modules,
+                                    ...modules2,
                                     imageResize: {
                                     parchment: Quill.import("parchment"),
                                     modules: ["Resize", "DisplaySize", "Toolbar"],
@@ -364,7 +517,7 @@ function NewPerform(props) {
                                 className="customQuill"
                     ></ReactQuill>
                     </div>
-                </div> */}
+                </div>
                 <div className="divrows formTxtArea">
                     <Button  onClick={newPerformSave} variant="secondary">등록</Button> &nbsp;
                     <Button  onClick={handleRedirect} variant="secondary">뒤로가기</Button>   
@@ -378,11 +531,3 @@ function NewPerform(props) {
     )};
 
 export default NewPerform;
-
-
-
-
-
-
-
-

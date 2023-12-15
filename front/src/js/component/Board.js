@@ -1,15 +1,35 @@
 import React, { useEffect, useState } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import "../../css/Board.css";
-import { useNavigate, Link } from "react-router-dom";
+
 const SERVER_URL = 'http://localhost:8090';
 
 function Board({ BoardType }) {
-    const navigate = useNavigate();
     const [boardName, setBoardName] = useState('');
-    const [posts, setPosts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 10; //게시물이 10개 이상 넘어가면 다음 게시물로
+    const [post, setPost] = useState([]);
+    const [selectedPost, setSelectedPost] = useState(null);
+    const [openModal, setOpenModal] = useState(false);
 
+    const columns = [
+        { field: 'postNumber', headerName: '번호', width: 100, headerAlign: 'center', align: 'center' },
+        { field: 'postTitle', headerName: '제목', width: 500, headerAlign: 'center', align: 'center' },
+        { field: 'postDate', headerName: '게시일', width: 150, headerAlign: 'center', align: 'center'},
+        // { field: 'name', header: '작성자', width: 100, headerAlign:}
+    ];
+
+    const handleRowClick = (params) => {
+        // 클릭한 행의 글 내용을 가져오기
+        const selectedPost = post.find(p => p.postNo === params.id);
+        setSelectedPost(selectedPost);
+        setOpenModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
 
     useEffect(() => {
         // 게시판 이름 가져오기
@@ -20,7 +40,7 @@ function Board({ BoardType }) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                setBoardName(data.brdName); //게시판 이름 저장
+                setBoardName(data.brdName);
             } catch (error) {
                 console.error('Error fetching brdName:', error);
             }
@@ -29,95 +49,49 @@ function Board({ BoardType }) {
         fetchBrdName();
     }, [BoardType]);
 
-
     useEffect(() => {
         // 게시글 목록 가져오기
         const fetchPost = async () => {
             try {
-                const response = await fetch(`${SERVER_URL}/brd_posts/searchBrdNo/${BoardType}`);
+                const response = await fetch(`${SERVER_URL}/brd_posts/search/findByBrdNo?brdNo=brd_post/${BoardType}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-
-                // 데이터가 존재하면 정렬 후 처리
-                if (data && Array.isArray(data)) {
-                    const postsWithBrdNo = data.map(post => ({
-                        ...post,
-                        brdNo: { BoardType }
-                    }));
-                    const sortedPosts = postsWithBrdNo
-                        .reverse(); //큰 수부터 정렬
-                    setPosts(sortedPosts);
-                } else {
-                    //데이터가 없는경우 빈 배열로 설정
-                    setPosts([]);
-                }
-            } catch (err) {
+                
+                setPost(data._embedded.brd_posts.map((post, index) => ({...post, postNumber: index + 1}))); //데이터가 없을 때 빈 배열 + 번호 추가
+            } catch(err){
                 console.error(err);
             }
         };
+
         fetchPost();
     }, [BoardType]);
-
-    // 게시글 조회수 증가 함수
-    const postView = async (postNo) => {
-        try {
-            await fetch(`${SERVER_URL}/brd_posts/postView/${postNo}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            // console.log('View incremented successfully.');
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
-    const startIndex = (currentPage - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const currentPosts = posts.slice(startIndex, endIndex);
 
     return (
         <div id="Board">
             <div className='background'>
                 <div className="Board_title">
                     <h1>{boardName}</h1>
-                    <button onClick={() => navigate(`/newPost/${BoardType}`)}>글쓰기</button>
                 </div>
                 <div className="brd_post">
-                    <div className='BoardList'>
-                        <div className='postList'>
-                            <div className='postNumber'><h5>번호</h5></div>
-                            <div className='postTitle'><h5>제목</h5></div>
-                            <div className='postViews'><h5>조회수</h5></div>
-                            <div className='postDate'><h5>등록일</h5></div>
-                        </div>
-                        {currentPosts.map((post, index) => (
-                            <div key={index} className='postItem'>
-                                <div className='postNumber'>{post.postNum}</div>
-                                <Link to={`/postDetail/${BoardType}/${post.postNo}`} brdNo = {BoardType} className='postTitle' onClick={() => postView(post.postNo)}>{post.postTitle}</Link>
-                                <div className='postViews'>{post.postViews}</div>
-                                <div className='postDate'>{post.postDate}</div>
-                                {/* 작성자 이름 추가 예정 */}
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                {/* 페이지네이션 추가 */}
-                <div className="pagination">
-                    {Array.from({ length: Math.ceil(posts.length / pageSize) }, (_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => setCurrentPage(index + 1)}
-                            className={currentPage === index + 1 ? 'active' : ''}
-                        >
-                            {index + 1}
-                        </button>
-                    ))}
+                    <DataGrid className='BoardList'
+                        rows={post}
+                        columns={columns} 
+                        disableRowSelectionOnClick={true}
+                        getRowId={row => row._links.self.href}
+                        onRowClick={handleRowClick}
+                    />
                 </div>
             </div>
+
+            {/* Modal for displaying post details */}
+            <Modal open={openModal} onClose={handleCloseModal}>
+                <Box sx={{ width: 400, bgcolor: 'background.paper', p: 2 }}>
+                    <Typography variant="h6">{selectedPost?.postTitle}</Typography>
+                    <Typography variant="body2">{selectedPost?.postSub}</Typography>
+                </Box>
+            </Modal>
         </div>
     );
 }

@@ -1,19 +1,17 @@
 #Main{
-    /* position:absolute; */
+    position:absolute;
     width: 100%;
-    min-height: 800px;
+    height: 100%;
     background:#071a52;
     display:flex;
     flex-direction: column; /* 자식 div(slide_Header, Board)를 아래로 정렬 */
     padding-top:0;
-    /* align-items: center; */
+    align-items: center;
 }
 
 #Main .perfome{
-    position:relative;
-    padding-top: 0;
-    /* margin: auto; */
-    margin-left: 5%;
+    position:absolute;
+    margin: auto;
     width: 90%;
     height: 300px;
     text-align: left;
@@ -26,71 +24,4 @@
     height: 100%;
     margin:0 auto;
     border: 1px solid red;
-}
-
-.notice{
-    position: relative;
-    width: 500px;
-    /* height: 300px; */
-    /* border: 1px solid rgb(255,255,255); */
-    padding-left: 0;
-    margin: 5%;
-    color: white;
-}
-
-.noticeHeader{
-    width: 100%;
-    white-space: nowrap;
-    /* border: 1px solid red; */
-}
-
-.noticeHeader h4{
-    display: inline;
-    /* border: 1px solid purple */
-}
-.noticeHeader h6{
-    display: inline;
-    /* border: 1px solid gold; */
-    margin: 65%;
-    cursor: pointer;
-}
-.notice .mini{
-    border: 1px solid rgb(255,255,255);
-    max-height: 400px;
-}
-.notice .postItem {
-    border-bottom: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.notice .postNumber {
-    flex-basis: 10%;
-    border-right: 1px solid #ccc;
-    color: #ccc;
-}
-
-.notice .postTitle {
-    flex-basis: 60%;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    border-right: 1px solid #ccc;
-    text-decoration: none;
-    color: #ccc;;
-    cursor: pointer;
-}
-
-.notice .postDate {
-    flex-basis: 20%;
-    color: #ccc;
-}
-
-.eventBanner{
-    border:1px solid red;
-    width: 500px;
-    height: 400px;
 }
