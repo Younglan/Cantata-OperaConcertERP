@@ -10,6 +10,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.packt.cantata.domain.Brd_division;
+import com.packt.cantata.domain.Brd_divisionRepository;
+import com.packt.cantata.domain.Brd_post;
+import com.packt.cantata.domain.Brd_postRepository;
 import com.packt.cantata.domain.Perform_time;
 import com.packt.cantata.domain.Perform_timeRepository;
 import com.packt.cantata.domain.Performance;
@@ -26,6 +30,12 @@ public class CantataApplication implements CommandLineRunner {
 	private PerformanceRepository pfRepository;
 	@Autowired
 	private Perform_timeRepository timeRepository;
+	
+	@Autowired
+	private Brd_divisionRepository brdRepository;
+	
+	@Autowired
+	private Brd_postRepository postRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CantataApplication.class, args);
@@ -67,6 +77,28 @@ public class CantataApplication implements CommandLineRunner {
 		for (Performance pf : pfRepository.findAll()) {
 			logger.info(pf.getPfCode() + " " +pf.getPfCate() + " " + pf.getPfTitle());
 			System.out.println(pf.getPfCode());
+		}
+		
+		Brd_division brd1 = new Brd_division("센터소개");
+		
+		Brd_division brd2 = new Brd_division("시설소개");
+		
+		Brd_division brd3 = new Brd_division("센터소식");
+
+		Brd_division brd4 = new Brd_division("이벤트");
+	
+		Brd_division brd5 = new Brd_division("자주하는 질문");
+
+		Brd_division brd6 = new Brd_division("1:1 문의");
+	
+		brdRepository.saveAll(Arrays.asList(brd1, brd2, brd3, brd4, brd5, brd6));
+		
+		for (Brd_division brd : brdRepository.findAll()) {
+			logger.info(brd.getBrdName());
+		}
+		
+		for (Brd_post post : postRepository.findAll()) {
+			logger.info(post.getPostTitle());
 		}
 		
 

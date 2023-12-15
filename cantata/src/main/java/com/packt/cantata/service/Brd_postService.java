@@ -1,0 +1,61 @@
+package com.packt.cantata.service;
+
+import java.io.IOException;
+import java.util.NoSuchElementException;
+
+import javax.persistence.EntityNotFoundException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.packt.cantata.domain.Brd_post;
+import com.packt.cantata.domain.Brd_postRepository;
+
+@Service
+public class Brd_postService {
+
+	@Autowired
+	private Brd_postRepository postRepository;
+
+	
+	public Long getLastPostNumForBrdNo(Long brdNo) {
+	    Long lastPostNum = postRepository.findLastPostNumForBrdNo(brdNo);
+	    return lastPostNum != null ? lastPostNum : 0L; //null값이 아닐때 brdNo값 기준 가장 큰 postNum 리턴 단 만약 null이라면 Long 0값을 리턴
+	} //brdNo별로 postNum값을 따로 관리하려 했으나 게시글이 primary key 이외에는 열리지 않아 폐기, 그래도 만약 나중에 쓰일 수도 있으니 주석처리
+
+//	public Long getLastPostNum() {
+//		Long lastPostNum = postRepository.findLastPostNum();
+//		return lastPostNum != null ? lastPostNum : 0L;
+//	}
+
+	public Brd_post savePost(Brd_post brdPost) {
+		Long lastPostNum = getLastPostNumForBrdNo(brdPost.getBrdNo().getBrdNo());
+		brdPost.setPostNum(lastPostNum + 1);
+
+		// Save the post
+		return postRepository.save(brdPost);
+	}
+	
+	public void postView(Long postNo) {
+		Brd_post post = postRepository.findById(postNo)
+				.orElseThrow(() -> new NoSuchElementException("게시물을 찾을 수 없습니다."));
+		
+		post.setPostViews(post.getPostViews() + 1);
+		postRepository.save(post);
+	}
+	
+//	public void savFileToPost(Long postNo, MultipartFile file) throws IOException {
+//		Brd_post post = postRepository.findById(postNo).orElseThrow(EntityNotFoundException::new);
+//		
+//		//MultipartFile을 byte 배열로 변환
+//		byte[] fileBytes = file.getBytes();
+//		
+//		//덴티티 파일에 데이터 설정
+//		post.setPostFile1(fileBytes);
+//		
+//		//저장된 엔티티 업데이트
+//		postRepository.save(post);
+//    }
+}

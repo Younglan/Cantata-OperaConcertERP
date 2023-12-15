@@ -11,5 +11,5 @@ public class PathAndEntities {
     String midPath;
     User user;
     Performance performance;
-    
+    Brd_post brdPost;
 }
