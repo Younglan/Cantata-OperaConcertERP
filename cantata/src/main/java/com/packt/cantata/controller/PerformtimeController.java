@@ -37,8 +37,7 @@ public class PerformtimeController {
 
 	@GetMapping("/allTimeList")
 	private Iterable<Perform_time> getTimes() {
-//		return timeRepo.findAll();
-		return timeRepo.findAllTimeList();
+		return timeRepo.findAll();
 	}
 	
 	@GetMapping("/pfTimeList/{pfCode}")
@@ -49,7 +48,6 @@ public class PerformtimeController {
 	
 	@PostMapping
 	public ResponseEntity<Perform_time> createPerformTime(@RequestBody NewTimeDto newTimeDto) {
-		System.out.println(newTimeDto);
 	    Perform_time performTime = new Perform_time();
 	    performTime.setPtDate(newTimeDto.getPtDate());
 

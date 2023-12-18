@@ -14,7 +14,7 @@ import com.packt.cantata.dto.Perform_timeDto;
 @RepositoryRestResource
 public interface Perform_timeRepository extends JpaRepository<Perform_time, Integer> {
 	
-	@Query(value="SELECT t.pt_date FROM perform_time t ORDER BY t.pt_date", nativeQuery=true)
+	@Query(value="SELECT t.pt_date FROM perform_time t WHERE t.pt_status = 1 ORDER BY t.pt_date", nativeQuery=true)
 	List<Date> findBygetpftimes();
 	
 	@Query(value="SELECT t.pt_no, t.pt_date FROM Perform_time t WHERE Date(t.pt_date) = :pt_date AND t.pf_code IN (SELECT p.pf_code FROM Performance p WHERE p.pf_title = :pf_title)", nativeQuery=true)
@@ -22,7 +22,7 @@ public interface Perform_timeRepository extends JpaRepository<Perform_time, Inte
 	
 	List<Perform_time> findByPfCode(@Param("pf_code") Performance performance);
 
-	@Query(value="SELECT t.pt_date FROM Perform_time t WHERE t.pf_code = :pfCode", nativeQuery=true)
+	@Query(value="SELECT t.pt_date FROM Perform_time t WHERE t.pf_code = :pfCode AND t.pt_status = 1 ORDER BY t.pt_date", nativeQuery=true)
 	List<Date> findByPfCode2(@Param("pfCode") String pfCode);
 
 	@Query(value="SELECT * FROM Perform_time WHERE pt_status = true", nativeQuery=true)

@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,20 +21,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Brd_division {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long brd_no;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long brdNo;
 
 	@Column(nullable = false)
-	private String brd_name;
+	private String brdName;
 
-	public Brd_division(String brd_name) {
+	public Brd_division(String brdName) {
 		super();
-		this.brd_name = brd_name;
+		this.brdName = brdName;
 	}
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "brdNo")
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "brd_no")
-	private List<Brd_post> brd_posts;
+	private List<Brd_post> brdPosts;
 }

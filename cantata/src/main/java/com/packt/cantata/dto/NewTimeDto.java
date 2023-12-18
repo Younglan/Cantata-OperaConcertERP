@@ -12,8 +12,4 @@ import lombok.Setter;
 public class NewTimeDto {
 	private Long pfCode;
     private Date ptDate;
-	@Override
-	public String toString() {
-		return "NewTimeDto [pfCode=" + pfCode + ", ptDate=" + ptDate + "]";
-	}
 }
