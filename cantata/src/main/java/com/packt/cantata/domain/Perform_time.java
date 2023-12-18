@@ -38,7 +38,7 @@ public class Perform_time {
 	@Column
 	private Date ptDate;
 	
-	@Column(columnDefinition = "boolean default true",nullable = false)
+	@Column(columnDefinition = "boolean default true")
 	private Boolean ptStatus = true;
 	
 	@JsonIgnore

@@ -23,6 +23,8 @@ public interface Perform_timeRepository extends JpaRepository<Perform_time, Inte
 	List<Perform_time> findByPfCode(@Param("pf_code") Performance performance);
 
 	@Query(value="SELECT t.pt_date FROM Perform_time t WHERE t.pf_code = :pfCode", nativeQuery=true)
-	List<Date> findByPfCode(@Param("pfCode") String pfCode);
+	List<Date> findByPfCode2(@Param("pfCode") String pfCode);
 
+	@Query(value="SELECT * FROM Perform_time WHERE pt_status = true", nativeQuery=true)
+	Iterable<Perform_time> findAllTimeList();
 }
