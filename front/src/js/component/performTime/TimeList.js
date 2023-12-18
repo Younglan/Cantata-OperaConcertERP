@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate,useParams  } from "react-router-dom";
-import { DataGrid, GridToolbarContainer, GridToolbarExport, gridClasses } from '@mui/x-data-grid';
-import { Snackbar } from "@mui/material";
-// import AddCar from "./AddCar";
-// import EditCar from "./EditCar";
-import Stack from "@mui/material/Stack";
-import { IconButton } from "@mui/material";
+import { DataGrid} from '@mui/x-data-grid';
 // import DeleteIcon from '@mui/icons-material/Delete';
 import './TimeList.css';
 import dayjs from "dayjs";
-import "dayjs/locale/ko";
 import AddTime from './AddTime';
 dayjs.locale("ko");
 
@@ -28,6 +22,8 @@ function TimeList(){
     // pfCode : URL로부터 가져옴
     const { pfCode: pfCodeFromParams } = useParams();
     const [pfCode, setPfCode] = useState(pfCodeFromParams);
+    const [pfStart, setPfStart] = useState([]);
+    const [pfEnd, setPfEnd] = useState([]);
 
     const navigate = useNavigate();
     //리다이렉션 핸들러
@@ -78,6 +74,14 @@ function TimeList(){
                 setTimes(filteredTimes);
         })
         .catch(err => console.error(err));
+
+        fetch(SERVER_URL+'/performances/'+pfCode)
+        .then(response => response.json())
+        .then(data => {
+            setPfStart(data.pfStart);
+            setPfEnd(data.pfEnd);
+        })
+        .catch(err => console.error(err));
     };
 
     const onDelClick = (ptNo) => {
@@ -104,6 +108,7 @@ function TimeList(){
         
     }
     const addTime = (time) =>{
+        console.log(time);
         fetch(SERVER_URL+'/perform_times',
             {method: 'POST',
             headers: {
@@ -146,7 +151,7 @@ function TimeList(){
                         disableRowSelectionOnClick={true}
                         getRowId={row => row.ptNo}/> 
 
-                <AddTime addTime={addTime} sendPfCode={pfCode}/>
+                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd}/>
                 <button onClick={handleRedirect}>뒤로가기</button> 
             </div>
         </React.Fragment>

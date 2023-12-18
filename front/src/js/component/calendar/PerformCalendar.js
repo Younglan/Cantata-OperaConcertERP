@@ -2,26 +2,58 @@
 // import moment from 'moment';
 // import Toolbar from './Toolbar';
 // import 'react-big-calendar/lib/css/react-big-calendar.css';
-import React, { Component } from 'react';
+import React, { Component,useState,useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import koLocale from '@fullcalendar/core/locales/ko'; // 한글 locale 추가
 import './PerformCalendar.css';
 
-class PerformCalendar extends Component {
-    render() {
-        return (
-          <div className="App">
-            <FullCalendar 
-              defaultView="dayGridMonth" 
-              plugins={[ dayGridPlugin ]}
-              events={[
-                { title: 'event 1', date: '2023-12-01' },
-                { title: 'event 2', date: '2023-12-03' }
-            ]}
-            />
-          </div>
-        );
-    }
+
+const SERVER_URL='http://localhost:8090';
+
+function PerformCalendar (){
+  const navigate = useNavigate();
+  const [times, setTimes] = useState([]);
+  
+  useEffect(() => {
+    fetchTimeList();
+  }, []);
+
+  const fetchTimeList= () => {
+    fetch(SERVER_URL+'/perform_times/allTimeList')
+    .then(response => response.json())
+    .then(data => {
+            setTimes(data);
+    })
+    .catch(err => console.error(err));
+  };
+
+  const handleEventClick = (eventInfo) => {
+    const eventData = eventInfo.event;
+    const pfcode = eventData.extendedProps.link;
+    navigate("/performanceDetail/"+pfcode);
+  };
+    
+  return (
+    <div className='contentsArea'>
+      <div className='contents'>
+        <FullCalendar 
+          defaultView="dayGridMonth" 
+          plugins={[ dayGridPlugin ]}
+          locale={koLocale}
+          events={times.map((time) => ({
+            title: time.pfCode.pfTitle,
+            date: time.ptDate,
+            extendedProps: {
+              link: time.pfCode.pfCode,
+            },
+          }))}
+          eventClick={handleEventClick} // 클릭 이벤트 핸들러 추가
+        />
+      </div>
+    </div>
+  );
 }
 
 export default PerformCalendar;
