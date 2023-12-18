@@ -2,7 +2,8 @@ package com.packt.cantata.domain;
 
 
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,7 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,46 +28,87 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Brd_post {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long post_no; // 글 번호
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long postNo; // 글 번호
 
-	// JsomManagedReference 에 있는 것들은 전부 임시
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "brd_no")
-	private Brd_division brd_no;
+	@ManyToOne//(fetch = FetchType.LAZY)
+	@JoinColumn(name = "brdNo")
+	private Brd_division brdNo;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id")
 	private User id; //회원ID
 
 	@Column(nullable = false)
-	private String post_title; // 글제목
+	private long postNum; //BrdNo에 따라 번호를 정렬하는 용도
+	
+	@Column(nullable = false)
+	private String postTitle; // 글제목
+
 
 	@Column(nullable = false)
-	private String post_sub; // 글내용
+	private String postSub; // 글내용
 
-	@Column(name = "post_file1") // 첨부파일 1
-	private String post_file1;
+	@Column(name = "postFile1") // 첨부파일 1
+	private String postFile1;
 
-	@Column(name = "post_file2") // 첨부파일 2
-	private String post_file2;
+	@Column(name = "postFile2") // 첨부파일 2
+	private String postFile2;
 
-	@Column(name = "post_file3") // 첨부파일 3
-	private String post_file3;
-
-	@Column(nullable = false)
-	private int post_views; // 조회수
+	@Column(name = "postFile3") // 첨부파일 3
+	private String postFile3;
 
 	@Column(nullable = false)
-	private Date post_date; // 작성일
+	private int postViews; // 조회수
+
+	@Column(nullable = false)
+	private LocalDate postDate = LocalDate.now(); // 작성일, 기본값은 현재 날짜
 
 	@Column
-	private Date post_deadline; // 게시표시일자
+	private LocalDate postDeadline; // 게시표시일자	
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post_no")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "postNo")
 	private List<Reply> replies;
+	
+	@OneToMany(mappedBy = "brdPost", cascade = CascadeType.REMOVE)
+//    @JsonManagedReference(value = "brd_post-files")
+    private List<File> files = new ArrayList<>();
+	
+	public Brd_post( String postTitle,String postFile1, String postFile2, String postFile3,
+			String postSub, LocalDate postDate, LocalDate postDeadline) {
+		super();
+		
+		this.postTitle = postTitle;
+		this.postFile1 = postFile1;
+		this.postFile2 = postFile2;
+		this.postFile3 = postFile3;
+		this.postSub = postSub;
+		this.postDate = postDate;
+		this.postDeadline = postDeadline;
+	}
+	public Brd_post(String postTitle, String postFile1, String postFile2, String postFile3) {
+		super();
+		this.postTitle = postTitle;
+		this.postFile1 = postFile1;
+		this.postFile2 = postFile2;
+		this.postFile3 = postFile3;
+	}
+
+	@Override
+	public String toString() {
+		return "Brd_post [postNo=" + postNo + ", postTitle=" + postTitle + ", postFile1=" + postFile1 
+				+ ",postFile2=" + postFile2 + ", postFile3=" + postFile3 + ", postSub="
+				+ postSub + ", postDate=" + postDate + ", postDeadline=" + postDeadline + ", brdNo =" + brdNo + "]";
+	}
+	
+	public Brd_post(String postTitle) {
+		super();
+		this.postTitle = postTitle;
+	}
+
 }

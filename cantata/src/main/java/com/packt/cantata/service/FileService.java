@@ -1,22 +1,26 @@
 package com.packt.cantata.service;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
-
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.packt.cantata.domain.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
+import com.packt.cantata.domain.Brd_post;
+import com.packt.cantata.domain.Brd_postRepository;
+import com.packt.cantata.domain.File;
+import com.packt.cantata.domain.FileRepository;
+import com.packt.cantata.domain.Performance;
+import com.packt.cantata.domain.PerformanceRepository;
 import com.packt.cantata.dto.PathAndEntities;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +30,8 @@ public class FileService {
 
     private final PerformanceRepository performanceRepository;
 	
+    private final Brd_postRepository postRepository;
+    
 	@Value("${spring.cloud.gcp.storage.bucket}")
     private String bucketName;
 	
@@ -54,7 +60,7 @@ public class FileService {
 //            createfile.setMember(pathAndEntities.getMember());
 //            createfile.setSpace(pathAndEntities.getSpace());
 //            createfile.setEdu(pathAndEntities.getEdu());
-//            createfile.setPost(pathAndEntities.getPost());
+            createfile.setBrdPost(pathAndEntities.getBrdPost());
 //            createfile.setEduHist(pathAndEntities.getEduHist());
 
             File savedFile = fileRepository.save(createfile);
@@ -72,7 +78,7 @@ public class FileService {
 //        Space space = null;
 //        Edu edu = null;
 //        EduHist eduHist = null;
-//        Post post = null;
+        Brd_post brdPost = null;
         String midPath = "";
 
         if (number == 0) {
@@ -97,10 +103,10 @@ public class FileService {
 //                    eduHist = eduHistRepository.findTopByOrderByEduHistNumDesc();
 //                    midPath = tableName + "/" + eduHist.getEduHistNum() + "/";
 //                    break;
-//                case "post":
-//                    post = postRepository.findTopByOrderByPostNumDesc();
-//                    midPath = tableName + "/" + post.getPostNum() + "/";
-//                    break;
+                case "brd_post": //테이블 이름과 같아야 함
+                    brdPost = postRepository.findTopByOrderByPostNoDesc();
+                    midPath = tableName + "/" + brdPost.getPostNo() + "/";
+                    break;
                 default:
                     throw new IllegalArgumentException("Invalid table name: " + tableName);
             }
@@ -137,10 +143,10 @@ public class FileService {
 //                        midPath = tableName + "/" + eduHist.getEduHistNum() + "/";
 //                    }
 //                    break;
-//                case "post":
-//                    post = postRepository.findByPostNum(number);
-//                        midPath = tableName + "/" + number + "/";
-//                    break;
+                case "brd_post":
+//                  brdPost = postRepository.findByPostNo(number);
+                      midPath = tableName + "/" + number + "/";
+                  break;
                 default:
                     throw new IllegalArgumentException("Invalid table name: " + tableName);
             }
