@@ -35,7 +35,7 @@ public class Ticket {
 	private Long tic_no; 	
 	 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "pt_no")
+	@JoinColumn(name = "ptNo")
 	private Perform_time pt_no;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id")
