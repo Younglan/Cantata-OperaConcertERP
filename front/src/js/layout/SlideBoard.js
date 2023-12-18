@@ -72,7 +72,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                     <ul>
                         <h2>공연</h2>
                         <li onClick = {() => {goToPerformanceList(); handleToggle();}}><h1>공연일정</h1></li>
-                        <li><h1>온라인예약</h1></li>
+                        <li onClick = {() => {navigate("/ticket"); handleToggle();}}><h1>온라인예약</h1></li>
                     </ul>
                 </div>
                 <div className = "rental_board menu_list">
