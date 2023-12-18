@@ -68,6 +68,16 @@ public class Brd_postController {
         }
     }
     
+    
+    @PutMapping("/updatePost/{postNo}") // 수정된 부분: postNum 대신 postNo
+    public ResponseEntity<Void> updatePost(@PathVariable Long postNo, @RequestBody Brd_post brdPost) {
+        try {
+            postService.updatePost(postNo, brdPost); // 수정된 글 정보를 서비스로 전달하여 업데이트
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 //    @GetMapping("/lastPostNum")
 //    public ResponseEntity<Long> getLastPostNum() {
 //        try {

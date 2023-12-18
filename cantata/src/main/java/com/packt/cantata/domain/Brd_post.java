@@ -67,6 +67,9 @@ public class Brd_post {
 
 	@Column(nullable = false)
 	private LocalDate postDate = LocalDate.now(); // 작성일, 기본값은 현재 날짜
+	
+	@Column(columnDefinition = "boolean default true",nullable = false)
+	private Boolean postStatus = true; //true면 게시판에 보이고 false면 보이지 않는다.
 
 	@Column
 	private LocalDate postDeadline; // 게시표시일자	

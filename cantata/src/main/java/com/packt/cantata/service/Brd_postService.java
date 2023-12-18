@@ -46,6 +46,21 @@ public class Brd_postService {
 		postRepository.save(post);
 	}
 	
+    public void updatePost(Long postNo, Brd_post updatedPost) {
+        Brd_post existingPost = postRepository.findById(postNo)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + postNo));
+
+        // 여기에서 필요한 업데이트 로직을 수행
+        //글 제목, 내용 등을 업데이트
+        existingPost.setPostTitle(updatedPost.getPostTitle());
+        existingPost.setPostFile1(updatedPost.getPostFile1());
+        existingPost.setPostSub(updatedPost.getPostSub());
+        existingPost.setPostDeadline(updatedPost.getPostDeadline());
+
+        // 업데이트된 글을 저장합니다.
+        postRepository.save(existingPost);
+    }
+	
 //	public void savFileToPost(Long postNo, MultipartFile file) throws IOException {
 //		Brd_post post = postRepository.findById(postNo).orElseThrow(EntityNotFoundException::new);
 //		
