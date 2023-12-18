@@ -69,7 +69,7 @@ public class TicketController {
 	
 	@RequestMapping(value="/pftimeDtl") 
 	public List<Date> getTimesDetail(@RequestParam("pfCode") String pfCode){
-		return pftrepo.findByPfCode(pfCode);
+		return pftrepo.findByPfCode2(pfCode);
 	}
 	@Transactional
 	@RequestMapping(value="/ticketcheck") 
