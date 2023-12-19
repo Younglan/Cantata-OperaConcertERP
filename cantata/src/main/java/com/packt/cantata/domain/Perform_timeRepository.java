@@ -28,7 +28,7 @@ public interface Perform_timeRepository extends JpaRepository<Perform_time, Inte
 	@Query(value="SELECT * FROM Perform_time WHERE pt_status = true", nativeQuery=true)
 	Iterable<Perform_time> findAllTimeList();
 	
-	@Query(value="SELECT * FROM Perform_time WHERE pf_code = :pfCode AND pt_status=1 AND (pt_date BETWEEN :ptDate AND :ptEndtime) OR (pt_endtime BETWEEN  :ptDate AND :ptEndtime) ;", nativeQuery=true)
+	@Query(value="SELECT * FROM Perform_time WHERE pf_code = :pfCode AND pt_status=1 AND ((pt_date BETWEEN :ptDate AND :ptEndtime) OR (pt_endtime BETWEEN  :ptDate AND :ptEndtime)) ;", nativeQuery=true)
 	Iterable<Perform_time> findPfCodeAndPtDate(@Param("pfCode") Long pfCode, @Param("ptDate") String ptDate,  @Param("ptEndtime")String ptEndtime);
 	
 }
