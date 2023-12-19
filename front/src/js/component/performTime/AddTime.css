@@ -1,0 +1,25 @@
+.addTimeform{
+    width: 600px;
+    height: 500px;
+    margin: 0 auto;
+}
+.addTimePicker{
+    width:90%;
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+    padding: .375rem .75rem;
+}
+.addTimePicker:focus{
+    border-color:#86b7fe;
+    outline: 0px;
+}
+
+.css-ypiqx9-MuiDialogContent-root{
+    width: 370px;
+    height: 500px;
+
+}
+
+.timesCheck{
+    color:red;
+}

@@ -1,5 +1,5 @@
 import React, { useRef, useState, useMemo, useEffect } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -135,11 +135,6 @@ function NewPerform(props) {
             const range = editor.getSelection();
             editor.insertEmbed(range ? range.index : 0, 'image', url);
         }
-        // else if(quillRef2.current) {
-        //     const editor = quillRef2.current.getEditor();
-        //     const range = editor.getSelection();
-        //     editor.insertEmbed(range ? range.index : 0, 'image', url);
-        // }
     }
     function insertToEditor2(url) {
         if(quillRef2.current) {

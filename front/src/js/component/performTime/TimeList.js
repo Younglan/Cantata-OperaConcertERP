@@ -28,6 +28,15 @@ function TimeList(){
     // pfCode : URL로부터 가져옴
     const { pfCode: pfCodeFromParams } = useParams();
     const [pfCode, setPfCode] = useState(pfCodeFromParams);
+<<<<<<< HEAD
+    const [pfTitle, setPfTitle] = useState([]);
+    const [pfStart, setPfStart] = useState([]);
+    const [pfEnd, setPfEnd] = useState([]);
+    const [pfRuntime, setPfRuntime] = useState([]);
+    const [plantNo, setPlantNo] = useState([]);
+
+=======
+>>>>>>> d34e731d92fa6847ffb1af0118f1ff7f4eeede03
 
     const navigate = useNavigate();
     //리다이렉션 핸들러
@@ -78,6 +87,20 @@ function TimeList(){
                 setTimes(filteredTimes);
         })
         .catch(err => console.error(err));
+<<<<<<< HEAD
+
+        fetch(SERVER_URL+'/performances/'+pfCode)
+        .then(response => response.json())
+        .then(data => {
+            setPfTitle(data.pfTitle);
+            setPfStart(data.pfStart);
+            setPfEnd(data.pfEnd);
+            setPfRuntime(data.pfRuntime);
+            
+        })
+        .catch(err => console.error(err));
+=======
+>>>>>>> d34e731d92fa6847ffb1af0118f1ff7f4eeede03
     };
 
     const onDelClick = (ptNo) => {
@@ -128,7 +151,7 @@ function TimeList(){
         return(
             <React.Fragment>
                 <div> 저장된 데이터가 없습니다. </div>
-                <AddTime addTime={addTime} sendPfCode={pfCode}/>
+                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime}/>
                 <button onClick={handleRedirect}>뒤로가기</button> 
             </React.Fragment>
         ) ;
@@ -146,7 +169,11 @@ function TimeList(){
                         disableRowSelectionOnClick={true}
                         getRowId={row => row.ptNo}/> 
 
+<<<<<<< HEAD
+                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime}/>
+=======
                 <AddTime addTime={addTime} sendPfCode={pfCode}/>
+>>>>>>> d34e731d92fa6847ffb1af0118f1ff7f4eeede03
                 <button onClick={handleRedirect}>뒤로가기</button> 
             </div>
         </React.Fragment>
