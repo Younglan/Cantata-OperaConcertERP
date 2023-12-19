@@ -4,7 +4,7 @@
     margin: 0 auto;
 }
 .addTimePicker{
-    width:90%;
+    width : 100%;
     border-radius: 5px;
     border: 1px solid #dee2e6;
     padding: .375rem .75rem;
@@ -15,7 +15,7 @@
 }
 
 .css-ypiqx9-MuiDialogContent-root{
-    width: 370px;
+    width: 400px;
     height: 500px;
 
 }
