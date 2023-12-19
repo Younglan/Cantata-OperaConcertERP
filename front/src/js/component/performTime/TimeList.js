@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate,useParams  } from "react-router-dom";
-import { DataGrid, GridToolbarContainer, GridToolbarExport, gridClasses } from '@mui/x-data-grid';
+import { DataGrid} from '@mui/x-data-grid';
 import { Snackbar } from "@mui/material";
-// import AddCar from "./AddCar";
-// import EditCar from "./EditCar";
-import Stack from "@mui/material/Stack";
-import { IconButton } from "@mui/material";
-// import DeleteIcon from '@mui/icons-material/Delete';
 import './TimeList.css';
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -28,15 +23,12 @@ function TimeList(){
     // pfCode : URL로부터 가져옴
     const { pfCode: pfCodeFromParams } = useParams();
     const [pfCode, setPfCode] = useState(pfCodeFromParams);
-<<<<<<< HEAD
     const [pfTitle, setPfTitle] = useState([]);
     const [pfStart, setPfStart] = useState([]);
     const [pfEnd, setPfEnd] = useState([]);
     const [pfRuntime, setPfRuntime] = useState([]);
     const [plantNo, setPlantNo] = useState([]);
 
-=======
->>>>>>> d34e731d92fa6847ffb1af0118f1ff7f4eeede03
 
     const navigate = useNavigate();
     //리다이렉션 핸들러
@@ -48,7 +40,7 @@ function TimeList(){
     const [open, setOpen] = useState(false);
 
     const columns = [ 
-        {field: 'ptNo', headerName: '회차구분',headerAlign: 'center'}, 
+        {field: 'ptNo', headerName: '등록번호',headerAlign: 'center'}, 
         {field: 'pfCode', headerName: '공연제목',headerAlign: 'center',width: 300, 
             valueGetter: (params) => {
                 const pfTitle = Array.isArray(params.row.pfCode) ? params.row.pfCode : [params.row.pfCode];
@@ -87,7 +79,6 @@ function TimeList(){
                 setTimes(filteredTimes);
         })
         .catch(err => console.error(err));
-<<<<<<< HEAD
 
         fetch(SERVER_URL+'/performances/'+pfCode)
         .then(response => response.json())
@@ -96,11 +87,11 @@ function TimeList(){
             setPfStart(data.pfStart);
             setPfEnd(data.pfEnd);
             setPfRuntime(data.pfRuntime);
-            
         })
-        .catch(err => console.error(err));
-=======
->>>>>>> d34e731d92fa6847ffb1af0118f1ff7f4eeede03
+        .catch(err => {
+            console.error(err);
+            navigate("/errorPage");
+        });
     };
 
     const onDelClick = (ptNo) => {
@@ -169,11 +160,7 @@ function TimeList(){
                         disableRowSelectionOnClick={true}
                         getRowId={row => row.ptNo}/> 
 
-<<<<<<< HEAD
                 <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime}/>
-=======
-                <AddTime addTime={addTime} sendPfCode={pfCode}/>
->>>>>>> d34e731d92fa6847ffb1af0118f1ff7f4eeede03
                 <button onClick={handleRedirect}>뒤로가기</button> 
             </div>
         </React.Fragment>

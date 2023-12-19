@@ -1,4 +1,5 @@
 import React, { useState} from "react";
+import { useNavigate  } from "react-router-dom";
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -9,10 +10,12 @@ import './AddTime.css';
 const SERVER_URL='http://localhost:8090';
 
 function AddTime(props){
-    const [date, setDate] = useState();
+    const navigate = useNavigate();
+    const [date, setDate] = useState(null);
+    const [time, setTime] = useState(null);
     const { sendPfCode, sendPfStart, sendPfEnd,sendPfTitle,sendRunTime  } = props;
     const [open, setOpen] = useState(false);
-    const [time, setTime] = useState({
+    const [performTime, setPerformTime] = useState({
         ptDate:'',
         ptEndtime:'',
         pfCode:sendPfCode
@@ -20,24 +23,52 @@ function AddTime(props){
     const [timesCheck, setTimesCheck] = useState();
     //모달폼 열기 
     const handleClickOpen = () => {
+        setDate(null);
+        setTime(null);
+        setTimesCheck(null);
         setOpen(true);
     };
     //모달 폼 닫기 
     const handleClose = () => {
         setOpen(false);
     }
-    
+
     const handleDateChange = (selectedDate) => {
         setDate(selectedDate);
-        const formatDate = new Date(moment(selectedDate).format("YYYY-MM-DD HH:mm"));
-        const formatDate2 = format(selectedDate, 'yyyy-MM-dd HH:mm', { locale: ko });
-        const ptEndtime = new Date(formatDate);
-        ptEndtime.setMinutes(ptEndtime.getMinutes() + sendRunTime);
-        setTime({ ...time, ptDate: formatDate, ptEndtime: ptEndtime});
-        //일정중복체크 함수 호출
-        timesCheckFunction(formatDate2);
+
+        // 선택된 날짜와 시간을 이용하여 일정 중복 체크 함수 호출
+        if (selectedDate && time) {
+            console.log("date : "+date+", time : "+time);
+            //선택한 날짜값과 시간값 하나의 데이터로 합치기
+            const selectedDateTime = new Date(selectedDate);
+            selectedDateTime.setHours(time.getHours(), time.getMinutes());
+
+            timeformatting(selectedDateTime);
+        }
     }
 
+    const handleTimeChange = (selectedTime) => {
+        setTime(selectedTime);
+        // 선택된 날짜와 시간을 이용하여 일정 중복 체크 함수 호출
+        if (date && selectedTime) {
+            //선택한 날짜값과 시간값 하나의 데이터로 합치기
+            const selectedDateTime = new Date(date);
+            selectedDateTime.setHours(selectedTime.getHours(), selectedTime.getMinutes());
+            //일정중복체크 함수 호출
+            timeformatting(selectedDateTime);
+        }
+    }
+    // 선택된 날짜와 시간을 이용하여 일정 중복 체크 함수 
+    const timeformatting = (selectedDateTime) =>{
+            const formatDate = new Date(moment(selectedDateTime).format("YYYY-MM-DD HH:mm"));
+            const formatDate2 = format(selectedDateTime, 'yyyy-MM-dd HH:mm', { locale: ko });
+            const ptEndtime = new Date(formatDate);
+            ptEndtime.setMinutes(ptEndtime.getMinutes() + sendRunTime);
+            console.log("ptEndtime : "+ptEndtime);
+            setPerformTime({ ...performTime, ptDate: formatDate, ptEndtime: ptEndtime});
+            //일정중복체크 함수 호출
+            timesCheckFunction(formatDate2);
+    }
     //일정중복체크 함수
     const timesCheckFunction = (date) => {
         //선택된 날짜에 대한 런타임 계산 및 포맷변경
@@ -52,7 +83,7 @@ function AddTime(props){
             if(data === true ){
                 setTimesCheck(null);
             }else{
-                setTimesCheck(<div className="timesCheck">해당회차가 이미 있습니다.</div>);
+                setTimesCheck(<div className="timesCheck">해당날짜와 시간에 이미 다른회차가 존재합니다.</div>);
             }
         })
         .catch(err => console.error(err));
@@ -63,12 +94,22 @@ function AddTime(props){
     }
 
     const handleSave = () => {
-        if(timesCheck !== null){
-            alert("날짜를 재선택하세요");
-        }else{
-            props.addTime(time);
-            handleClose();
+        console.log(performTime);
+        if(date === null){
+            alert("날짜를 선택하세요");
+        }else if(time === null){
+            alert("시간을 선택하세요");
+        }else if(date && time){
+            if(timesCheck !== null){
+                console.log(timesCheck);
+                alert("날짜와 시간을 다시 선택하세요");
+            }else{
+                
+                props.addTime(performTime);
+                handleClose();
+            }
         }
+        
         
     }
 
@@ -79,17 +120,28 @@ function AddTime(props){
                 <DialogTitle>[{sendPfTitle}]</DialogTitle>
                 <DialogContent className="addTimeformContent">
                     새 회차 일시 선택
+                    {/* 첫 번째 DatePicker: 날짜 선택 */}
                     <DatePicker
-                        showTimeSelect
-                        locale={ ko }
-                        dateFormat='yyyy-MM-dd HH:mm' // 날짜 형태
-                        shouldCloseOnSelect // 날짜를 선택하면 datepicker가 자동으로 닫힘
+                        locale={ko}
+                        dateFormat='yyyy-MM-dd'
+                        selected={date}
                         minDate={new Date(sendPfStart)} // minDate 이전 날짜 선택 불가
                         maxDate={new Date(sendPfEnd)} // maxDate 이후 날짜 선택 불가
-                        selected={date}
                         onChange={handleDateChange}
                         className="addTimePicker"
                     />
+                    {/* 두 번째 DatePicker: 시간 선택 */}
+                    {date && (
+                        <DatePicker
+                            showTimeSelect
+                            showTimeSelectOnly
+                            locale={ko}
+                            dateFormat='HH:mm'
+                            selected={time}
+                            onChange={handleTimeChange}
+                            className="addTimePicker"
+                        />
+                    )}
                     {renderTimesCheck()}
                        
                 </DialogContent>
