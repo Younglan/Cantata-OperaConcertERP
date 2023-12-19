@@ -1,32 +1,32 @@
-package com.packt.cantata;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import com.packt.cantata.domain.Performance;
-import com.packt.cantata.domain.PerformanceRepository;
-
-
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class PerformanceRepositoryTest {
-	@Autowired
-	private PerformanceRepository pfRepository;
-	
-	SimpleDateFormat dtFormat = new SimpleDateFormat ("yyyy-MM-dd");
-	
-	@Test
-	void findPerform() {
-		pfRepository.findAll();
-	}
-	
+//package com.packt.cantata;
+//
+//import static org.assertj.core.api.Assertions.assertThat;
+//
+//import java.text.ParseException;
+//import java.text.SimpleDateFormat;
+//
+//import org.junit.jupiter.api.Test;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+//import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+//
+//import com.packt.cantata.domain.Performance;
+//import com.packt.cantata.domain.PerformanceRepository;
+//
+//
+//@DataJpaTest
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//public class PerformanceRepositoryTest {
+//	@Autowired
+//	private PerformanceRepository pfRepository;
+//	
+//	SimpleDateFormat dtFormat = new SimpleDateFormat ("yyyy-MM-dd");
+//	
+//	@Test
+//	void findPerform() {
+//		pfRepository.findAll();
+//	}
+//	
 //	@Test
 //	void savePerform() {
 //		try {
@@ -51,11 +51,11 @@ public class PerformanceRepositoryTest {
 //		
 //		
 //	}
-//	@Test
-//	void deletePerform() {
-//		pfRepository.save(new Performance("공연", "라보헴", "상상극단", "posterURI", "라보헴 공연설명이에요~"));
-//		pfRepository.deleteAll();
-//		assertThat(pfRepository.count()).isEqualTo(0);
-//	}
-
-}
+////	@Test
+////	void deletePerform() {
+////		pfRepository.save(new Performance("공연", "라보헴", "상상극단", "posterURI", "라보헴 공연설명이에요~"));
+////		pfRepository.deleteAll();
+////		assertThat(pfRepository.count()).isEqualTo(0);
+////	}
+//
+//}

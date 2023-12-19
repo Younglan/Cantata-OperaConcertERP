@@ -1,8 +1,12 @@
 package com.packt.cantata.domain;
 
-import javax.persistence.*;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +25,10 @@ public class File {
 //	@JsonManagedReference(value = "performance-files")
 	@JoinColumn(name = "pf_code", nullable=true)
 	private Performance performance;	
+	
+	@ManyToOne
+	@JoinColumn(name = "postNo", nullable=true)
+	private Brd_post brdPost;
 	
     @Column(nullable = false)
     private String fileName;

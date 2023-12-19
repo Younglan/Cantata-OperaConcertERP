@@ -26,7 +26,7 @@ function TicketMainDetail(){
     const leftS = [48, 32, 8, 48, 72, 80];
     
     useEffect(()=>{
-      console.log(ticketInfo.state)
+     
       fetch(`http://localhost:8090/pftimeDtl/?pfCode=${ticketInfo.state.pfcode}`)
       .then(response => response.json())
       .then(data => setDate(data.map((it)=>{
@@ -37,6 +37,7 @@ function TicketMainDetail(){
     }, []);
     
       const renderRowTime = (props) => {
+        
         const { index, style } = props;
         return (
           <ListItem style={style} key={index} component="div" disablePadding>
@@ -60,6 +61,7 @@ function TicketMainDetail(){
       };
 
       async function onChangeClick(title){
+        
         try{
           const tmptitle = moment(title).format('YYYY-MM-DD');
         

@@ -18,4 +18,5 @@ public class NewTimeDto {
 		return "NewTimeDto [pfCode=" + pfCode + ", ptDate=" + ptDate + ", ptEndtime=" + ptEndtime + "]";
 	}
 	
+
 }
