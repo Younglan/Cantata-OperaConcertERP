@@ -80,7 +80,7 @@ function Ticket(){
                         seat_no:`${tmpseat}`,
                         tic_pay:`${catpay}-${category}`,
                         pt_no:{
-                            pt_no:ptno
+                            ptNo:ptno
                         },
                         id:{
                             id:"admin"
