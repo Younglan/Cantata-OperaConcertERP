@@ -22,8 +22,12 @@ function TimeList(){
     // pfCode : URL로부터 가져옴
     const { pfCode: pfCodeFromParams } = useParams();
     const [pfCode, setPfCode] = useState(pfCodeFromParams);
+    const [pfTitle, setPfTitle] = useState([]);
     const [pfStart, setPfStart] = useState([]);
     const [pfEnd, setPfEnd] = useState([]);
+    const [pfRuntime, setPfRuntime] = useState([]);
+    const [plantNo, setPlantNo] = useState([]);
+
 
     const navigate = useNavigate();
     //리다이렉션 핸들러
@@ -78,8 +82,11 @@ function TimeList(){
         fetch(SERVER_URL+'/performances/'+pfCode)
         .then(response => response.json())
         .then(data => {
+            setPfTitle(data.pfTitle);
             setPfStart(data.pfStart);
             setPfEnd(data.pfEnd);
+            setPfRuntime(data.pfRuntime);
+            
         })
         .catch(err => console.error(err));
     };
@@ -133,7 +140,7 @@ function TimeList(){
         return(
             <React.Fragment>
                 <div> 저장된 데이터가 없습니다. </div>
-                <AddTime addTime={addTime} sendPfCode={pfCode}/>
+                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime}/>
                 <button onClick={handleRedirect}>뒤로가기</button> 
             </React.Fragment>
         ) ;
@@ -151,7 +158,7 @@ function TimeList(){
                         disableRowSelectionOnClick={true}
                         getRowId={row => row.ptNo}/> 
 
-                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd}/>
+                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime}/>
                 <button onClick={handleRedirect}>뒤로가기</button> 
             </div>
         </React.Fragment>
