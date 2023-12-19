@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -55,6 +57,8 @@ public class Plant {
 	}
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plant_no")
 	private List<Rental> rentals;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plant_no")
-	private List<Performance> performs;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "plant_no", cascade = CascadeType.ALL)
+	private List<Performance> performances;
 }

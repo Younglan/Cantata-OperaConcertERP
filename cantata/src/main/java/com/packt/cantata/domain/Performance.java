@@ -74,7 +74,7 @@ public class Performance {
 	
 	public Performance( String pfCate, String pfTitle, String agency,String agencyTel, String pfPoster, String pfEximg,
 			String pfExplan, String pfNotice, Date pfStart, Date pfEnd, int pfRuntime, int R, int S,int A, int B, int C,
-			int D,Plant plant_no) {
+			int D,Plant plantNo) {
 		super();
 		
 		this.pfCate = pfCate;
@@ -95,7 +95,7 @@ public class Performance {
 		this.C = C;
 		this.D = D;
 //		this.pfStatus = pfStatus;
-		this.plant_no = plant_no;	
+		this.plant_no = plantNo;	
 	}
 	public Performance(String pfCate, String pfTitle, String agency, String pfPoster, String pfExplan) {
 		super();
