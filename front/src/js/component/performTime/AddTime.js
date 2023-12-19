@@ -73,7 +73,7 @@ function AddTime(props){
     }
 
     return(
-        <div >
+        <div>
             <button onClick={handleClickOpen}>새 회차 등록</button>
             <Dialog open={open} onClose={handleClose} className="addTimeform">
                 <DialogTitle>[{sendPfTitle}]</DialogTitle>
