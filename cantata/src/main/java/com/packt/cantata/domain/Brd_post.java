@@ -79,7 +79,6 @@ public class Brd_post {
 	private List<Reply> replies;
 	
 	@OneToMany(mappedBy = "brdPost", cascade = CascadeType.REMOVE)
-//    @JsonManagedReference(value = "brd_post-files")
     private List<File> files = new ArrayList<>();
 	
 	public Brd_post( String postTitle,String postFile1, String postFile2, String postFile3,
