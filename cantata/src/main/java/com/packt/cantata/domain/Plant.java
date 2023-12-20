@@ -55,10 +55,10 @@ public class Plant {
 		this.plant_status = plant_status;
 		this.floor = floor;
 	}
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plant_no")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plantNo")
 	private List<Rental> rentals;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy = "plant_no", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "plantNo", cascade = CascadeType.ALL)
 	private List<Performance> performances;
 }
