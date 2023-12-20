@@ -49,8 +49,11 @@ public class CantataApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Plant plant1 = new Plant("오디토리움", "공연장", null, 1500, null, 1000000, null, "사용가능", "3층");
-		Plant plant2 = new Plant("퍼포먼스홀", "공연장", null, 1500, null, 1000000, null, "사용불가", "1층");
+		Plant plant1 = new Plant("오디토리움", "공연장", null, 1500, null, 1000000, null, true, 3);
+		Plant plant2 = new Plant("퍼포먼스홀", "공연장", null, 1500, null, 1000000, null, true, 1);
+		Plant plant3 = new Plant("사용불가공연장", "공연장", null, 1500, null, 1000000, null, false, 1);
+		Plant plant4 = new Plant("리허설실1", "리허설실", null, 1500, null, 1000000, null, true, 1);
+
 
 		Performance pf1 = new Performance("전시", 
 				"20주년 기념 상상아트 전시회", 
@@ -78,7 +81,7 @@ public class CantataApplication implements CommandLineRunner {
 		
 		Perform_time pt1 = new Perform_time(pf2,dtFormat.parse("2023-12-01"),dtFormat.parse("2023-12-01"),true);
 
-		plantRepository.saveAll(Arrays.asList(plant1,plant2));
+		plantRepository.saveAll(Arrays.asList(plant1,plant2,plant3,plant4));
 		pfRepository.saveAll(Arrays.asList(pf1,pf2));
 		timeRepository.saveAll(Arrays.asList(pt1));
 		
