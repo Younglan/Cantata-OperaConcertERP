@@ -13,7 +13,7 @@ function AddTime(props){
     const navigate = useNavigate();
     const [date, setDate] = useState(null);
     const [time, setTime] = useState(null);
-    const { sendPfCode, sendPfStart, sendPfEnd,sendPfTitle,sendRunTime  } = props;
+    const { sendPfCode, sendPfStart, sendPfEnd,sendPfTitle,sendRunTime,sendPlantNo  } = props;
     const [open, setOpen] = useState(false);
     const [performTime, setPerformTime] = useState({
         ptDate:'',
@@ -38,7 +38,6 @@ function AddTime(props){
 
         // 선택된 날짜와 시간을 이용하여 일정 중복 체크 함수 호출
         if (selectedDate && time) {
-            console.log("date : "+date+", time : "+time);
             //선택한 날짜값과 시간값 하나의 데이터로 합치기
             const selectedDateTime = new Date(selectedDate);
             selectedDateTime.setHours(time.getHours(), time.getMinutes());
@@ -64,7 +63,6 @@ function AddTime(props){
             const formatDate2 = format(selectedDateTime, 'yyyy-MM-dd HH:mm', { locale: ko });
             const ptEndtime = new Date(formatDate);
             ptEndtime.setMinutes(ptEndtime.getMinutes() + sendRunTime);
-            console.log("ptEndtime : "+ptEndtime);
             setPerformTime({ ...performTime, ptDate: formatDate, ptEndtime: ptEndtime});
             //일정중복체크 함수 호출
             timesCheckFunction(formatDate2);
@@ -77,13 +75,13 @@ function AddTime(props){
         const formatDate = format(ptEndtime, 'yyyy-MM-dd HH:mm', { locale: ko });
         
         //백엔드요청
-        fetch(SERVER_URL+"/perform_times/findPfCodePtDate?pfCode="+sendPfCode+"&ptDate="+date+"&ptEndtime="+formatDate)
+        fetch(SERVER_URL+"/perform_times/findPfCodePtDate?plantNo="+sendPlantNo+"&ptDate="+date+"&ptEndtime="+formatDate)
         .then(response => response.json())
         .then(data => {
             if(data === true ){
                 setTimesCheck(null);
             }else{
-                setTimesCheck(<div className="timesCheck">해당날짜와 시간에 이미 다른회차가 존재합니다.</div>);
+                setTimesCheck(<div className="timesCheck">해당날짜와 시간에 이미 다른공연이 존재합니다.</div>);
             }
         })
         .catch(err => console.error(err));
@@ -94,17 +92,14 @@ function AddTime(props){
     }
 
     const handleSave = () => {
-        console.log(performTime);
         if(date === null){
             alert("날짜를 선택하세요");
         }else if(time === null){
             alert("시간을 선택하세요");
         }else if(date && time){
             if(timesCheck !== null){
-                console.log(timesCheck);
                 alert("날짜와 시간을 다시 선택하세요");
             }else{
-                
                 props.addTime(performTime);
                 handleClose();
             }
@@ -125,7 +120,7 @@ function AddTime(props){
                         locale={ko}
                         dateFormat='yyyy-MM-dd'
                         selected={date}
-                        minDate={new Date(sendPfStart)} // minDate 이전 날짜 선택 불가
+                        minDate={Math.max(new Date(), new Date(sendPfStart))} // 둘 중 더 미래의 날짜부터 선택하도록 설정
                         maxDate={new Date(sendPfEnd)} // maxDate 이후 날짜 선택 불가
                         onChange={handleDateChange}
                         className="addTimePicker"
