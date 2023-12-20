@@ -23,9 +23,10 @@ const Item2 = styled(Paper)(({ theme }) => ({
 export default function RentalApps() {
   const [text, setText] = useState({
     rent_name:"",
+    rent_status:"결제대기",
     rent_start:`${moment(new Date()).format("yyyy-MM-DD")}`,
     rent_end:`${moment(new Date()).format("yyyy-MM-DD")}`,
-    rent_date:`${moment(new Date()).format("yyyy-MM-DD")}`,
+    rent_regidate:`${moment(new Date()).format("yyyy-MM-DD")}`,
     // payment:0,
   });
     // const SERVER_URL='http://localhost:8090';
@@ -249,7 +250,7 @@ export default function RentalApps() {
     </Box>
     </Box>
     <div className="rental">
-            <button type='button'className='button1' name="rent_date" onClick={newRentalSave} onChange={onChange} >신청</button>
+            <button type='button'className='button1' name="rent_regidate" onClick={newRentalSave} onChange={onChange} >신청</button>
             <button type='button' value='취소' className="button2" onClick={handleRedirect} >취소</button>
         </div>
       </div>

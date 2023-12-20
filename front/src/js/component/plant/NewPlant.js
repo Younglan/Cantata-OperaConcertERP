@@ -1,10 +1,14 @@
-import React, {useState, useMemo,useEffect } from "react";
+import React, {useState } from "react";
 import { useNavigate} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import '../plant/css/NewPlant.css'
+import '../plant/css/NewPlant.css';
+
+import ReactQuill from "react-quill";
+
+import "react-quill/dist/quill.snow.css";
 
 
 function Newplant(props) {
@@ -23,17 +27,7 @@ function Newplant(props) {
         plant_status:true,
         floor:'',
     });
-
-    let plCode ;
-
-    useEffect(() => {
-        plCode=0;
-    }, []);
-
-    const [file, setFile] = useState(null);
-
-
-
+    const [plExplan, setPlExplan] = React.useState('');
     //리다이렉션 핸들러
     const handleRedirect = () => {
             navigate(-1);
@@ -45,71 +39,71 @@ function Newplant(props) {
             [event.target.name]:event.target.value,}); console.log(plant); 
     }
 
-    const handleFileChange = (event) => {
-        const selectedFile = event.target.files[0];
-        setFile(selectedFile);console.log(selectedFile);
-      };
-
-      const newPlantSave = async () => {
-        try {
-          const formData = new FormData();
-          formData.append('file', file);
-          formData.append('tableName', 'plant');
-          formData.append('number', plCode+1);
     
-          // 클라이언트에서 이미지를 서버로 업로드
-          const uploadResponse = fetch('http://localhost:8090/files/FileNums', {
-            method: 'POST',
-            body: formData,
-          });
-    
-          if (uploadResponse.ok) {
-            // 이미지 업로드 성공 시 이미지 주소를 받아오기
-            const fileNums = uploadResponse.json();
-            
-    
-            // 나머지 데이터와 이미지 주소를 서버로 전송
-            const response = fetch('http://localhost:8090/plants/plantapp', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                ...plant,
-              }),
-            });
-    
-            if (response.ok) {
-              alert('저장 완료.');
-            } else {
-              alert('저장되지 않았습니다.');
-            }
-          } else {
-            alert('이미지 업로드 실패');
-          }
-        } catch (error) {
-          console.error('에러 발생:', error);
-        }
-      };
 
   //새로운 공연 등록
-//   function newPlantSave(){
-//     console.log(plant)
-//     fetch('http://localhost:8090/plants/plantapp',
-//     {
-//         method:'POST',
-//         headers: {'Content-Type':'application/json'},
-//         body:JSON.stringify(plant)
-//     })
-//     .then(response =>{
-//         if(response.ok){
-//             alert('저장완료.');
-//             // navigate("/performList");
+  function newPlantSave(){
+    console.log(plant)
+    fetch('http://localhost:8090/plants/plantapp',
+    {
+        method:'POST',
+        headers: {'Content-Type':'application/json'},
+        body:JSON.stringify(plant)
+    })
+    .then(response =>{
+        if(response.ok){
+            alert('저장완료.');
+            // navigate("/performList");
             
-//         }else{
-//             alert('저장되지않았습니다.');
-//         }
-//     })
-//     .catch(err => console.error(err))
-// }
+        }else{
+            alert('저장되지않았습니다.');
+        }
+    })
+    .catch(err => console.error(err))
+}
+const handleQuillChange = (plExplanValue) => {
+  const cleanedPlExplan = plExplanValue.replace(/<\/?p>/g, '');
+  // plExplan 출력
+  console.log(plExplan);
+
+  // plExplan 상태 업데이트
+  setPlExplan(plExplanValue);
+
+  // plant 상태 업데이트
+  setPlant((prevState) => ({ ...prevState, plant_detail: cleanedPlExplan }));
+}
+const formats = [
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "align",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "background",
+    "color",
+    "width",
+];
+const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link"],
+      [{ align: [] }, { color: [] }, { background: [] }], // dropdown with defaults from theme
+      ["clean"],
+    ],
+  };
 
     return (
         <div className='contentsArea'>
@@ -135,9 +129,14 @@ function Newplant(props) {
                 </div>
                 <div className="divrows">
                     <div className="formHeader">시설&nbsp;설명</div>
-                    <div className="divcolscont">
-                        <Form.Control type="text" placeholder=""  className="fullwidth" name="plant_detail" value={plant.plant_datail} onChange={handleChange}/>
-                    </div>
+                    <ReactQuill
+                        style={{ height: "500px",marginBottom:"60px" }}
+                        theme="snow"
+                        modules={modules}
+                        formats={formats}
+                        value={plExplan}
+                        onChange={handleQuillChange}
+                        />
                     <div className="formHeader">수용인원</div>
                     <div className="divcolscont">
                         <Form.Control type="number" placeholder="숫자만 입력하세요"  className="fullwidth" name="capacity" value={plant.capacity} onChange={handleChange}/>
@@ -162,7 +161,7 @@ function Newplant(props) {
                         <Form.Control type="number" placeholder="숫자만입력하세요"  className="fullwidth"  name="floor" value={plant.floor} onChange={handleChange} />
                     </div>
                 </div>
-                <div className="divrows">
+                {/* <div className="divrows">
                     <div className="formHeader">대표&nbsp;이미지&nbsp;등록</div>
                     <div className="divcolscont">
                         <Form.Control type="file" name="plant_mainimg"  onChange={handleFileChange} accept="image/*"/>
@@ -175,7 +174,7 @@ function Newplant(props) {
                     <div className="divcolscont">
                         <Form.Control type="file" name="plant_subimg2"  onChange={handleFileChange} accept="image/*"/>
                     </div>
-                </div>
+                </div> */}
                 <div className="divrows formTxtArea">
                     <Button  onClick={newPlantSave} variant="secondary">등록</Button> &nbsp;
                     <Button  onClick={handleRedirect} variant="secondary">뒤로가기</Button>   

@@ -16,7 +16,7 @@ function RentalList(){
 
     const columns = [ 
 
-        {field: 'rent_name', headerName: '활동명',headerAlign: 'center'}, 
+        {field: 'cp_no', headerName: '신청인명',headerAlign: 'center'}, 
 
         {field: 'rent_start', headerName: '시작날짜', width: 150,headerAlign: 'center'
         ,valueFormatter: (params) => dayjs(params.value).format('YYYY/MM/DD'),}, 
@@ -62,7 +62,7 @@ function RentalList(){
             .then(response => {
                 console.log(response)
                 if(response.ok){
-                    setRental({id:0});
+                    setRental(prevRental => ({ ...prevRental, id: 0 }));
                 }else{
                     alert("잘못된 시도입니다!");
                 }
