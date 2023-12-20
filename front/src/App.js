@@ -4,6 +4,7 @@ import Header from './js/layout/Header';
 import Footer from './js/layout/Footer';
 import Main from './js/page/Main';
 import PageTest from './js/page/pageTest';
+import AdminPage from './js/page/AdminPage';
 import PerformanceDetail from './js/component/performance/PerformanceDetail';
 import PerformanceList from './js/component/performance/PerformanceList';
 import NewPerform from './js/component/performance/NewPerform';
@@ -28,6 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/pageTest" element={<PageTest />} />
+          <Route path="/adminPage" element={<AdminPage/>}/>
           <Route path="/performList" element={<PerformanceList />} />
           <Route path="/performList/newPerform" element={<NewPerform />} />
           <Route path="/performanceDetail/:pfCode" element={<PerformanceDetail />} />
