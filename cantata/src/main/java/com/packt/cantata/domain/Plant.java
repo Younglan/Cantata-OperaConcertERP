@@ -55,6 +55,7 @@ public class Plant {
 		this.plant_status = plant_status;
 		this.floor = floor;
 	}
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plantNo")
 	private List<Rental> rentals;
 	
