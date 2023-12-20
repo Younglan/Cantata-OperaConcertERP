@@ -30,8 +30,11 @@ function NewPerform(props) {
    
     let pfCode ;
 
-    useEffect(() => {
+    const [plants, setPlants] = useState([]);
 
+    useEffect(() => {
+        fetchFindPlantList();
+        
     }, []);
 
 
@@ -51,8 +54,9 @@ function NewPerform(props) {
         b: '',
         c : '',
         d : '',
-        plantNo : '1',
+        plantNo : '',
     });
+    
 
     // 연결된 파일 번호 리스트
     const [filesNumbers, setFilesNumbers] = useState([]);
@@ -64,6 +68,13 @@ function NewPerform(props) {
     const handleRedirect = () => {
             navigate(-1);
     };
+    //공연장리스트조회
+    const fetchFindPlantList = () => {
+        fetch(SERVER_URL+'/plants/getplant')
+        .then(response => response.json())
+        .then(data => setPlants(data))
+        .catch(err => console.error(err));
+    }
 
     // 폼의 input 값 변경 핸들러
     const handleChange = (event) => {
@@ -364,6 +375,8 @@ function NewPerform(props) {
         alert("날짜를 선택하세요.");
     }else if(!perform.pfRuntime){
         alert("런타임을 입력하세요.");
+    }else if(!perform.plantNo){
+        alert("공연장을 고르세요.");
     }else if(!perform.agency || !perform.agencyTel){
         alert("기획사와 문의처 전화번호를 입력하세요.");
     }else if(!perform.r || !perform.s || !perform.a|| !perform.b|| !perform.c|| !perform.d){
@@ -456,9 +469,16 @@ function NewPerform(props) {
                 <div className="divrows">
                     <div className="formHeader">장&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</div>
                     <div className="divcolscont">
-                    <Form.Select aria-label="Default select example" className="fullwidth"  >
-                        <option value="오디토리움">오디토리움</option>
-                        <option value="퍼포먼스홀">퍼포먼스홀</option>
+                    <Form.Select aria-label="Default select example" className="fullwidth" name="plantNo" value={perform.plantNo}onChange={handleChange}  >
+                        {/* <option value="오디토리움">오디토리움</option>
+                        <option value="퍼포먼스홀">퍼포먼스홀</option> */}
+                        {/* plants 리스트를 매핑하여 option 요소를 동적으로 생성 */}
+                        <option value="">공연장을 선택하세요.</option>
+                        {plants.map(plant => (
+                            <option key={plant.plantNo} value={plant.plantNo}>
+                                {plant.plant_name}
+                            </option>
+                        ))}
                     </Form.Select>
                     </div>
                     <div className="formHeader">기&nbsp;&nbsp;&nbsp;&nbsp;획&nbsp;&nbsp;&nbsp;&nbsp;사</div>
