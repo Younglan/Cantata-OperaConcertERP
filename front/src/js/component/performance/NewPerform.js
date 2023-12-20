@@ -40,8 +40,6 @@ function NewPerform(props) {
         pfTitle : '',
         agency : '',
         agencyTel : '',
-        pfPoster : '',
-        pfEximg : '',
         pfExplan : '',
         pfNotice : '',
         pfStart : '',
@@ -52,7 +50,8 @@ function NewPerform(props) {
         a: '',
         b: '',
         c : '',
-        d : ''
+        d : '',
+        plantNo : '1',
     });
 
     // 연결된 파일 번호 리스트
@@ -76,11 +75,13 @@ function NewPerform(props) {
         setStDate(selectedDate);
         const formatDate = new Date(moment(selectedDate).format("YYYY-MM-DD"));
         setPerform({ ...perform, pfStart: formatDate });
+        // setPerform(prevState => ({ ...prevState, pfStart: formatDate }));
     }
     const handleEndChange = (selectedDate) => {
         setEdDate(selectedDate);
         const formatDate = new Date(moment(selectedDate).format("YYYY-MM-DD"));
         setPerform({ ...perform, pfEnd: formatDate });
+        // setPerform(prevState => ({ ...prevState, pfEnd: formatDate }));
     }
 
     // Quill 에디터의 컨텐츠 변경 핸들러 (이미지 태그가 제거될 경우 관련 파일 번호도 제거)
@@ -159,6 +160,7 @@ function NewPerform(props) {
 
         input.onchange = () => {
             const files = Array.from(input.files);
+            console.log("onChanged file : "+files);
 
             if (files.length > 1) {
                 alert('한번에 한 사진만 업로드 가능합니다!');
@@ -354,11 +356,15 @@ function NewPerform(props) {
 
   //새로운 공연 등록
   function newPerformSave(){
-    fetch(SERVER_URL+'/performances',
+    console.log(perform);
+    var formData = new FormData();
+    formData.append("pfPosterFile", document.getElementById("pfPoster").files[0]);
+    formData.append('perform', JSON.stringify(perform));
+
+    fetch(SERVER_URL+'/performances/new',
     {
         method:'POST',
-        headers: {'Content-Type':'application/json'},
-        body:JSON.stringify(perform)
+        body: formData,
     })
     .then(response =>{
         if(response.ok){
@@ -468,7 +474,7 @@ function NewPerform(props) {
                 <div className="divrows">
                     <div className="formHeader">포스터&nbsp;&nbsp;등록</div>
                     <div className="divcolscont">
-                        <Form.Control type="file" name="pfPoster" value={perform.pfPoster} onChange={handleChange}/>
+                        <Form.Control type="file" id="pfPoster" name="pfPoster"/>
                     </div>
                 </div>
                 <div className="divrows formTxtArea">
