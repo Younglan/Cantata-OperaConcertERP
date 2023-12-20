@@ -26,7 +26,7 @@ public class Plant {
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(nullable=false, updatable=false) 
-	private long plant_no;
+	private long plantNo;
 	private String plant_name;
 	private String plant_use;
 	private String plant_detail;

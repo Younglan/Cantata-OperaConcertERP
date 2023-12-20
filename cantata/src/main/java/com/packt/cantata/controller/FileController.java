@@ -28,6 +28,7 @@ public class FileController {
         try {
             List<Long> fileNums = fileService.uploadToCloudAndGetFileNums(files, tableName, number);
             System.out.println("@@@@@@@@@@@tableName  :   "+tableName);
+            System.out.println("@@@@@@@@@@@fileNums  :   "+fileNums);
             return ResponseEntity.ok(fileNums);
         } catch (IOException e) {
             e.printStackTrace();
