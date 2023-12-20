@@ -39,7 +39,13 @@ public class Performance {
 	private String pfTitle;
 	
 	@Column(nullable = true)
-	private String pfCate, agency, agencyTel, pfPoster, pfEximg;
+	private String pfCate, agency, agencyTel;
+	
+	@Column(nullable = true)
+	private String pfPoster;
+	
+//	@Column(nullable = true)
+//	private String pfEximg;
 	
 	@Column(nullable = true)
 	@Lob
@@ -59,8 +65,8 @@ public class Performance {
 	private Boolean pfStatus = true;
 	
 	@ManyToOne
-	@JoinColumn(name = "plant_no")
-	private Plant plant_no;
+	@JoinColumn(name = "plantNo")
+	private Plant plantNo;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
@@ -72,7 +78,7 @@ public class Performance {
 	private List<Perform_time> performTimes;
 
 	
-	public Performance( String pfCate, String pfTitle, String agency,String agencyTel, String pfPoster, String pfEximg,
+	public Performance( String pfCate, String pfTitle, String agency,String agencyTel, String pfPoster, 
 			String pfExplan, String pfNotice, Date pfStart, Date pfEnd, int pfRuntime, int R, int S,int A, int B, int C,
 			int D,Plant plantNo) {
 		super();
@@ -82,7 +88,7 @@ public class Performance {
 		this.agency = agency;
 		this.agencyTel = agencyTel;
 		this.pfPoster = pfPoster;
-		this.pfEximg = pfEximg;
+//		this.pfEximg = pfEximg;
 		this.pfExplan = pfExplan;
 		this.pfNotice = pfNotice;
 		this.pfStart = pfStart;
@@ -95,7 +101,7 @@ public class Performance {
 		this.C = C;
 		this.D = D;
 //		this.pfStatus = pfStatus;
-		this.plant_no = plantNo;	
+		this.plantNo = plantNo;	
 	}
 	public Performance(String pfCate, String pfTitle, String agency, String pfPoster, String pfExplan) {
 		super();
@@ -111,10 +117,10 @@ public class Performance {
 	@Override
 	public String toString() {
 		return "Performance [pfCode=" + pfCode + ", pfCate=" + pfCate + ", pfTitle=" + pfTitle + ", agency=" + agency
-				+ ", pfPoster=" + pfPoster + ", pfEximg=" + pfEximg + ", pfExplan=" + pfExplan + ", pfNotice="
+				+ ", pfPoster=" + pfPoster + ", pfExplan=" + pfExplan + ", pfNotice="
 				+ pfNotice + ", pfStart=" + pfStart + ", pfEnd=" + pfEnd + ", pfRuntime=" + pfRuntime + ", R="
 				+ R + ", S=" + S + ", A=" + A + ", B=" + B + ", C=" + C + ", D=" + D
-				+ ", pfStatus=" + pfStatus + ", plantNo=" + plant_no + ", perform_times=" + performTimes + "]";
+				+ ", pfStatus=" + pfStatus + ", plantNo=" + plantNo + ", perform_times=" + performTimes + "]";
 	}
 	public Performance(String pfCate, String pfTitle, String agency, int pfRuntime) {
 		super();

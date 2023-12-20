@@ -1,6 +1,8 @@
 package com.packt.cantata.service;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,8 @@ public class FileService {
 	
 	
 	public List<Long> uploadToCloudAndGetFileNums(List<MultipartFile> files, String tableName, Long number) throws IOException {
-        PathAndEntities pathAndEntities = determineMidPath(tableName, number);
+        System.out.println("@#@#@#@#@#@# files : "+files.get(0));
+		PathAndEntities pathAndEntities = determineMidPath(tableName, number);
 
         // Set up Google Cloud Storage
         Storage storage = StorageOptions.getDefaultInstance().getService();
@@ -46,7 +49,8 @@ public class FileService {
         List<Long> uploadedFileNums = new ArrayList<>();
 
         for (MultipartFile file : files) {
-        	System.out.println("@#@#@#@#@#@# MidPath : "+file.getOriginalFilename());
+        	System.out.println("@#@#@#@#@#@# getMidPath : "+pathAndEntities.getMidPath());
+        	System.out.println("@#@#@#@#@#@# getOriginalFilename : "+file.getOriginalFilename());
             String newFileName = pathAndEntities.getMidPath() + file.getOriginalFilename();
             String fileUrl = "https://storage.googleapis.com/" + bucketName + "/" + newFileName;
             BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, newFileName).build();
@@ -70,6 +74,31 @@ public class FileService {
         return uploadedFileNums;
     }
 	
+	public String attachUploadAndGetUri (MultipartFile posterFile, String tableName, Long number) throws IOException {
+//		// 로컬 파일 경로
+//        String localFilePath = posterFile;
+//        //파일명
+//        Path path = Paths.get(localFilePath);
+//        String originalFileName = path.getFileName().toString();
+		String originalFileName = posterFile.getOriginalFilename();
+//        //파일데이터
+//        byte[] fileContent = java.nio.file.Files.readAllBytes(path);
+        
+        // Set up Google Cloud Storage
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+        
+        //업로드될 객체 이름 (클라우드 상에서의 경로와 파일 이름)
+        String cloudObjectName = tableName +"/"+ number +"/"+ originalFileName;
+        
+        BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, cloudObjectName).build();
+        Blob blob = storage.create(blobInfo, posterFile.getBytes());
+        
+        
+        String fileUrl = "https://storage.googleapis.com/" + bucketName + "/" + cloudObjectName;      
+        
+		return fileUrl;
+	}
+	
 	private PathAndEntities determineMidPath(String tableName, Long number) {
         PathAndEntities result = new PathAndEntities();
      
@@ -80,7 +109,7 @@ public class FileService {
 //        EduHist eduHist = null;
         Brd_post brdPost = null;
         String midPath = "";
-
+        System.out.println("\n\n@#@#@#@#@#@# number : "+number);
         if (number == 0) {
             switch (tableName) {
 	            case "performance":
