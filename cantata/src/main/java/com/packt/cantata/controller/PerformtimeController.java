@@ -1,5 +1,8 @@
 package com.packt.cantata.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.packt.cantata.CantataApplication;
@@ -50,6 +54,7 @@ public class PerformtimeController {
 	public ResponseEntity<Perform_time> createPerformTime(@RequestBody NewTimeDto newTimeDto) {
 	    Perform_time performTime = new Perform_time();
 	    performTime.setPtDate(newTimeDto.getPtDate());
+	    performTime.setPtEndtime(newTimeDto.getPtEndtime());
 
 	    Performance performance = pfRepo.findByPfCode(newTimeDto.getPfCode());
 	    performTime.setPfCode(performance);
@@ -58,5 +63,23 @@ public class PerformtimeController {
 
 	    return ResponseEntity.ok(savedPerformTime);
 	}
+	
+	@GetMapping("/findPfCodePtDate")
+	public Boolean findPfCodePtDate(@RequestParam Long pfCode, @RequestParam String ptDate, @RequestParam String ptEndtime) {
+		System.out.println(pfCode);
+		System.out.println(ptDate);
+		System.out.println(ptEndtime);
+		Iterable<Perform_time> findNull = timeRepo.findPfCodeAndPtDate(pfCode,ptDate,ptEndtime);
+		
+		System.out.println(findNull);
+		if(findNull == null || !findNull.iterator().hasNext()) {
+			System.out.println("@#@#@#@#  : "+findNull);
+			return true;
+		}else {
+		System.out.println("@#@#@#@#  : "+findNull);
+		return false;
+		}
+	}
+	
 
 }

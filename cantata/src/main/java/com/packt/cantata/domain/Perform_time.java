@@ -38,17 +38,21 @@ public class Perform_time {
 	@Column
 	private Date ptDate;
 	
-	@Column(columnDefinition = "boolean default true",nullable = false)
+	@Column
+	private Date ptEndtime;
+	
+	@Column(columnDefinition = "boolean default true")
 	private Boolean ptStatus = true;
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pt_no")
 	private List<Ticket> ticket;
 
-	public Perform_time(Performance pfCode, Date ptDate, Boolean ptStatus) {
+	public Perform_time(Performance pfCode, Date ptDate, Date ptEndtime, Boolean ptStatus) {
 		super();
 		this.pfCode = pfCode;
 		this.ptDate = ptDate;
+		this.ptEndtime = ptEndtime;
 		this.ptStatus = ptStatus;
 	}
 

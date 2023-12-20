@@ -75,7 +75,7 @@ public class CantataApplication implements CommandLineRunner {
 				120,
 				50000,40000,30000,10000,5000,1000,plant1);
 		
-		Perform_time pt1 = new Perform_time(pf2,dtFormat.parse("2023-12-01"),true);
+		Perform_time pt1 = new Perform_time(pf2,dtFormat.parse("2023-12-01"),dtFormat.parse("2023-12-01"),true);
 
 		plantRepository.saveAll(Arrays.asList(plant1));
 		pfRepository.saveAll(Arrays.asList(pf1,pf2));

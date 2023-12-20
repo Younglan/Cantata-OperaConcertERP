@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './js/layout/Header';
 import Footer from './js/layout/Footer';
 import Main from './js/page/Main';
-import PageTest from './js/page/pageTest';
+import PageTest from './js/page/PageTest';
 import PerformanceDetail from './js/component/performance/PerformanceDetail';
 import PerformanceList from './js/component/performance/PerformanceList';
 import NewPerform from './js/component/performance/NewPerform';
@@ -18,6 +18,7 @@ import RentalComplete from './js/component/rental/RentalComplete';
 import TicketFind from './js/component/Ticket/TicketFind';
 import Newplant from './js/component/plant/NewPlant';
 import PerformCalendar from './js/component/calendar/PerformCalendar';
+import ErrorPage from './js/page/ErrorPage';
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
           <Route path='/Rentcom' element={<RentalComplete/>}/>
           <Route path='/myticket' element={<TicketFind/>}/>
           <Route path='/Newplant' element={<Newplant/>}/>
+          <Route path='/errorPage' element={<ErrorPage/>}/>
         </Routes>
       </Router>
       <Footer />
