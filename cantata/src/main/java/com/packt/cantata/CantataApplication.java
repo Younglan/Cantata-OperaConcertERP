@@ -49,7 +49,7 @@ public class CantataApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-		Plant plant1 = new Plant("오디토리움", "공연장", null, 1500, null, 1000000, null, "사용가능", "3층");
+		Plant plant1 = new Plant("오디토리움", "공연장", null, 1500, null, 1000000, null, true, 3);
 
 		Performance pf1 = new Performance("전시", 
 				"20주년 기념 상상아트 전시회", 

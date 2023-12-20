@@ -36,12 +36,12 @@ public class Plant {
 	private String plant_subimg2;
 	private long plant_charge;
 	private String plant_sub;
-	private String plant_status;
-	private String floor;
+	private Boolean plant_status;
+	private int floor;
 	
 	public Plant(String plant_name, String plant_use, String plant_detail
 			, int capacity, String plant_mainimg
-			, long plant_charge, String plant_sub, String plant_status, String floor) {
+			, long plant_charge, String plant_sub, Boolean plant_status, int floor) {
 		super();
 		this.plant_name = plant_name;
 		this.plant_use = plant_use;
