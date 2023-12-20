@@ -30,9 +30,14 @@ function RentalList(){
          headerName: '관리메뉴',
          sortable:false,
          filterable: false,
-         renderCell: row =>
+         renderCell: row =>(
+            <React.Fragment>
             <button onClick={() => onDelClick(row.id)}>취소</button>
-        }
+            {row.status === '결제대기' && (
+                <button onClick={() => onPayClick(row.id)}>결제</button>
+              )}
+              </React.Fragment>
+        ),},
     ];
     
     const fetchRentals= () => {
@@ -71,6 +76,20 @@ function RentalList(){
         .catch(err => console.error(err))
         }
     }
+    const onPayClick = (rent_no) => {
+        fetch(`http://localhost:8090/rentals/updateStatus?rent_no=${rent_no}&status=결제완료`, {
+          method: 'PUT',
+        })
+          .then((response) => {
+            console.log(response);
+            if (response.ok) {
+              setRental((prevRental) => ({ ...prevRental, id: 0 }));
+            } else {
+              alert('결제 처리 중 오류가 발생했습니다!');
+            }
+          })
+          .catch((err) => console.error(err));
+      };
 
     return(
         <div className='contentsArea'>

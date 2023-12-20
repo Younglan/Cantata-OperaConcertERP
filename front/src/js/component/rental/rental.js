@@ -244,13 +244,13 @@ export default function RentalApps() {
                   variant="filled"
                   className= "paragraph" defaultValue={"계약금"}
         /> 
-      <TextField id="input1" variant="outlined" onChange={onChange} value={text.payment} name = "payment" sx={{
+      <TextField id="input1" variant="outlined" name = "payment" sx={{
                     '& > :not(style)': { width: '50ch' },
                   }}/>
     </Box>
     </Box>
     <div className="rental">
-            <button type='button'className='button1' name="rent_regidate" onClick={newRentalSave} onChange={onChange} >신청</button>
+            <button type='button'className='button1' name="rent_regidate" onClick={newRentalSave} onChange={onChange}>신청</button>
             <button type='button' value='취소' className="button2" onClick={handleRedirect} >취소</button>
         </div>
       </div>
