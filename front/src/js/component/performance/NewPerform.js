@@ -356,26 +356,46 @@ function NewPerform(props) {
 
   //새로운 공연 등록
   function newPerformSave(){
-    console.log(perform);
-    var formData = new FormData();
-    formData.append("pfPosterFile", document.getElementById("pfPoster").files[0]);
-    formData.append('perform', JSON.stringify(perform));
-
-    fetch(SERVER_URL+'/performances/new',
-    {
-        method:'POST',
-        body: formData,
-    })
-    .then(response =>{
-        if(response.ok){
-            alert('저장완료.');
-            navigate("/performList");
-            
-        }else{
-            alert('저장되지않았습니다.');
-        }
-    })
-    .catch(err => console.error(err))
+    // pfPoster 요소 가져오기
+    var pfPosterElement = document.getElementById("pfPoster");
+    if(!perform.pfTitle){
+        alert("제목을 입력하세요.");
+    }else if(!perform.pfStart || !perform.pfEnd){
+        alert("날짜를 선택하세요.");
+    }else if(!perform.pfRuntime){
+        alert("런타임을 입력하세요.");
+    }else if(!perform.agency || !perform.agencyTel){
+        alert("기획사와 문의처 전화번호를 입력하세요.");
+    }else if(!perform.r || !perform.s || !perform.a|| !perform.b|| !perform.c|| !perform.d){
+        alert("좌석별 가격을 입력하세요.");
+    }else if(!pfPosterElement.value){
+        alert("포스터이미지를 등록하세요");
+    }else if(!perform.pfNotice){
+        alert("공지사항을 입력하세요.");
+    }else if(!perform.pfExplan){
+        alert("공연상세설명을 입력하세요.");
+    }else{
+        var formData = new FormData();
+        formData.append("pfPosterFile", pfPosterElement.files[0]);
+        formData.append('perform', JSON.stringify(perform));
+    
+        fetch(SERVER_URL+'/performances/new',
+        {
+            method:'POST',
+            body: formData,
+        })
+        .then(response =>{
+            if(response.ok){
+                alert('저장완료.');
+                navigate("/performList");
+                
+            }else{
+                alert('저장되지않았습니다.');
+            }
+        })
+        .catch(err => console.error(err))
+    }
+    
 }
 
 
