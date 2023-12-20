@@ -31,13 +31,21 @@ function RentalList(){
          sortable:false,
          filterable: false,
          renderCell: row =>(
-            <React.Fragment>
             <button onClick={() => onDelClick(row.id)}>취소</button>
-            {row.status === '결제대기' && (
-                <button onClick={() => onPayClick(row.id)}>결제</button>
-              )}
-              </React.Fragment>
         ),},
+        {field: 'rent_status',
+         headerName: '결제메뉴',
+         sortable:false,
+         filterable: false,
+         renderCell: row =>(
+            <React.Fragment>
+                {console.log(row.row.rent_status)} {/* 로그를 추가하여 데이터 확인 */}
+                {row.row.rent_status === '결제대기' && (
+                    <button onClick={() => onPayClick(row.value.id)}>결제</button>
+                )}
+            </React.Fragment>
+         )
+        }
     ];
     
     const fetchRentals= () => {
@@ -77,13 +85,13 @@ function RentalList(){
         }
     }
     const onPayClick = (rent_no) => {
-        fetch(`http://localhost:8090/rentals/updateStatus?rent_no=${rent_no}&status=결제완료`, {
+        fetch('http://localhost:8090/rentals/updateStatus/?rent_no='+rent_no+'/&status=결제완료', {
           method: 'PUT',
         })
           .then((response) => {
             console.log(response);
             if (response.ok) {
-              setRental((prevRental) => ({ ...prevRental, id: 0 }));
+              setRental((prevRental) => ({ ...prevRental, row:{...prevRental.row, status:'결제완료',},}));
             } else {
               alert('결제 처리 중 오류가 발생했습니다!');
             }
