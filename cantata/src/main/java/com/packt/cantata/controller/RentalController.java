@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,5 +40,13 @@ public class RentalController {
 	public 	ResponseEntity<Rental> postrental(@RequestBody Rental rental ){
 		Rental tlt = rentalrepository.save(rental);
 		return ResponseEntity.status(HttpStatus.OK).body(tlt);
+	}
+	@DeleteMapping("/delrental")
+	public void delRental(@RequestParam("rent_no")Long rent_no){
+		 rentalrepository.deleteById(rent_no);
+	}
+	@PutMapping("/updateStatus/{rent_no}/{status}")
+    public int updateRentStatus(Long rent_no, String rent_status) {
+        return rentalrepository.updateByrent_status(rent_no, rent_status);
 	}
 }

@@ -16,7 +16,7 @@ function RentalList(){
 
     const columns = [ 
 
-        {field: 'rent_name', headerName: '활동명',headerAlign: 'center'}, 
+        {field: 'cp_no', headerName: '신청인명',headerAlign: 'center'}, 
 
         {field: 'rent_start', headerName: '시작날짜', width: 150,headerAlign: 'center'
         ,valueFormatter: (params) => dayjs(params.value).format('YYYY/MM/DD'),}, 
@@ -30,9 +30,14 @@ function RentalList(){
          headerName: '관리메뉴',
          sortable:false,
          filterable: false,
-         renderCell: row =>
+         renderCell: row =>(
+            <React.Fragment>
             <button onClick={() => onDelClick(row.id)}>취소</button>
-        }
+            {row.status === '결제대기' && (
+                <button onClick={() => onPayClick(row.id)}>결제</button>
+              )}
+              </React.Fragment>
+        ),},
     ];
     
     const fetchRentals= () => {
@@ -62,7 +67,7 @@ function RentalList(){
             .then(response => {
                 console.log(response)
                 if(response.ok){
-                    setRental({id:0});
+                    setRental(prevRental => ({ ...prevRental, id: 0 }));
                 }else{
                     alert("잘못된 시도입니다!");
                 }
@@ -71,6 +76,20 @@ function RentalList(){
         .catch(err => console.error(err))
         }
     }
+    const onPayClick = (rent_no) => {
+        fetch(`http://localhost:8090/rentals/updateStatus?rent_no=${rent_no}&status=결제완료`, {
+          method: 'PUT',
+        })
+          .then((response) => {
+            console.log(response);
+            if (response.ok) {
+              setRental((prevRental) => ({ ...prevRental, id: 0 }));
+            } else {
+              alert('결제 처리 중 오류가 발생했습니다!');
+            }
+          })
+          .catch((err) => console.error(err));
+      };
 
     return(
         <div className='contentsArea'>

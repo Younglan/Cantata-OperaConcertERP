@@ -65,8 +65,8 @@ public class Performance {
 	private Boolean pfStatus = true;
 	
 	@ManyToOne
-	@JoinColumn(name = "plant_no")
-	private Plant plant_no;
+	@JoinColumn(name = "plantNo")
+	private Plant plantNo;
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "performance", cascade = CascadeType.ALL)
@@ -101,7 +101,7 @@ public class Performance {
 		this.C = C;
 		this.D = D;
 //		this.pfStatus = pfStatus;
-		this.plant_no = plantNo;	
+		this.plantNo = plantNo;	
 	}
 	public Performance(String pfCate, String pfTitle, String agency, String pfPoster, String pfExplan) {
 		super();
@@ -120,7 +120,7 @@ public class Performance {
 				+ ", pfPoster=" + pfPoster + ", pfExplan=" + pfExplan + ", pfNotice="
 				+ pfNotice + ", pfStart=" + pfStart + ", pfEnd=" + pfEnd + ", pfRuntime=" + pfRuntime + ", R="
 				+ R + ", S=" + S + ", A=" + A + ", B=" + B + ", C=" + C + ", D=" + D
-				+ ", pfStatus=" + pfStatus + ", plantNo=" + plant_no + ", perform_times=" + performTimes + "]";
+				+ ", pfStatus=" + pfStatus + ", plantNo=" + plantNo + ", perform_times=" + performTimes + "]";
 	}
 	public Performance(String pfCate, String pfTitle, String agency, int pfRuntime) {
 		super();
