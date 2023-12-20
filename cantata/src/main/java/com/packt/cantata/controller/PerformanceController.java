@@ -76,7 +76,7 @@ public class PerformanceController {
 	Performance newPerform = new Performance();
 	//외래키입력
 	Plant plant = plantRepo.findByPlantNo(perform.getPlantNo());
-	newPerform.setPlant_no(plant);
+	newPerform.setPlantNo(plant);
 	
 	newPerform.setPfCate(perform.getPfCate());
 	newPerform.setPfTitle(perform.getPfTitle());

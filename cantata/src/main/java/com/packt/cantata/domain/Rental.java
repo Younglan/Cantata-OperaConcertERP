@@ -36,14 +36,14 @@ public class Rental {
 	@JoinColumn(name = "cp_no")
 	private Corporation cp_no;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "plant_no")
-	private Plant plant_no;
+	@JoinColumn(name = "plantNoo")
+	private Plant plantNo;
 	
 	@Builder
-	public Rental(Corporation cp_no, Plant plant_no,
+	public Rental(Corporation cp_no, Plant plantNo,
 			Date rent_start, Date rent_end, Date rent_date, Date rent_status, String rent_pay) {
 		this.cp_no = cp_no;
-		this.plant_no = plant_no;
+		this.plantNo = plantNo;
 		this.rent_start = rent_start;
 		this.rent_end = rent_end;
 		this.rent_date = rent_date;
