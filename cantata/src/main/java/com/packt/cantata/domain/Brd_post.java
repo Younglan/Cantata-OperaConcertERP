@@ -46,11 +46,11 @@ public class Brd_post {
 	@Column(nullable = false)
 	private long postNum; //BrdNo에 따라 번호를 정렬하는 용도
 	
-	@Column(nullable = false)
+	@Column
 	private String postTitle; // 글제목
 
 
-	@Column(nullable = false)
+	@Column
 	private String postSub; // 글내용
 
 	@Column(name = "postFile1") // 첨부파일 1
