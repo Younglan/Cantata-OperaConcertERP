@@ -85,7 +85,7 @@ public class PerformanceController {
 	}
 
 	Performance newPerform = new Performance();
-	//외래키입력
+	//외래키입력 
 	Plant plant = plantRepo.findByPlantNo(perform.getPlantNo());
 	newPerform.setPlantNo(plant);
 	
