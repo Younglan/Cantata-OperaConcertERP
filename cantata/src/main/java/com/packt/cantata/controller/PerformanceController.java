@@ -100,26 +100,30 @@ public class PerformanceController {
 	newPerform.setPfNotice(perform.getPfNotice());
 	newPerform.setPfExplan(perform.getPfExplan());
 	newPerform.setR(perform.getR());
+	newPerform.setS(perform.getS());
 	newPerform.setA(perform.getA());
 	newPerform.setB(perform.getB());
 	newPerform.setC(perform.getC());
 	newPerform.setD(perform.getD());
 
 	//첨부파일 처리
-	ResponseEntity<Long> number = getLastPostNum();
-	Long incrementedNum;
-	if (number.getStatusCode().is2xxSuccessful() && number.getBody() != null) {
-	    incrementedNum = number.getBody() + 1;
-	} else {
-		incrementedNum = (long) 1;
+	if(posterFile!=null ) {
+		ResponseEntity<Long> number = getLastPostNum();
+		Long incrementedNum;
+		if (number.getStatusCode().is2xxSuccessful() && number.getBody() != null) {
+		    incrementedNum = number.getBody() + 1;
+		} else {
+			incrementedNum = (long) 1;
+		}
+			
+		try {
+			newPerform.setPfPoster(fileService.attachUploadAndGetUri(posterFile, "performance", incrementedNum));
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+			
 	}
-		
-	try {
-		newPerform.setPfPoster(fileService.attachUploadAndGetUri(posterFile, "performance", incrementedNum));
-	} catch (IOException e) {
-		e.printStackTrace();
-	} 
-		
+	
 	//새로운공연 등록
 	Performance savedPerform = pfRepository.save(newPerform);
 	return ResponseEntity.ok(savedPerform);
