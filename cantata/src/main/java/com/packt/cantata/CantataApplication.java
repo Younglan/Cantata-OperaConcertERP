@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import com.packt.cantata.domain.Brd_division;
 import com.packt.cantata.domain.Brd_divisionRepository;
@@ -22,6 +23,7 @@ import com.packt.cantata.domain.Plant;
 import com.packt.cantata.domain.PlantRepository;
 
 @SpringBootApplication
+@EnableJpaAuditing 
 public class CantataApplication implements CommandLineRunner {
 
 	private static final Logger logger = LoggerFactory.getLogger(CantataApplication.class);

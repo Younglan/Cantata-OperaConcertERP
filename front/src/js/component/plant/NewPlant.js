@@ -15,16 +15,16 @@ function Newplant(props) {
     //네비게이터
     const navigate = useNavigate();
     const [plant, setPlant] = useState({
-        plant_name:'',
-        plant_use:'무대',
-        plant_detail:'',
+        plantName:'',
+        plantUse:'무대',
+        plantDetail:'',
         capacity:'',
-        plant_charge:'',
+        plantCharge:'',
         // plant_mainimg:'',
         // plant_subimg1:'',
         // plant_subimg2:'',
-        plant_sub:'',
-        plant_status:true,
+        plantSub:'',
+        plantStatus:true,
         floor:'',
     });
     const [plExplan, setPlExplan] = React.useState('');
@@ -42,24 +42,70 @@ function Newplant(props) {
     
 
   //새로운 공연 등록
-  function newPlantSave(){
-    console.log(plant)
-    fetch('http://localhost:8090/plants/plantapp',
-    {
-        method:'POST',
-        headers: {'Content-Type':'application/json'},
-        body:JSON.stringify(plant)
-    })
-    .then(response =>{
-        if(response.ok){
-            alert('저장완료.');
-            // navigate("/performList");
+//   function newPlantSave(){
+//     console.log(plant)
+//     fetch('http://localhost:8090/plants/plantapp',
+//     {
+//         method:'POST',
+//         headers: {'Content-Type':'application/json'},
+//         body:JSON.stringify(plant)
+//     })
+//     .then(response =>{
+//         if(response.ok){
+//             alert('저장완료.');
+//             // navigate("/performList");
             
-        }else{
-            alert('저장되지않았습니다.');
-        }
-    })
-    .catch(err => console.error(err))
+//         }else{
+//             alert('저장되지않았습니다.');
+//         }
+//     })
+//     .catch(err => console.error(err))
+// }
+function newPlantSave(){
+    // pfPoster 요소 가져오기
+    var plantMainimgElement = document.getElementById("plantMainimg");
+    var plantSubimg1Element = document.getElementById("plantSubimg1");
+    var plantSubimg2Element = document.getElementById("plantSubimg2");
+    if(!plant.plantName){
+        alert("제목을 입력하세요.");
+    }else if(!plant.floor){
+        alert("층수을 입력하세요.");
+    }else if(!plant.capacity){
+        alert("수용 인원를 입력하세요.");
+    }else if(!plantMainimgElement.value){
+        alert("포스터이미지를 등록하세요");
+    }else if(!plantSubimg1Element.value){
+            alert("부가이미지를 등록하세요");
+    }else if(!plantSubimg2Element.value){
+            alert("부가이미지를 등록하세요");
+    }else if(!plant.plantDetail){
+        alert("시설설명을 입력하세요.");
+    }else if(!plant.plantCharge){
+        alert("대관 요금을 입력하세요.");
+    }else{
+        var formData = new FormData();
+        formData.append("plantMainImgFile", plantMainimgElement.files[0]);
+        formData.append("plantSubimg1File", plantSubimg1Element.files[0]);
+        formData.append("plantSubimg2File", plantSubimg2Element.files[0]);
+        formData.append('plant', JSON.stringify(plant));
+    
+        fetch('http://localhost:8090/plants/plantapp',
+        {
+            method:'POST',
+            body: formData,
+        })
+        .then(response =>{
+            if(response.ok){
+                alert('저장완료.');
+                // navigate("/performList");
+                
+            }else{
+                alert('저장되지않았습니다.');
+            }
+        })
+        .catch(err => console.error(err))
+    }
+    
 }
 const handleQuillChange = (plExplanValue) => {
   // plExplan 출력
@@ -69,7 +115,7 @@ const handleQuillChange = (plExplanValue) => {
   setPlExplan(plExplanValue);
 
   // plant 상태 업데이트
-  setPlant((prevState) => ({ ...prevState, plant_detail: plExplanValue }));
+  setPlant((prevState) => ({ ...prevState, plantDetail: plExplanValue }));
 }
 const formats = [
     "header",
@@ -114,7 +160,7 @@ const modules = {
                 <div className="divrows">
                     <div className="formHeader">시설 용도</div>
                     <div className="divcolscont">
-                    <Form.Select aria-label="Default select example" className="fullwidth" name="plant_use" value={plant.plant_use} onChange={handleChange}>
+                    <Form.Select aria-label="Default select example" className="fullwidth" name="plantUse" value={plant.plantUse} onChange={handleChange}>
                         <option value="무대">무대</option>
                         <option value="연습실">연습실</option>
                     </Form.Select>
@@ -123,7 +169,7 @@ const modules = {
                 <div className="divrows">
                     <div className="formHeader">시설명</div>
                     <div className="divcolscont">
-                        <Form.Control type="text" placeholder=""  className="fullwidth" name="plant_name" value={plant.plant_name} onChange={handleChange} />
+                        <Form.Control type="text" placeholder=""  className="fullwidth" name="plantName" value={plant.plantName} onChange={handleChange} />
                     </div>
                 </div>
                 <div className="divrows">
@@ -142,38 +188,38 @@ const modules = {
                     </div>
                     <div className="formHeader">대관요금</div>
                     <div className="divcolscont">
-                        <Form.Control type="text" placeholder=""  className="fullwidth" name="plant_charge" value={plant.plant_charge} onChange={handleChange} />
+                        <Form.Control type="text" placeholder=""  className="fullwidth" name="plantCharge" value={plant.plantCharge} onChange={handleChange} />
                     </div>
                 </div>
                 <div className="divrows">
                     <div className="formHeader">장소&nbsp;상태</div>
-                    <Form.Select aria-label="Default select example" className="fullwidth" name="plant_status" value={plant. plant_status} onChange={handleChange}>
+                    <Form.Select aria-label="Default select example" className="fullwidth" name="plantStatus" value={plant.plantStatus} onChange={handleChange}>
                         <option value="True">사용가능</option>
                         <option value="False">불가능</option>
                     </Form.Select>
                     <div className="formHeader">부대시설</div>
                     <div className="divcolscont">
-                        <Form.Control type="text" placeholder=""  className="fullwidth"  name="plant_sub" value={plant.plant_sub} onChange={handleChange} />
+                        <Form.Control type="text" placeholder=""  className="fullwidth"  name="plantSub" value={plant.plantSub} onChange={handleChange} />
                     </div>
                     <div className="formHeader">층&nbsp;수</div>
                     <div className="divcolscont">
                         <Form.Control type="number" placeholder="숫자만입력하세요"  className="fullwidth"  name="floor" value={plant.floor} onChange={handleChange} />
                     </div>
                 </div>
-                {/* <div className="divrows">
+                <div className="divrows">
                     <div className="formHeader">대표&nbsp;이미지&nbsp;등록</div>
                     <div className="divcolscont">
-                        <Form.Control type="file" name="plant_mainimg"  onChange={handleFileChange} accept="image/*"/>
+                        <Form.Control type="file" name="plantMainimg"   id="plantMainimg"/>
                     </div>
                     <div className="formHeader">부가&nbsp;이미지&nbsp;등록</div>
                     <div className="divcolscont">
-                        <Form.Control type="file" name="plant_subimg1"  onChange={handleFileChange} accept="image/*"/>
+                        <Form.Control type="file" name="plantSubimg1"  id="plantSubimg1"/>
                     </div>
                     <div className="formHeader">부가&nbsp;이미지&nbsp;등록</div>
                     <div className="divcolscont">
-                        <Form.Control type="file" name="plant_subimg2"  onChange={handleFileChange} accept="image/*"/>
+                        <Form.Control type="file" name="plantSubimg2"  id="plantSubimg2"/>
                     </div>
-                </div> */}
+                </div>
                 <div className="divrows formTxtArea">
                     <Button  onClick={newPlantSave} variant="secondary">등록</Button> &nbsp;
                     <Button  onClick={handleRedirect} variant="secondary">뒤로가기</Button>   

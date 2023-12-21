@@ -26,7 +26,8 @@ import com.packt.cantata.dto.PerformDto;
 import com.packt.cantata.dto.Perform_timeDto;
 
 @RestController
-@CrossOrigin(origins="http://localhost:3000")
+@RequestMapping(value="/ticket")
+
 public class TicketController {
 	@Autowired
 	private PerformanceRepository pfrepository;
