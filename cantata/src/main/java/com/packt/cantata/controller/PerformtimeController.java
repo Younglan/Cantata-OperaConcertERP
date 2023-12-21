@@ -66,17 +66,11 @@ public class PerformtimeController {
 	
 	@GetMapping("/findPfCodePtDate")
 	public Boolean findPfCodePtDate(@RequestParam Long plantNo, @RequestParam String ptDate, @RequestParam String ptEndtime) {
-		System.out.println(plantNo);
-		System.out.println(ptDate);
-		System.out.println(ptEndtime);
 		Iterable<Perform_time> findNull = timeRepo.findPfCodeAndPtDate(plantNo,ptDate,ptEndtime);
 		
-		System.out.println(findNull);
 		if(findNull == null || !findNull.iterator().hasNext()) {
-			System.out.println("@#@#@#@#  : "+findNull);
 			return true;
 		}else {
-		System.out.println("@#@#@#@#  : "+findNull);
 		return false;
 		}
 	}
