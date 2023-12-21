@@ -25,4 +25,11 @@ public interface PerformanceRepository  extends JpaRepository<Performance, Long>
 
 	Performance findByPfCode(Long pfCode);
 	
+	@Query(value="SELECT * FROM performance "
+			+ "	WHERE plant_no= :plantNo "
+			+ "	AND pf_status = 1 "
+			+ "	AND ((pf_start BETWEEN :startDate AND :endDate) "
+			+ "	OR (pf_end BETWEEN :startDate AND :endDate));", nativeQuery=true)
+	Iterable<Performance> checkPerform(@Param("plantNo") Long plantNo, @Param("startDate") String startDate,  @Param("endDate")String endDate);
+	
 }

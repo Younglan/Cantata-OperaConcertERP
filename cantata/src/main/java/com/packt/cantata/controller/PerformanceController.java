@@ -64,53 +64,69 @@ public class PerformanceController {
 	@PostMapping("/new")
 	public ResponseEntity<Performance> postPerforms(@RequestPart("pfPosterFile") MultipartFile posterFile,
 														@RequestPart("perform") String performJson){
-	ObjectMapper objectMapper = new ObjectMapper();
-    PerformanceFormDto perform = null;
-	try {
-		perform = objectMapper.readValue(performJson, PerformanceFormDto.class);
-	} catch (JsonProcessingException e1) {
-		// TODO Auto-generated catch block
-		e1.printStackTrace();
-	}
-
-	Performance newPerform = new Performance();
-	//외래키입력
-	Plant plant = plantRepo.findByPlantNo(perform.getPlantNo());
-	newPerform.setPlantNo(plant);
+		ObjectMapper objectMapper = new ObjectMapper();
+	    PerformanceFormDto perform = null;
+		try {
+			perform = objectMapper.readValue(performJson, PerformanceFormDto.class);
+		} catch (JsonProcessingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	
-	newPerform.setPfCate(perform.getPfCate());
-	newPerform.setPfTitle(perform.getPfTitle());
-	newPerform.setAgency(perform.getAgency());
-	newPerform.setAgencyTel(perform.getAgencyTel());
-//		newPerform.setPfEximg(postData.getPfEximg());
-	newPerform.setPfStart(perform.getPfStart());
-	newPerform.setPfEnd(perform.getPfEnd());
-	newPerform.setPfRuntime(perform.getPfRuntime());
-	newPerform.setPfNotice(perform.getPfNotice());
-	newPerform.setPfExplan(perform.getPfExplan());
-	newPerform.setR(perform.getR());
-	newPerform.setA(perform.getA());
-	newPerform.setB(perform.getB());
-	newPerform.setC(perform.getC());
-	newPerform.setD(perform.getD());
+		Performance newPerform = new Performance();
+		//외래키입력 
+		Plant plant = plantRepo.findByPlantNo(perform.getPlantNo());
+		newPerform.setPlantNo(plant);
+		
+		newPerform.setPfCate(perform.getPfCate());
+		newPerform.setPfTitle(perform.getPfTitle());
+		newPerform.setAgency(perform.getAgency());
+		newPerform.setAgencyTel(perform.getAgencyTel());
+	//		newPerform.setPfEximg(postData.getPfEximg());
+		newPerform.setPfStart(perform.getPfStart());
+		newPerform.setPfEnd(perform.getPfEnd());
+		newPerform.setPfRuntime(perform.getPfRuntime());
+		newPerform.setPfNotice(perform.getPfNotice());
+		newPerform.setPfExplan(perform.getPfExplan());
+		newPerform.setR(perform.getR());
+		newPerform.setS(perform.getS());
+		newPerform.setA(perform.getA());
+		newPerform.setB(perform.getB());
+		newPerform.setC(perform.getC());
+		newPerform.setD(perform.getD());
+	
+		//첨부파일 처리
+		if(posterFile!=null ) {
+			ResponseEntity<Long> number = getLastPostNum();
+			Long incrementedNum;
+			if (number.getStatusCode().is2xxSuccessful() && number.getBody() != null) {
+			    incrementedNum = number.getBody() + 1;
+			} else {
+				incrementedNum = (long) 1;
+			}
+				
+			try {
+				newPerform.setPfPoster(fileService.attachUploadAndGetUri(posterFile, "performance", incrementedNum));
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
+				
+		}
+		
+		//새로운공연 등록
+		Performance savedPerform = pfRepository.save(newPerform);
+		return ResponseEntity.ok(savedPerform);
 
-	//첨부파일 처리
-	ResponseEntity<Long> number = getLastPostNum();
-	Long incrementedNum;
-	if (number.getStatusCode().is2xxSuccessful() && number.getBody() != null) {
-	    incrementedNum = number.getBody() + 1;
-	} else {
-		incrementedNum = (long) 1;
 	}
-		
-	try {
-		newPerform.setPfPoster(fileService.attachUploadAndGetUri(posterFile, "performance", incrementedNum));
-	} catch (IOException e) {
-		e.printStackTrace();
-	} 
-		
-	//새로운공연 등록
-	Performance savedPerform = pfRepository.save(newPerform);
-	return ResponseEntity.ok(savedPerform);
+	
+	
+	@GetMapping("/checkPerformDate")
+	public Boolean checkPerformDate(@RequestParam Long plantNo,  @RequestParam String startDate, @RequestParam String endDate) {
+		Iterable<Performance> findPerforms = pfRepository.checkPerform(plantNo, startDate, endDate);
+		if(findPerforms == null || !findPerforms.iterator().hasNext()) {
+			return true;
+		}else {
+			return false;
+		}
 	}
 }
