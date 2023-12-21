@@ -12,7 +12,7 @@
     display: flex;
 }
 
-.Header .header_title{
+.header_title{
     width: 38%;
     justify-content: center;
 }
