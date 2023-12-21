@@ -2,6 +2,8 @@ package com.packt.cantata.controller;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.packt.cantata.domain.Performance;
 import com.packt.cantata.domain.Rental;
 import com.packt.cantata.domain.RentalRepository;
 
 @RestController
 //@RequiredArgsConstructor
 @CrossOrigin(origins="http://localhost:3000")
+@RequestMapping(value="/rentals")
 public class RentalController {
 	
 	@Autowired
@@ -36,7 +38,7 @@ public class RentalController {
 		return rentalrepository.findAll();
 	}
 	
-	@RequestMapping(value="/rental", method = RequestMethod.POST)
+	@RequestMapping(value="/rentalapp", method = RequestMethod.POST)
 	public 	ResponseEntity<Rental> postrental(@RequestBody Rental rental ){
 		Rental tlt = rentalrepository.save(rental);
 		return ResponseEntity.status(HttpStatus.OK).body(tlt);
@@ -45,8 +47,12 @@ public class RentalController {
 	public void delRental(@RequestParam("rent_no")Long rent_no){
 		 rentalrepository.deleteById(rent_no);
 	}
-	@PutMapping("/updateStatus/{rent_no}/{status}")
-    public int updateRentStatus(Long rent_no, String rent_status) {
-        return rentalrepository.updateByrent_status(rent_no, rent_status);
+	@Transactional
+	@PutMapping("/updateStatus")
+    public ResponseEntity<Rental> updateRentStatus(@RequestParam("rentno")Long rentNo, @RequestParam("status") String rent_status) {
+				System.out.println(rentNo+rent_status);
+		    	Rental tan =rentalrepository.findByRentNo(rentNo);
+		    	tan.setRent_status(rent_status);
+		    	return  ResponseEntity.ok(tan);
 	}
 }
