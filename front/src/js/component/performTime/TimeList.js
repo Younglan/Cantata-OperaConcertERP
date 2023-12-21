@@ -80,13 +80,16 @@ function TimeList(){
         })
         .catch(err => console.error(err));
 
-        fetch(SERVER_URL+'/performances/'+pfCode)
+        fetch(SERVER_URL+'/performances/selectedPerform/'+pfCode)
         .then(response => response.json())
         .then(data => {
             setPfTitle(data.pfTitle);
             setPfStart(data.pfStart);
             setPfEnd(data.pfEnd);
             setPfRuntime(data.pfRuntime);
+            // data 객체에서 plant_no의 plantNo 속성만을 가져와서 setPlantNo로 설정
+            const plantNo = data.plantNo?.plantNo;
+            setPlantNo(plantNo);
         })
         .catch(err => {
             console.error(err);
@@ -142,7 +145,7 @@ function TimeList(){
         return(
             <React.Fragment>
                 <div> 저장된 데이터가 없습니다. </div>
-                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime}/>
+                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime} sendPlantNo={plantNo}/>
                 <button onClick={handleRedirect}>뒤로가기</button> 
             </React.Fragment>
         ) ;
@@ -160,7 +163,7 @@ function TimeList(){
                         disableRowSelectionOnClick={true}
                         getRowId={row => row.ptNo}/> 
 
-                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime}/>
+                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime} sendPlantNo={plantNo}/>
                 <button onClick={handleRedirect}>뒤로가기</button> 
             </div>
         </React.Fragment>

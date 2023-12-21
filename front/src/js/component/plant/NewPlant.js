@@ -62,7 +62,6 @@ function Newplant(props) {
     .catch(err => console.error(err))
 }
 const handleQuillChange = (plExplanValue) => {
-  const cleanedPlExplan = plExplanValue.replace(/<\/?p>/g, '');
   // plExplan 출력
   console.log(plExplan);
 
@@ -70,7 +69,7 @@ const handleQuillChange = (plExplanValue) => {
   setPlExplan(plExplanValue);
 
   // plant 상태 업데이트
-  setPlant((prevState) => ({ ...prevState, plant_detail: cleanedPlExplan }));
+  setPlant((prevState) => ({ ...prevState, plant_detail: plExplanValue }));
 }
 const formats = [
     "header",
