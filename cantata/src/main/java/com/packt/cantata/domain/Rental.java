@@ -15,9 +15,11 @@ import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "Rental")
 public class Rental {
@@ -36,7 +38,7 @@ public class Rental {
 	@JoinColumn(name = "cp_no")
 	private Corporation cp_no;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "plantNoo")
+	@JoinColumn(name = "plantNo")
 	private Plant plantNo;
 	
 	@Builder
@@ -50,6 +52,7 @@ public class Rental {
 		this.rent_status = rent_status;
 		this.rent_pay = rent_pay;
 	}
+
 	
 
 }
