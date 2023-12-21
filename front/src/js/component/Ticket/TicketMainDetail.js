@@ -27,7 +27,7 @@ function TicketMainDetail(){
     
     useEffect(()=>{
      
-      fetch(`http://localhost:8090/pftimeDtl/?pfCode=${ticketInfo.state.pfcode}`)
+      fetch(`http://localhost:8090/ticket/pftimeDtl/?pfCode=${ticketInfo.state.pfcode}`)
       .then(response => response.json())
       .then(data => setDate(data.map((it)=>{
         return String(new Date(moment(it).format('YYYY-MM-DD')))
@@ -65,7 +65,7 @@ function TicketMainDetail(){
         try{
           const tmptitle = moment(title).format('YYYY-MM-DD');
         
-          const response = await fetch(`http://localhost:8090/pftime/?date=${tmptitle}&title=${ticketInfo.state.perform.pfTitle}`);
+          const response = await fetch(`http://localhost:8090/ticket/pftime/?date=${tmptitle}&title=${ticketInfo.state.perform.pfTitle}`);
           const data = await response.json();
           await setTime(data);
           console.log(data);
@@ -77,7 +77,7 @@ function TicketMainDetail(){
     }
     
     const onClickTime = (time) => {
-      fetch(`http://localhost:8090/seat/?num=${time}`)
+      fetch(`http://localhost:8090/ticket/seat/?num=${time}`)
       .then(response => response.json())
       .then(data => ticketInfo.setSeat(data))
       .catch(err => console.error(err));

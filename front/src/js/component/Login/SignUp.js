@@ -45,6 +45,7 @@ function SignUp() {
   const [addropen, setAddropen] = useState(false);
   const [submit, setSubmit] = useState(true);
   useEffect(() => {
+    console.log(formdata);
     handleSubmit();
   }, [formdata]);
   const handleInputChange = (e) => {
@@ -52,7 +53,7 @@ function SignUp() {
     console.log(formdata);
     setFormData(
       name === "addr_dtl"
-        ? { ...formdata, address: `${addrall}${value}` }
+        ? { ...formdata, address: `${addrall} ${value}` }
         : {
             ...formdata,
             [name]: value,
