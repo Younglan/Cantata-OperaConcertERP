@@ -32,10 +32,5 @@ public class PlantController {
 		Plant pav = plantrepository.save(plant);
 		return ResponseEntity.status(HttpStatus.OK).body(pav);
 	}
-	
-	@GetMapping("/filteredPlantToPerForm")
-	public Iterable<Plant> filteredPlantToPerForm(){
-		return plantrepository.filteredPlantToPerForm();
-	}
 
 }

@@ -33,6 +33,10 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
         navigate("/performCalendar");
     }
     
+    const goToAdminPage = () =>{
+        navigate("/adminpage");
+        handleToggle(); // 메뉴 닫기
+    }
     return (
         <div className='Over_background'>
             <div className={`slide_board ${isOpen ? 'open' : 'close'}`}>
@@ -99,7 +103,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                 </div>
                 {userRole === 'admin' && (//특정권한 확인 admin일 경우에만 보임
                 <div className = "manager_board menu_list">
-                    <ul>
+                    <ul onClick={goToAdminPage}>
                         <h2>관리자메뉴</h2>
                         <li><h1>공연관리</h1></li>
                         <li><h1>예매관리</h1></li>

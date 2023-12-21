@@ -8,17 +8,13 @@
     width: 90%;
     min-height: 800px;
     padding-top: 50px;
-    /* border: 1px solid red; */
+    margin-top: 20px;
+
 }
 
 .pfList{
     margin: 0 auto;
     width: 80%;
-    max-width: 890px;
+    max-width: 900px;
     text-align: center;
 }
-/* .btnbox > button {
-    background-color: aqua;
-    height: 20px;
-    clear: both;
-} */

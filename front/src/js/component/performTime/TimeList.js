@@ -88,7 +88,7 @@ function TimeList(){
             setPfEnd(data.pfEnd);
             setPfRuntime(data.pfRuntime);
             // data 객체에서 plant_no의 plantNo 속성만을 가져와서 setPlantNo로 설정
-            const plantNo = data.plant_no?.plantNo;
+            const plantNo = data.plantNo?.plantNo;
             setPlantNo(plantNo);
         })
         .catch(err => {

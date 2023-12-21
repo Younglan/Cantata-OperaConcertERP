@@ -29,9 +29,9 @@ function PerformanceList(){
                 </div>
         ),
     }, 
-        {field: 'pfStart', headerName: '공연 시작일', width: 100}, 
-        {field: 'pfEnd', headerName: '공연 종료일', width: 100}, 
-        {field: 'agency', headerName: '배급사', width: 100}, 
+        {field: 'pfStart', headerName: '공연 시작일', width: 110}, 
+        {field: 'pfEnd', headerName: '공연 종료일', width: 110}, 
+        {field: 'agency', headerName: '배급사', width: 120}, 
         {field: '_links.self.href',
          headerName: '관리메뉴',
          sortable:false,

@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from 'moment/moment';
+import { format } from 'date-fns';
 import ko from "date-fns/locale/ko";
 
 import './NewPerform.css';
@@ -27,6 +28,7 @@ function NewPerform(props) {
     const [pfExplan, setPfExplan] = React.useState('');
     const [stDate, setStDate] = useState();
     const [edDate, setEdDate] = useState();
+    const [dateCheck, setDateCheck] = useState();
    
     let pfCode ;
 
@@ -70,7 +72,7 @@ function NewPerform(props) {
     };
     //공연장리스트조회
     const fetchFindPlantList = () => {
-        fetch(SERVER_URL+'/plants/getplant')
+        fetch(SERVER_URL+'/plants/filteredPlantToPerForm')
         .then(response => response.json())
         .then(data => setPlants(data))
         .catch(err => console.error(err));
@@ -83,16 +85,55 @@ function NewPerform(props) {
     }
     //날짜 변경 핸들러
     const handleStartChange = (selectedDate) => {
-        setStDate(selectedDate);
-        const formatDate = new Date(moment(selectedDate).format("YYYY-MM-DD"));
-        setPerform({ ...perform, pfStart: formatDate });
-        // setPerform(prevState => ({ ...prevState, pfStart: formatDate }));
+        if(!perform.plantNo){
+            alert('장소를 먼저 선택하세요');
+        }else{
+            setStDate(selectedDate);
+            if(edDate && selectedDate){
+                performDateCheck(selectedDate, edDate, perform.plantNo);
+            }
+        }
     }
     const handleEndChange = (selectedDate) => {
-        setEdDate(selectedDate);
-        const formatDate = new Date(moment(selectedDate).format("YYYY-MM-DD"));
-        setPerform({ ...perform, pfEnd: formatDate });
-        // setPerform(prevState => ({ ...prevState, pfEnd: formatDate }));
+        if(!stDate){
+            alert('시작일을 먼저 선택하세요');
+        }else{
+            setEdDate(selectedDate);
+            if(stDate && selectedDate){
+                performDateCheck(stDate, selectedDate, perform.plantNo);
+            }
+
+        }
+    }
+    const handlePlantChange = (selectdPlant) =>{
+        if(stDate && edDate && selectdPlant){
+            console.log("Start : "+stDate+", End : "+ edDate+", plantNo : "+selectdPlant);
+            performDateCheck(stDate, edDate, selectdPlant);
+        }
+        setPerform(prevState => ({ ...prevState, plantNo: selectdPlant }));
+    }
+
+    //일정 체크
+    const performDateCheck = (stDate, edDate, plantNo) => {
+        const sendStartDate = new Date(moment(stDate).format("YYYY-MM-DD"));
+        const sendStartDate2 = format(stDate, 'yyyy-MM-dd', { locale: ko });
+        const sendEndDate = new Date(moment(edDate).format("YYYY-MM-DD"));
+        const sendEndDate2 = format(edDate, 'yyyy-MM-dd', { locale: ko });
+
+        //백엔드요청
+        fetch(SERVER_URL+"/performances/checkPerformDate?plantNo="+plantNo+"&startDate="+sendStartDate2+"&endDate="+sendEndDate2)
+        .then(response => response.json())
+        .then(data =>{
+            if(data === true){
+                setDateCheck(null);
+                setPerform(prevState => ({ ...prevState, plantNo: plantNo, pfStart: sendStartDate, pfEnd: sendEndDate}));
+            }else{
+                setDateCheck(() => {
+                    alert('해당 날짜와 공연장에 개설할 수 없습니다.');
+                  });
+            }
+        })
+        .catch(err => console.error(err));
     }
 
     // Quill 에디터의 컨텐츠 변경 핸들러 (이미지 태그가 제거될 경우 관련 파일 번호도 제거)
@@ -171,7 +212,6 @@ function NewPerform(props) {
 
         input.onchange = () => {
             const files = Array.from(input.files);
-            console.log("onChanged file : "+files);
 
             if (files.length > 1) {
                 alert('한번에 한 사진만 업로드 가능합니다!');
@@ -379,7 +419,7 @@ function NewPerform(props) {
         alert("공연장을 고르세요.");
     }else if(!perform.agency || !perform.agencyTel){
         alert("기획사와 문의처 전화번호를 입력하세요.");
-    }else if(!perform.r || !perform.s || !perform.a|| !perform.b|| !perform.c|| !perform.d){
+    }else if(!perform.r || !perform.s || !perform.a || !perform.b || !perform.c || !perform.d){
         alert("좌석별 가격을 입력하세요.");
     }else if(!pfPosterElement.value){
         alert("포스터이미지를 등록하세요");
@@ -387,6 +427,8 @@ function NewPerform(props) {
         alert("공지사항을 입력하세요.");
     }else if(!perform.pfExplan){
         alert("공연상세설명을 입력하세요.");
+    }else if(dateCheck !== null){
+        alert("장소 혹은 날짜를 다시 선택하세요");
     }else{
         var formData = new FormData();
         formData.append("pfPosterFile", pfPosterElement.files[0]);
@@ -436,6 +478,20 @@ function NewPerform(props) {
                     </div>
                 </div>
                 <div className="divrows">
+                    <div className="formHeader">장&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</div>
+                        <div className="divcolscont">
+                        <Form.Select aria-label="Default select example" className="fullwidth" name="plantNo" value={perform.plantNo} onChange={(event) => handlePlantChange(event.target.value)} >
+                            {/* <option value="오디토리움">오디토리움</option>
+                            <option value="퍼포먼스홀">퍼포먼스홀</option> */}
+                            {/* plants 리스트를 매핑하여 option 요소를 동적으로 생성 */}
+                            <option value="">공연장을 선택하세요.</option>
+                            {plants.map(plant => (
+                                <option key={plant.plantNo} value={plant.plantNo}>
+                                    {plant.plant_name}
+                                </option>
+                            ))}
+                        </Form.Select>
+                    </div>
                     <div className="formHeader">시&nbsp;&nbsp;&nbsp;&nbsp;작&nbsp;&nbsp;&nbsp;&nbsp;일</div>
                     <div className="divcolscont">
                         <DatePicker
@@ -467,20 +523,7 @@ function NewPerform(props) {
                     </div>
                 </div>
                 <div className="divrows">
-                    <div className="formHeader">장&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</div>
-                    <div className="divcolscont">
-                    <Form.Select aria-label="Default select example" className="fullwidth" name="plantNo" value={perform.plantNo}onChange={handleChange}  >
-                        {/* <option value="오디토리움">오디토리움</option>
-                        <option value="퍼포먼스홀">퍼포먼스홀</option> */}
-                        {/* plants 리스트를 매핑하여 option 요소를 동적으로 생성 */}
-                        <option value="">공연장을 선택하세요.</option>
-                        {plants.map(plant => (
-                            <option key={plant.plantNo} value={plant.plantNo}>
-                                {plant.plant_name}
-                            </option>
-                        ))}
-                    </Form.Select>
-                    </div>
+                    
                     <div className="formHeader">기&nbsp;&nbsp;&nbsp;&nbsp;획&nbsp;&nbsp;&nbsp;&nbsp;사</div>
                     <div className="divcolscont">
                         <Form.Control type="text" placeholder=""  className="fullwidth" name="agency" value={perform.agency} onChange={handleChange} />
