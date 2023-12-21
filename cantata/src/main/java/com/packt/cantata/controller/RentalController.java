@@ -44,8 +44,8 @@ public class RentalController {
 		return ResponseEntity.status(HttpStatus.OK).body(tlt);
 	}
 	@DeleteMapping("/delrental")
-	public void delRental(@RequestParam("rent_no")Long rent_no){
-		 rentalrepository.deleteById(rent_no);
+	public void delRental(@RequestParam("rentNo")Long rentNo){
+		 rentalrepository.deleteById(rentNo);
 	}
 	@Transactional
 	@PutMapping("/updateStatus")

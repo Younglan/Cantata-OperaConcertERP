@@ -26,7 +26,7 @@ public class Rental {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long rent_no;
+	private long rentNo;
 	@Column(nullable = false)
 	
 	private Date rent_start;		
