@@ -14,17 +14,18 @@ function TicketStatus(){
         <div className="tick_status">
             <div className="ts_title">{ticketInfo.perform.pf_title}</div>
             <div className="ts_main" style={hiddenInfo}>
-                <div className="ts_poster">{ticketInfo.perform.pf_poster}</div>
+                <div className="ts_poster"><img src={ticketInfo.perform.pf_poster} alt="poster_Image"></img></div>
                 <div className="ts_sub">{moment(ticketInfo.perform.pf_start).format("yyyy-MM-DD")}~<br/>{moment(ticketInfo.perform.pf_end).format("yyyy-MM-DD")}<br/>런타임 : {ticketInfo.perform.pf_runtime} 분</div>
             </div>
             <div className="ts_seat" style={hiddenSeat}>
                 <div className="ts_seat_1">
-                    <div>R석</div>
-                    <div>S석</div>
-                    <div>A석</div>
-                    <div>B석</div>
-                    <div>C석</div>
-                    <div>D석</div>
+     
+                    <div style={{display:"flex"}}>R석<div style={{width:"15px",height:"15px", backgroundColor:"#4d377b",margin:"auto 10px"}}></div></div>
+                    <div style={{display:"flex"}}>S석<div style={{width:"15px",height:"15px", backgroundColor:"#79EDFF",margin:"auto 10px"}}></div></div>
+                    <div style={{display:"flex"}}>A석<div style={{width:"15px",height:"15px", backgroundColor:"#3CB371",margin:"auto 10px"}}></div></div>
+                    <div style={{display:"flex"}}>B석<div style={{width:"15px",height:"15px", backgroundColor:"#FF7F00",margin:"auto 10px"}}></div></div>
+                    <div style={{display:"flex"}}>C석<div style={{width:"15px",height:"15px", backgroundColor:"#E9BD15",margin:"auto 10px"}}></div></div>
+                    <div style={{display:"flex"}}>D석<div style={{width:"15px",height:"15px", backgroundColor:"#964B00",margin:"auto 10px"}}></div></div>
                 </div>
                 <div className="ts_seat_2">
                     <div className={leftSeat(ticketInfo.seatno[0])}>{ticketInfo.seatno[0]}</div>

@@ -69,7 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.POST, "/login","/signup").permitAll()
 		.antMatchers("/verify/**","/tel/**","/Duple/**","/updateRecent/**","/findid/**","/pwdchan/**").permitAll()
 		.antMatchers("/admin/**").hasRole("ADMIN")
-		.antMatchers("/user/**","/corporations/**").hasRole("USER")
+		.antMatchers("/user/**","/corporations/**","/ticket/**").hasRole("USER")
+		
 		.anyRequest().authenticated().and()
 		.exceptionHandling()
 		.authenticationEntryPoint(exceptionHandler).and()

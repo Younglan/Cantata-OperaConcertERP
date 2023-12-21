@@ -24,7 +24,11 @@ function TicketMain(){
     const classSeat = ["R","S","A","B","C","D"];
     const leftS = [48, 32, 8, 48, 72, 80];
     const fetchtime = () =>{
-        fetch("http://localhost:8090/pftdate")
+      const token = sessionStorage.getItem("jwt");
+        fetch("http://localhost:8090/ticket/pftdate",{
+          headers: { 
+          'Authorization': token
+              }})
         .then(response => response.json())
         .then(data => setDate(data.map((it)=>{
           return String(new Date(moment(it).format('YYYY-MM-DD')))
@@ -76,8 +80,12 @@ function TicketMain(){
       };
 
     const onChangeClick = (event) =>{
+      const token = sessionStorage.getItem("jwt");
         const tmptitle = moment(event).format('YYYY-MM-DD');
-        fetch(`http://localhost:8090/tickdate/?date=${tmptitle}`)
+        fetch(`http://localhost:8090/ticket/tickdate/?date=${tmptitle}`,{
+          headers: { 
+          'Authorization': token
+              }})
         .then(response => response.json())
         .then(data => setTitle(data))
         .catch(err => console.error(err));
@@ -85,8 +93,11 @@ function TicketMain(){
     };
     const onClickTitle = (title) => {
         const tmptitle = moment(value).format('YYYY-MM-DD');
-        
-        fetch(`http://localhost:8090/pftime/?date=${tmptitle}&title=${title}`)
+        const token = sessionStorage.getItem("jwt");
+        fetch(`http://localhost:8090/ticket/pftime/?date=${tmptitle}&title=${title}`,{
+          headers: { 
+          'Authorization': token
+              }})
         .then(response => response.json())
         .then(data => setTime(data))
         .catch(err => console.error(err));
@@ -94,7 +105,11 @@ function TicketMain(){
         ticketInfo.setButtonOn(false);
     };
     const onClickTime = (time) => {
-      fetch(`http://localhost:8090/seat/?num=${time}`)
+      const token = sessionStorage.getItem("jwt");
+      fetch(`http://localhost:8090/ticket/seat/?num=${time}`,{
+        headers: { 
+        'Authorization': token
+            }})
       .then(response => response.json())
       .then(data => ticketInfo.setSeat(data))
       .catch(err => console.error(err));
