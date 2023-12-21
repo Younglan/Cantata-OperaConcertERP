@@ -12,47 +12,48 @@ import "react-quill/dist/quill.snow.css";
 Quill.register("modules/imageResize", ImageResize);
 const SERVER_URL = 'http://localhost:8090';
 
-function NewPost(props) {
+function EditPost(props) {
+    const { postNo } = useParams();
     const { BoardType } = useParams();
-    const [boardName, setBoardName] = useState('');
-    const [validationError, setValidationError] = useState(false); //유동성 검사
+    const [postTitle, setPostTitle] = useState('');
+    // const [boardName, setBoardName] = useState('');
     //네비게이터
     const navigate = useNavigate();
-    // 연결된 파일 번호 리스트
-    const [filesNumbers, setFilesNumbers] = useState([]);
-    const [imageLoading, setImageLoading] = useState(false);
-    // 파일의 SRC와 번호를 매핑한 객체
-    const [fileSrcToNumberMap, setFileSrcToNumberMap] = useState({});
+     // 연결된 파일 번호 리스트
+     const [filesNumbers, setFilesNumbers] = useState([]);
+     const [imageLoading, setImageLoading] = useState(false);
+     // 파일의 SRC와 번호를 매핑한 객체
+     const [fileSrcToNumberMap, setFileSrcToNumberMap] = useState({});
     // const [open, setOpen] = useState(false);
 
-    let postNo;
 
     const [post, setPost] = useState({
-        postTitle: '',
-        postFile1: '',
-        postSub: '',
-        postDeadline: '',
-        brdNo: ''
+        postTitle : '',
+        postFile1 : '',
+        postSub : '',
+        postDeadline : '',
+        brdNo : ''
     });
     const [postSub, setPostSub] = React.useState('');
     // const [selectedBrdNo, setSelectedBrdNo] = useState(null);
+  
     useEffect(() => {
         // 게시판 이름 가져오기
-        const fetchBrdName = async () => {
+        const fetchPost = async () => {
             try {
-                const response = await fetch(`${SERVER_URL}/brd_divisions/${BoardType}`);
+                const response = await fetch(`${SERVER_URL}/brd_posts/${postNo}`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 const data = await response.json();
-                setBoardName(data.brdName);
+                setPostTitle(data.postTitle);
             } catch (error) {
                 console.error('Error fetching brdName:', error);
             }
         };
 
-        fetchBrdName();
-    }, [BoardType]);
+        fetchPost();
+    }, [postNo]);
 
 
     //리다이렉션 핸들러
@@ -66,6 +67,7 @@ function NewPost(props) {
             ...post,
             [event.target.name]: event.target.value
         });
+        setPostTitle(event.target.value);
     }
 
     // Quill 에디터의 컨텐츠 변경 핸들러 (이미지 태그가 제거될 경우 관련 파일 번호도 제거)
@@ -98,13 +100,18 @@ function NewPost(props) {
             const range = editor.getSelection();
             editor.insertEmbed(range ? range.index : 0, 'image', url);
         }
+        else if (quillRef2.current) {
+            const editor = quillRef2.current.getEditor();
+            const range = editor.getSelection();
+            editor.insertEmbed(range ? range.index : 0, 'image', url);
+        }
     }
 
     // Quill 에디터의 이미지 업로드 핸들러
     function imageHandler() {
         fetch(SERVER_URL + '/brd_posts/lastPostNo')
             .then(response => response.json())
-            .then(data => { postNo = data })
+            .then(data =>  {postNo = data} )
             .catch(err => console.error(err));
 
         const input = document.createElement('input');
@@ -113,7 +120,7 @@ function NewPost(props) {
         input.setAttribute('multiple', 'true');
         input.click();
 
-        input.onchange = async () => {
+        input.onchange = () => {
             const files = Array.from(input.files);
 
             if (files.length > 1) {
@@ -189,9 +196,6 @@ function NewPost(props) {
         "width",
     ];
 
-    const validateForm = () => { //제목 또는 내용의 유효성 검사
-        return !(!post.postTitle.trim() || !post.postSub.trim()); //trim()은 공백 제거, 만약 postTitle, postSub중 하나라도 비어있다면 !에 따라 true를 그리고 이중 !에 따라 false를 리턴한다.
-    };
 
     const modules = useMemo(() => {
         return {
@@ -216,61 +220,60 @@ function NewPost(props) {
             }
         };
     }, []);
-
+    
     //<QuillEditor> quill 에디터 컴포넌트 ref
     const quillRef1 = useRef(null);
+    const quillRef2 = useRef(null);
 
-    //새로운 글 등록
-    function newPostSave() {
-        const isValid = validateForm();
-        if (isValid) {
-            setValidationError(false);
-            // postNum 서버로부터 가져오기
-            fetch(`${SERVER_URL}/brd_posts/lastPostNum/${BoardType}`)
-                .then(response => response.json())
-                .then(data => {
-                    // postNum 값을 이용하여 새로운 글 저장
-                    fetch(`${SERVER_URL}/brd_posts/newPost`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            ...post,
-                            postNum: data + 1, // 마지막 postNum + 1
-                            brdNo: { brdNo: BoardType },
-                        })
-                    })
-                        .then(response => {
-                            if (response.ok) {
-                                alert('저장완료.');
-                                navigate(-1);
-                            } else {
-                                alert('저장되지않았습니다.');
-                            }
-                        })
-                        .catch(err => console.error(err))
-                })
-                .catch(err => console.error(err));
-        } else {
-            setValidationError(true);
-        }
+    //글 수정
+    function updatePost() {
+        //글 수정 요청을 서버에 보내기
+       fetch(`${SERVER_URL}/brd_posts/updatePost/${postNo}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            ...post,
+            brdNo: { brdNo: post.brdNo },
+        })
+    })
+        .then(response => {
+            if (response.ok) {
+                alert('수정 완료.');
+                navigate(-1);
+            } else {
+                alert('수정되지 않았습니다.');
+            }
+        })
+        .catch(err => console.error(err));
     }
     return (
         <div className='contentsArea'>
             <div className='contents'>
                 {/* <form> */}
                 <div>
-                    <h1>글쓰기 폼</h1>
-                </div>
-                <div className="divrows">
-                    <div className="formHeader"><p>{boardName}</p></div>
+                    <h1>{postTitle}</h1>
                 </div>
                 <div className="divrows">
                     <div className="formHeader">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</div>
                     <div className="divcolscont">
-                        <Form.Control type="text" placeholder="" className="fullwidth" name="postTitle" value={post.postTitle} onChange={handleChange} />
+                        <Form.Control type="text" placeholder="" className="fullwidth" name="postTitle" value={postTitle} onChange={handleChange} />
                     </div>
                 </div>
-            
+                {BoardType === '4' && ( //이벤트 페이지(brdNo:4)에서 열었을시 이벤트 마침일 표시
+                <div className="divrows">
+                    <div className="formHeader">마&nbsp;&nbsp;&nbsp;&nbsp;침&nbsp;&nbsp;&nbsp;&nbsp;일</div>
+                    <div className="divcolscont">
+                        <Form.Control type="date" placeholder="" className="fullwidth" name = "postDeadline" value={post.postDeadline} onChange={handleChange}/>
+                        {/* 이거는 이벤트에만 쓸 예정 나중에 배너하고도 연결해야함.. */}
+                    </div>
+                </div>
+                )}
+                <div className="divrows">
+                    <div className="formHeader">포스&nbsp;&nbsp;터</div>
+                    <div className="divcolscont">
+                        <Form.Control type="file" name="postFile1" value={post.postFile1} onChange={handleChange} />
+                    </div>
+                </div>
                 <div className="divrows formTxtArea">
                     <div className="formHeader">글&nbsp;&nbsp;쓰&nbsp;&nbsp;기</div>
                     <div className="divcolscont">
@@ -293,7 +296,7 @@ function NewPost(props) {
                     </div>
                 </div>
                 <div className="divrows formTxtArea">
-                    <Button onClick={newPostSave} variant="secondary" disabled={!validateForm()}>등록</Button> &nbsp;
+                    <Button onClick={updatePost} variant="secondary">등록</Button> &nbsp;
                     <Button onClick={handleRedirect} variant="secondary">뒤로가기</Button>
                 </div>
 
@@ -305,4 +308,4 @@ function NewPost(props) {
     )
 };
 
-export default NewPost;
+export default EditPost;

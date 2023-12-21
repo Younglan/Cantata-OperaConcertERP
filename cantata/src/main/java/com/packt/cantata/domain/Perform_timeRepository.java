@@ -36,5 +36,6 @@ public interface Perform_timeRepository extends JpaRepository<Perform_time, Inte
 			+ "	AND ((pt.pt_date BETWEEN :ptDate AND :ptEndtime)"
 			+ "		OR (pt.pt_endtime BETWEEN :ptDate AND :ptEndtime));", nativeQuery=true)
 	Iterable<Perform_time> findPfCodeAndPtDate(@Param("plantNo") Long plantNo, @Param("ptDate") String ptDate,  @Param("ptEndtime")String ptEndtime);
+
 	
 }

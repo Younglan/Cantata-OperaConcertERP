@@ -20,8 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.packt.cantata.CantataApplication;
-import com.packt.cantata.domain.Perform_time;
-import com.packt.cantata.domain.Perform_timeRepository;
 import com.packt.cantata.domain.Performance;
 import com.packt.cantata.domain.PerformanceRepository;
 import com.packt.cantata.domain.Plant;
@@ -44,8 +42,6 @@ public class PerformanceController {
 //	@Autowired
 //	private PerformanceService pfService; 
 	@Autowired
-	private Perform_timeRepository timeRepo;
-	@Autowired
 	private PlantRepository plantRepo;
 	@Autowired
 	private FileService fileService;
@@ -55,7 +51,6 @@ public class PerformanceController {
 		//전체공연 검색 및 반환
 		return pfRepository.findAll();
 	}
-	
 	@GetMapping("/lastPfCode")
 	public ResponseEntity<Long> getLastPostNum() {
 		Performance lastPerformNum = pfRepository.findTopByOrderByPfCodeDesc();
@@ -64,12 +59,6 @@ public class PerformanceController {
             return ResponseEntity.ok().body(lastPerformNum.getPfCode());
         }
         return ResponseEntity.ok().body(0L);  // 0을 반환하거나 다른 기본값을 반환할 수 있습니다.
-	}
-	
-	@GetMapping("/selectedPerform/{pfCode}")
-	public Performance getSelectedPerform(Performance performance){
-		Performance returnPerform = pfRepository.findByPfCode(performance.getPfCode());
-		return returnPerform;
 	}
 	
 	@PostMapping("/new")
@@ -127,6 +116,7 @@ public class PerformanceController {
 		//새로운공연 등록
 		Performance savedPerform = pfRepository.save(newPerform);
 		return ResponseEntity.ok(savedPerform);
+
 	}
 	
 	

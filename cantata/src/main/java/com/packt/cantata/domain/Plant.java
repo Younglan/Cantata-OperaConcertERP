@@ -36,12 +36,12 @@ public class Plant {
 	private String plant_subimg2;
 	private long plant_charge;
 	private String plant_sub;
-	private Boolean plant_status;
-	private int floor;
+	private String plant_status;
+	private String floor;
 	
 	public Plant(String plant_name, String plant_use, String plant_detail
 			, int capacity, String plant_mainimg
-			, long plant_charge, String plant_sub, Boolean plant_status, int floor) {
+			, long plant_charge, String plant_sub, String plant_status, String floor) {
 		super();
 		this.plant_name = plant_name;
 		this.plant_use = plant_use;
@@ -55,7 +55,6 @@ public class Plant {
 		this.plant_status = plant_status;
 		this.floor = floor;
 	}
-	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plantNo")
 	private List<Rental> rentals;
 	
