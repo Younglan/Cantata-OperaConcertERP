@@ -1,20 +1,123 @@
 .contentsArea{
-    
+    padding-top: 30px;
 }
 
-.contentsHeader{
-    border: 1px solid cyan;
-    height: 300px;
-    color : white;
+.headLevel{
+    margin: 0 auto;
+    height: 100%;
+    width: 90%;
 }
+@media(min-width:431px ){
+    .contentsHeader{
+        height: 400px;
+        color : white;
+    }
+    .performHead{
+        float: left;
+        height: 100%;
+    }
+    .performHeaderImg{
+        width:30%;
+    }
+    .performHeaderCon{
+        width:70%;
+        padding: 10px;
+        padding-left: 30px;
+    }
+    #performHeaderImg > p > button {
+        width:90%;
+        margin-top: 0px;
+        border-radius: 0;
+        max-width: 250px;
+    }
+}
+@media (max-width: 430px) {
+    .contentsHeader{
+        height: auto;
+        color : white;
+    }
+  .performHead{
+    height: auto;
+    }
+    .performHeaderImg{
+        width:100%;
+    }
+    .performHeaderCon{
+        width:100%;
+        padding-top: 20px;
+    }
+    #performHeaderImg > p > button {
+        width: 100%;
+        margin-top: 0px;
+        border-radius: 0;
+    }
+}
+.performHeaderCon > h1{
+    text-align: left;
+    height: 80px;
+}
+
+
+
+#performHeaderImg > p > .redButton{
+    background-color: #BB2649;
+    border-color: #BB2649;
+}
+
+#performHeaderImg > p > .redButton:hover{
+    background-color: #b61b3f;
+    border-color: #b61b3f;
+}
+
+
+#performHeaderImg > img{
+    width:90%;
+    height: 83%;
+    max-width: 250px;
+}
+
+.performHeaderCon > ul{
+    list-style: none;
+    display: block;
+    text-align: left;
+}
+
+.performHeaderCon > ul > li > span{
+    font-size: 14px;
+    padding-left: 10px;
+    display: table-cell;
+}
+.performHeaderCon > ul > li > span.tit {
+    border-top: #7c7c7c;
+    border-bottom: #7c7c7c;
+    padding-left: 0px;
+    height:30px;
+    width:80px;
+    color: #999;
+  }
+#performHeaderCon > p > button{
+    width:50%;
+    border-radius: 0;
+  }
+
 
 .contents{
-    /* border: 1px solid red; */
-    width: 100%;
-
+    margin-top: 20px;
+    }
+    
+.btn-group{
+    width:85%;
+}
+.detailContent{
+    width:85%;
+    margin: 0 auto;
+    margin-top: 20px;
+    /* text-align: left; */
 }
 
-.btn-group{
-    width:95%;
-    
+.detailContent > p {
+    text-align: initial;
+}
+.detailContent > p > p > img{
+    max-width: 100%;
 }

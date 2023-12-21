@@ -70,7 +70,7 @@ function NewPerform(props) {
     };
     //공연장리스트조회
     const fetchFindPlantList = () => {
-        fetch(SERVER_URL+'/plants/getplant')
+        fetch(SERVER_URL+'/plants/filteredPlantToPerForm')
         .then(response => response.json())
         .then(data => setPlants(data))
         .catch(err => console.error(err));
@@ -171,7 +171,6 @@ function NewPerform(props) {
 
         input.onchange = () => {
             const files = Array.from(input.files);
-            console.log("onChanged file : "+files);
 
             if (files.length > 1) {
                 alert('한번에 한 사진만 업로드 가능합니다!');
@@ -379,8 +378,6 @@ function NewPerform(props) {
         alert("공연장을 고르세요.");
     }else if(!perform.agency || !perform.agencyTel){
         alert("기획사와 문의처 전화번호를 입력하세요.");
-    }else if(!perform.r || !perform.s || !perform.a|| !perform.b|| !perform.c|| !perform.d){
-        alert("좌석별 가격을 입력하세요.");
     }else if(!pfPosterElement.value){
         alert("포스터이미지를 등록하세요");
     }else if(!perform.pfNotice){
