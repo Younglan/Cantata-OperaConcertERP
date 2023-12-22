@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './js/layout/Header';
 import Footer from './js/layout/Footer';
 import Main from './js/page/Main';
-import PageTest from './js/page/pageTest';
+import PageTest from './js/page/PageTest';
 import AdminPage from './js/page/AdminPage';
 import PerformanceDetail from './js/component/performance/PerformanceDetail';
 import PerformanceList from './js/component/performance/PerformanceList';
@@ -15,6 +15,7 @@ import EventPage from './js/page/EventPage';
 import NewPost from './js/component/NewPost';
 import NewEventPost from './js/component/NewEventPost';
 import EditPost from './js/component/EditPost';
+import EditEventPost from './js/component/EditEventPost';
 import PostDetail from './js/component/PostDetail';
 import FAQ from "./js/page/FAQ";
 import QNA from "./js/page/QNA";
@@ -35,7 +36,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/pageTest" element={<PageTest />} />
-          <Route path="/adminPage" element={<AdminPage/>}/>
+          <Route path="/adminPage/:props" element={<AdminPage/>}/>
           <Route path="/performList" element={<PerformanceList />} />
           <Route path="/performList/newPerform" element={<NewPerform />} />
           <Route path="/performanceDetail/:pfCode" element={<PerformanceDetail />} />
@@ -49,6 +50,7 @@ function App() {
           <Route path='/NewPost/:BoardType' element={<NewPost/>}/>
           <Route path='/NewEventPost/:BoardType' element={<NewEventPost/>}/>
           <Route path='/EditPost/:BoardType/:postNo' element={<EditPost/>}/>
+          <Route path="/EditEventPost/:BoardType/:postNo" element={<EditEventPost/>}/>
           <Route path='/postDetail/:BoardType/:postNo' element={<PostDetail/>}/>
           <Route path='/ticket' element={<Ticket/>}/>
           <Route path='/RentApp' element={<RentalApps/>}/>

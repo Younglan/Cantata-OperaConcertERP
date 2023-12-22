@@ -128,7 +128,7 @@
 
 .Board ul{
     /* animation-fill-mode: forwards; */
-    animation: slide 3s forwards;
+    animation: slide 2s forwards;
 }
 
 @keyframes slide {
