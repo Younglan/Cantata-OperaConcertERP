@@ -4,6 +4,7 @@ package com.packt.cantata.domain;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -72,7 +73,7 @@ public class Brd_post {
 	private Boolean postStatus = true; //true면 게시판에 보이고 false면 보이지 않는다.
 
 	@Column
-	private LocalDate postDeadline; // 게시표시일자	
+	private Date postDeadline; // 게시표시일자	
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "postNo")
@@ -82,7 +83,7 @@ public class Brd_post {
     private List<File> files = new ArrayList<>();
 	
 	public Brd_post( String postTitle,String postFile1, String postFile2, String postFile3,
-			String postSub, LocalDate postDate, LocalDate postDeadline) {
+			String postSub, LocalDate postDate, Date postDeadline) {
 		super();
 		
 		this.postTitle = postTitle;
@@ -112,5 +113,6 @@ public class Brd_post {
 		super();
 		this.postTitle = postTitle;
 	}
+
 
 }
