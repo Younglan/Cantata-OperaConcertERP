@@ -1,6 +1,5 @@
 package com.packt.cantata.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -20,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.packt.cantata.CantataApplication;
+import com.packt.cantata.domain.Perform_timeRepository;
 import com.packt.cantata.domain.Performance;
 import com.packt.cantata.domain.PerformanceRepository;
 import com.packt.cantata.domain.Plant;
@@ -45,6 +44,8 @@ public class PerformanceController {
 	private PlantRepository plantRepo;
 	@Autowired
 	private FileService fileService;
+	@Autowired
+	private Perform_timeRepository timeRepo;
 	
 	@RequestMapping("/allPerform")
 	public List<Performance> getPerforms(){
@@ -60,6 +61,7 @@ public class PerformanceController {
         }
         return ResponseEntity.ok().body(0L);  // 0을 반환하거나 다른 기본값을 반환할 수 있습니다.
 	}
+	
 	
 	@PostMapping("/new")
 	public ResponseEntity<Performance> postPerforms(@RequestPart("pfPosterFile") MultipartFile posterFile,
@@ -128,5 +130,11 @@ public class PerformanceController {
 		}else {
 			return false;
 		}
+	}
+	
+	@GetMapping("/selectedPerform/{pfCode}")
+	public Performance getSelectedPerform(Performance performance){
+		Performance returnPerform = pfRepository.findByPfCode(performance.getPfCode());
+		return returnPerform;
 	}
 }

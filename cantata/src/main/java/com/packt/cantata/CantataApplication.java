@@ -51,37 +51,39 @@ public class CantataApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
-//		Plant plant1 = new Plant("오디토리움", "공연장", null, 1500, null, 1000000, null, "사용가능", "3층");
-//
-//		Performance pf1 = new Performance("전시", 
-//				"20주년 기념 상상아트 전시회", 
-//				"상상극단", 
-//				"042-222-5555",
-//				"posterURI", 
-////				"exIMG",
-//				"상세설명이에요",
-//				"공연공지사항",
-//				dtFormat.parse("2023-11-23"), dtFormat.parse("2023-12-01"),
-//				100,
-//				50000,40000,30000,10000,5000,1000,plant1);
-//		
-//		Performance pf2 = new Performance("공연", 
-//				"행복한왕자", 
-//				"상상극단", 
-//				"042-222-5555",
-//				"posterURI", 
-////				"exIMG",
-//				"상세설명이에요",
-//				"공연공지사항",
-//				dtFormat.parse("2023-11-23"), dtFormat.parse("2023-12-01"),
-//				120,
-//				50000,40000,30000,10000,5000,1000,plant1);
-//		
-//		Perform_time pt1 = new Perform_time(pf2,dtFormat.parse("2023-12-01"),dtFormat.parse("2023-12-01"),true);
-//
-//		plantRepository.saveAll(Arrays.asList(plant1));
-//		pfRepository.saveAll(Arrays.asList(pf1,pf2));
-//		timeRepository.saveAll(Arrays.asList(pt1));
+		Plant plant1 = new Plant("오디토리움", "공연장", null, 1500, null,null,null, 100000,null, true, 3);
+		Plant plant2 = new Plant("퍼포먼스홀", "공연장", null, 1500,null ,null,null, 100000,null, true, 3);
+		Plant plant3 = new Plant("사용불가공연장", "공연장", null, 1500, null ,null,null, 100000,null, false, 1);
+		Plant plant4 = new Plant("리허설실1", "리허설실", null, 1500, null ,null,null, 100000,null, true, 1);
+		Performance pf1 = new Performance("전시", 
+				"20주년 기념 상상아트 전시회", 
+				"상상극단", 
+				"042-222-5555",
+				"posterURI", 
+//				"exIMG",
+				"상세설명이에요",
+				"공연공지사항",
+				dtFormat.parse("2023-11-23"), dtFormat.parse("2023-12-01"),
+				100,
+				50000,40000,30000,10000,5000,1000,plant1);
+		
+		Performance pf2 = new Performance("공연", 
+				"행복한왕자", 
+				"상상극단", 
+				"042-222-5555",
+				"posterURI", 
+//				"exIMG",
+				"상세설명이에요",
+				"공연공지사항",
+				dtFormat.parse("2023-11-23"), dtFormat.parse("2023-12-01"),
+				120,
+				50000,40000,30000,10000,5000,1000,plant1);
+		
+		Perform_time pt1 = new Perform_time(pf2,dtFormat.parse("2023-12-01"),dtFormat.parse("2023-12-01"),true);
+
+		plantRepository.saveAll(Arrays.asList(plant1,plant2,plant3,plant4));
+		pfRepository.saveAll(Arrays.asList(pf1,pf2));
+		timeRepository.saveAll(Arrays.asList(pt1));
 		
 		
 		
@@ -103,7 +105,7 @@ public class CantataApplication implements CommandLineRunner {
 		Brd_division brd6 = new Brd_division("1:1 문의");
 	
 		brdRepository.saveAll(Arrays.asList(brd1, brd2, brd3, brd4, brd5, brd6));
-		
+
 		for (Brd_division brd : brdRepository.findAll()) {
 			logger.info(brd.getBrdName());
 		}

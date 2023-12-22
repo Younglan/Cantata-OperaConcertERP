@@ -8,6 +8,9 @@ public interface PlantRepository extends CrudRepository<Plant, Long>{
 	
 	@Query(value="SELECT * FROM plant WHERE plant_use='공연장' AND plant_status= true;", nativeQuery=true)
 	Iterable<Plant> filteredPlantToPerForm();
+	
+	@Query(value="SELECT * FROM plant WHERE plant_status= true;", nativeQuery=true)
+	Iterable<Plant> filteredPlant();
 
 	Plant findTopByOrderByPlantNoDesc();
 

@@ -108,5 +108,14 @@ public class PlantController {
 	Plant pav = plantrepository.save(newPlant);
 	return ResponseEntity.ok(pav);
 	}
-
+	
+	@GetMapping("/filteredPlantToPerForm")
+	public Iterable<Plant> filteredPlantToPerForm(){
+		return plantrepository.filteredPlantToPerForm();
+	}
+	
+	@GetMapping("/filteredPlant")
+	public Iterable<Plant> filteredPlant(){
+		return plantrepository.filteredPlant();
+	}
 }
