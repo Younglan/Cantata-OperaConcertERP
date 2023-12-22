@@ -114,14 +114,6 @@ public class Performance {
 	
 	
 
-	@Override
-	public String toString() {
-		return "Performance [pfCode=" + pfCode + ", pfCate=" + pfCate + ", pfTitle=" + pfTitle + ", agency=" + agency
-				+ ", pfPoster=" + pfPoster + ", pfExplan=" + pfExplan + ", pfNotice="
-				+ pfNotice + ", pfStart=" + pfStart + ", pfEnd=" + pfEnd + ", pfRuntime=" + pfRuntime + ", R="
-				+ R + ", S=" + S + ", A=" + A + ", B=" + B + ", C=" + C + ", D=" + D
-				+ ", pfStatus=" + pfStatus + ", plantNo=" + plantNo + ", perform_times=" + performTimes + "]";
-	}
 	public Performance(String pfCate, String pfTitle, String agency, int pfRuntime) {
 		super();
 		this.pfCate = pfCate;

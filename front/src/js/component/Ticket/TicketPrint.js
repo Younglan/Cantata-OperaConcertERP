@@ -4,8 +4,10 @@ import "./css/TicketPrint.css";
 import { Table, TableCell, TableContainer, TableRow } from "@mui/material";
 import moment from "moment";
 import 'moment/locale/ko';
+import { parseJwt } from "../../../loginUtil";
 function TicketPrint({ticket}){
     const ticketInfo = useContext(TicketContext);
+    const token = sessionStorage.getItem("jwt");
     return(
         <div className="tf_main">
           <div className="tf_left">
@@ -54,11 +56,11 @@ function TicketPrint({ticket}){
                     <tbody>
                       <TableRow>
                         <TableCell align="center" component="th" style={{width:"20%"}}>예매자</TableCell>
-                        <TableCell align="center"></TableCell>
+                        <TableCell align="center">{parseJwt(token)}</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell align="center" component="th">연락처</TableCell>
-                        <TableCell align="center"></TableCell>
+                        <TableCell align="center">010-4162-0646</TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell align="center" component="th">티켓수령</TableCell>

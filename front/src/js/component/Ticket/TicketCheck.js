@@ -15,7 +15,7 @@ function TicketCheck(){
           setScaned(true);
         }, []);
         const updateTicketStatus = (ticket) =>{
-            fetch(`http://localhost:8090/ticketcheck/?ticket=${ticket}`, 
+            fetch(`http://localhost:8090/ticket/ticketcheck/?ticket=${ticket}`, 
                 {
                     method: 'PUT',
                     headers: { 'Content-Type':'application/json'}

@@ -29,24 +29,24 @@ public class Rental {
 	
 	private Date rent_start;		
 	private Date rent_end;	
-	private Date rent_date;		
+	private Date rent_regidate;		
 	private Date rent_status;		
 	private String rent_pay;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cp_no")
 	private Corporation cp_no;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "plantNoo")
+	@JoinColumn(name = "plantNo")
 	private Plant plantNo;
 	
 	@Builder
 	public Rental(Corporation cp_no, Plant plantNo,
-			Date rent_start, Date rent_end, Date rent_date, Date rent_status, String rent_pay) {
+			Date rent_start, Date rent_end, Date rent_regidate, Date rent_status, String rent_pay) {
 		this.cp_no = cp_no;
 		this.plantNo = plantNo;
 		this.rent_start = rent_start;
 		this.rent_end = rent_end;
-		this.rent_date = rent_date;
+		this.rent_regidate = rent_regidate;
 		this.rent_status = rent_status;
 		this.rent_pay = rent_pay;
 	}

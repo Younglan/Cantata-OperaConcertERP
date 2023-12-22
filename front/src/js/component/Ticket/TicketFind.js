@@ -1,14 +1,15 @@
 import { Pagination, PaginationItem } from "@mui/material";
-import moment from "moment";
+
 import React, { useEffect, useState } from "react";
 import MyTicket from "./MyTicket";
+import { parseJwt } from "../../../loginUtil";
 
 function TicketFind(){
     const [currentPage, setCurrentPage] = useState(1);
-    
+    const token = sessionStorage.getItem("jwt");
     const [ticketingData, setData] = useState([]);
     const [sliceData, setSliceData] = useState([]);
-    const userid = "admin";
+    const userid = parseJwt(token);
     const onPageChange = (e) => {
         
         setCurrentPage(Number(e.target.innerText));
@@ -17,7 +18,10 @@ function TicketFind(){
     async function resTicketfind(){
         
             try{
-                const response = await fetch(`http://localhost:8090/ticketfind/?id=${userid}`);
+                const response = await fetch(`http://localhost:8090/ticket/ticketfind/?id=${userid}`,{
+                    headers: { 
+                    'Authorization': token
+                        }});
                 const data = await response.json();
                 setData(data);
                
@@ -26,8 +30,12 @@ function TicketFind(){
             }
     }
     async function reqTicketCancle(ele){
+        
         try{
-            await fetch(`http://localhost:8090/ticketcancle/?no=${ele}`);
+            await fetch(`http://localhost:8090/ticket/ticketcancle/?no=${ele}`,{
+                headers: { 
+                'Authorization': token
+                    }});
         }catch(e){
             console.error(e);
         }

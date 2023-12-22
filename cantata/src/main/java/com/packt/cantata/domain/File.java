@@ -30,6 +30,10 @@ public class File {
 	@JoinColumn(name = "postNo", nullable=true)
 	private Brd_post brdPost;
 	
+	@ManyToOne
+	@JoinColumn(name = "plantNo", nullable=true)
+	private Plant plant;
+	
     @Column(nullable = false)
     private String fileName;
 
