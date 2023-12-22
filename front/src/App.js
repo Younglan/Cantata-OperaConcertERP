@@ -27,7 +27,12 @@ import TicketFind from './js/component/Ticket/TicketFind';
 import Newplant from './js/component/plant/NewPlant';
 import PerformCalendar from './js/component/calendar/PerformCalendar';
 import ErrorPage from './js/page/ErrorPage';
-
+import LoginPage from './js/component/Login/LoginPage';
+import SignUp from './js/component/Login/SignUp';
+import ChangeInformation from './js/component/UserPage/ChangeInformation'
+import FindId from './js/component/Login/FindId'
+import AddCorp from './js/component/UserPage/AddCorp'
+import UserList from './js/component/UserPage/UserList'
 function App() {
   return (
     <div className="App">
@@ -59,6 +64,12 @@ function App() {
           <Route path='/myticket' element={<TicketFind/>}/>
           <Route path='/Newplant' element={<Newplant/>}/>
           <Route path='/errorPage' element={<ErrorPage/>}/>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/userpage/change" element={<ChangeInformation />} />
+          <Route path="/findId" element={<FindId />} />
+          <Route path="/addcorp" element={<AddCorp />} />
+          <Route path="/userList" element={< UserList />} />
         </Routes>
       </Router>
       <Footer />

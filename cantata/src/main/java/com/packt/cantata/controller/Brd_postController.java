@@ -1,5 +1,6 @@
 package com.packt.cantata.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,13 +14,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.packt.cantata.CantataApplication;
 import com.packt.cantata.domain.Brd_division;
+import com.packt.cantata.domain.Brd_divisionRepository;
 import com.packt.cantata.domain.Brd_post;
 import com.packt.cantata.domain.Brd_postRepository;
+import com.packt.cantata.dto.Brd_postDto;
 import com.packt.cantata.service.Brd_postService;
+import com.packt.cantata.service.FileService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -34,9 +42,12 @@ public class Brd_postController {
     
     @Autowired
     private Brd_postService postService;
+    
+    @Autowired
+    private FileService fileService;
 
-//    @Autowired
-//    private Brd_divisionRepository divisionRepository;
+    @Autowired
+    private Brd_divisionRepository divisionRepository;
     
    @GetMapping("/allPosts")
     public List<Brd_post> getBrd_Posts() {
@@ -109,26 +120,64 @@ public class Brd_postController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-        
     
-//    @PostMapping("/newPost") //BrdNo별로 게시판 분리용이었지만 위의 역할로 인해 필요없어졌지만 만약을 대비해 일단 주석처리
-//    public ResponseEntity<String> saveBrdPost(@RequestBody Brd_post post) {
-//        try {
-//            // Brd_post에서 Brd_division을 가져옵니다.
-//            Brd_division division = post.getBrdNo();
-//
-//            // 가져온 Brd_division이 없다면 새로 생성하여 저장합니다.
-//            if (division != null && division.getBrdNo() == null) {
-//                divisionRepository.save(division);
-//            }
-//
-//            // Brd_post를 저장합니다.
-//            postRepository.save(post);
-//
-//            return ResponseEntity.ok("저장완료.");
-//        } catch (Exception e) {
-//            logger.error("글 저장 중 오류 발생", e);
-//            return ResponseEntity.status(500).body("저장되지 않았습니다.");
-//        }
-//    }
+    @PostMapping(value = "/newEventPost")
+    public ResponseEntity<Brd_post> createNewPost(@RequestPart("postFile") MultipartFile postFile,
+    												@RequestPart("post") String postJson){
+//    												@RequestPart("postNum") long postNumJson,
+//    												@RequestPart("brdNo") Long brdNoJson {
+
+    	
+        //Json 데이터 처리
+    	ObjectMapper objectMapper = new ObjectMapper();
+    	Brd_postDto brdPostDto = null;
+        try {
+        	brdPostDto = objectMapper.readValue(postJson, Brd_postDto.class);
+            //게시물 저장 코드
+//            Brd_post savedPost = postService.savePost(brdPost); //Brd_postService에서 savePost값을 가져온다.
+//            return ResponseEntity.ok(savedPost);
+        } catch (JsonProcessingException e1) {
+        	// TODO Auto-generated catch block
+    		e1.printStackTrace();
+//    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        
+     // postNum과 brdNo 처리
+//        brdPostDto.setPostNum(postNumJson);
+//        brdPostDto.setBrdNo(brdNoJson);
+        
+        Brd_post newBrdPost = new Brd_post();
+        
+        //외래키 입력
+        Brd_division brdNo = divisionRepository.findByBrdNo(brdPostDto.getBrdNo());
+        newBrdPost.setBrdNo(brdNo);
+        
+//        newBrdPost.setPostNum(brdPostDto.getPostNum());
+        newBrdPost.setPostTitle(brdPostDto.getPostTitle());
+        newBrdPost.setPostSub(brdPostDto.getPostSub());
+        newBrdPost.setPostDeadline(brdPostDto.getPostDeadline());
+
+     // 첨부파일 처리
+//        newBrdPost.setPostFile1(postFilePath);
+      //첨부파일 처리
+        ResponseEntity<Long> number = getLastPostNo();
+        Long incrementedNum;
+        if (number.getStatusCode().is2xxSuccessful() && number.getBody() != null) {
+    	    incrementedNum = number.getBody() + 1;
+    	} else {
+    		incrementedNum = (long) 1;
+    	}
+        
+
+        try {
+            newBrdPost.setPostFile1(fileService.attachUploadAndGetUri(postFile, "brd_post", incrementedNum));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+        //새로운 글 등록
+        Brd_post savedBrdPost = postService.savePost(newBrdPost);
+        return ResponseEntity.ok(savedBrdPost);
+    }
+   
 }

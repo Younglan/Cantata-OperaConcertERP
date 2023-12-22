@@ -4,9 +4,10 @@ import moment from "moment";
 import { Table, TableCell, TableContainer, TableRow } from "@mui/material";
 import QRCode from "qrcode.react";
 import "./css/TicketPaper.css"
+import { parseJwt } from "../../../loginUtil";
 const TicketPaper = forwardRef((prop, ref)=>{
     const ticketInfo = useContext(TicketContext);
-    
+    const token = sessionStorage.getItem("jwt");
     return(
         <section ref={ref} className="paper_sec">
           {prop.ticket.map((ele,i)=>{
@@ -51,11 +52,11 @@ const TicketPaper = forwardRef((prop, ref)=>{
                               <tbody>
                               <TableRow>
                                   <TableCell align="center" component="th" style={{width:"auto"}}>예매자</TableCell>
-                                  <TableCell align="center"> </TableCell>
+                                  <TableCell align="center">{parseJwt(token)}</TableCell>
                               </TableRow>
                               <TableRow>
                                   <TableCell align="center" component="th">연락처</TableCell>
-                                  <TableCell align="center"></TableCell>
+                                  <TableCell align="center">010-4162-0646</TableCell>
                               </TableRow>
                               <TableRow>
                                   <TableCell align="center" component="th">티켓수령</TableCell>

@@ -1,0 +1,17 @@
+
+
+.find_form {
+    padding:10px;
+    margin: 20px auto;
+    width: 600px;
+ 
+    /* border: 1px solid red; */
+    border-radius: 10px;
+    /* padding-top: 20px; */
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+.items{
+    margin-top: 20px;
+}
+

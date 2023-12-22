@@ -1,5 +1,6 @@
 package com.packt.cantata.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -17,9 +18,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @Table(name = "Plant")
 public class Plant {
@@ -27,38 +30,51 @@ public class Plant {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(nullable=false, updatable=false) 
 	private long plantNo;
-	private String plant_name;
-	private String plant_use;
-	private String plant_detail;
+	private String plantName;
+	private String plantUse;
+	private String plantDetail;
 	private int capacity;
-	private String plant_mainimg;
-	private String plant_subimg1;
-	private String plant_subimg2;
-	private long plant_charge;
-	private String plant_sub;
-	private String plant_status;
-	private String floor;
+	private String plantMainimg;
+	private String plantSubimg1;
+	private String plantSubimg2;
+	private long plantCharge;
+	private String plantSub;
+	private Boolean plantStatus;
+	private int floor;
 	
-	public Plant(String plant_name, String plant_use, String plant_detail
-			, int capacity, String plant_mainimg
-			, long plant_charge, String plant_sub, String plant_status, String floor) {
+	public Plant(String plantName, String plantUse, String plantDetail
+			, int capacity, String plantMainimg, String plantSubimg1, String plantSubimg2
+			, long plantCharge, String plantSub, Boolean plantStatus, int floor) {
 		super();
-		this.plant_name = plant_name;
-		this.plant_use = plant_use;
-		this.plant_detail = plant_detail;
+		this.plantName = plantName;
+		this.plantUse = plantUse;
+		this.plantDetail = plantDetail;
 		this.capacity = capacity;
-		this.plant_mainimg = plant_mainimg;
-//		this.plant_subimg1 = plant_subimg1;
-//		this.plant_subimg2 = plant_subimg2;
-		this.plant_charge = plant_charge;
-		this.plant_sub = plant_sub;
-		this.plant_status = plant_status;
+		this.plantMainimg = plantMainimg;
+		this.plantSubimg1 = plantSubimg1;
+		this.plantSubimg2 = plantSubimg2;
+		this.plantCharge = plantCharge;
+		this.plantSub = plantSub;
+		this.plantStatus = plantStatus;
 		this.floor = floor;
 	}
+	@Override
+	public String toString() {
+		return "Plant [plantNo=" + plantNo + ", plantName=" + plantName + ", plantUse=" + plantUse + ", plantDetail="
+				+ plantDetail + ", capacity=" + capacity + ", plantMainimg=" + plantMainimg + ", plantSubimg1="
+				+ plantSubimg1 + ", plantSubimg2=" + plantSubimg2 + ", plantCharge=" + plantCharge + ", plantSub="
+				+ plantSub + ", plantStatus=" + plantStatus + ", floor=" + floor + ", rentals=" + rentals
+				+ ", performances=" + performances + "]";
+	}
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "plantNo")
 	private List<Rental> rentals;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy = "plantNo", cascade = CascadeType.ALL)
 	private List<Performance> performances;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "plant", cascade = CascadeType.ALL)
+    private List<File> files = new ArrayList<>();
 }

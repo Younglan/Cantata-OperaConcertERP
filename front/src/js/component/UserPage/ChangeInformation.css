@@ -1,0 +1,36 @@
+.cf_content{
+    padding: 20px;
+}
+.changeForm {
+    
+  margin : 50px auto;
+    /* border: 1px solid red; */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+.changeForm > div{
+    
+   width:100%;
+  }
+.formGroup1{
+    text-align: right;
+    margin-right: 100px;
+  }
+.formGroup2{
+    text-align: left;
+    margin-left: 100px;
+  }
+  .formGroup1 > .textGroup{
+    margin-bottom: 10px;
+  }
+  .formGroup2 > .textGroup{
+    margin-bottom: 18px;
+  }
+  
+  .clickform {
+    text-align: center;
+  }
+Button {
+    width: 200px;
+}

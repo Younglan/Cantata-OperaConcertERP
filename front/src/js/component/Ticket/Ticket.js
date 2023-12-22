@@ -12,6 +12,7 @@ import useDidMountEffect from "./useDidMountEffect";
 import TicketMainDetail from "./TicketMainDetail";
 import { useLocation } from "react-router-dom";
 
+import { parseJwt } from "../../../loginUtil";
 
 export const TicketContext = createContext();
 export const SeatContext = createContext();
@@ -57,7 +58,11 @@ function Ticket(){
     
 
     const fetchPerformInfo=(title)=>{
-        fetch(`http://localhost:8090/pfinfo?name=${title}`)
+        const token = sessionStorage.getItem("jwt");
+        fetch(`http://localhost:8090/ticket/pfinfo?name=${title}`,{
+            headers: { 
+            'Authorization': token
+                }})
         
         .then(res => {
           return res.json();
@@ -69,12 +74,15 @@ function Ticket(){
         
     };
     async function resToticket(){
+        const token = sessionStorage.getItem("jwt");
         for(let tmpseat of seatno){
             try{
-                const response = await fetch("http://localhost:8090/ticketing",
+                const response = await fetch("http://localhost:8090/ticket/ticketing",
                 {
                     method: 'POST',
-                    headers: { 'Content-Type':'application/json',
+                    headers: { 
+                        'Content-Type':'application/json',
+                        'Authorization': token
                             },
                     body: JSON.stringify({
                         seat_no:`${tmpseat}`,
@@ -83,13 +91,13 @@ function Ticket(){
                             ptNo:ptno
                         },
                         id:{
-                            id:"admin"
+                            id: parseJwt(token)
                         }
                     })
                 });
                 const data = await response.json();
                 ticket.current.push(data.tic_no);
-               
+                
             }catch(e){
                 console.error(e);
             }

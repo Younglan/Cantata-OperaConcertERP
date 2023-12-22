@@ -1,5 +1,4 @@
 import React, { useState} from "react";
-import { useNavigate  } from "react-router-dom";
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -10,7 +9,6 @@ import './AddTime.css';
 const SERVER_URL='http://localhost:8090';
 
 function AddTime(props){
-    const navigate = useNavigate();
     const [date, setDate] = useState(null);
     const [time, setTime] = useState(null);
     const { sendPfCode, sendPfStart, sendPfEnd,sendPfTitle,sendRunTime,sendPlantNo  } = props;

@@ -13,62 +13,85 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.packt.cantata.AuthEntryPoint;
+import com.packt.cantata.AuthenticationFilter;
+import com.packt.cantata.service.UserDetailsServiceImpl;
 
+import lombok.RequiredArgsConstructor;
 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
-
-//	@Bean
+@Configuration 
+@EnableWebSecurity 
+@RequiredArgsConstructor
+public class SecurityConfig extends WebSecurityConfigurerAdapter { 
 //	@Override
-//	public UserDetailsService userDetailsService() {
-//		UserDetails user = User.withDefaultPasswordEncoder().username("user").password("password").roles("USER")
-//				.build();
-//		return new InMemoryUserDetailsManager(user);
+//	protected void configure(HttpSecurity http) throws Exception{
+//		http.csrf().disable().cors().and()
+//		.authorizeRequests().anyRequest().permitAll();
 //	}
+	@Autowired
+	private UserDetailsServiceImpl userDetailsService; 
+	
 
+	private final AuthenticationFilter authenticationFilter;
+	
+	
+	private final AuthEntryPoint exceptionHandler; 
+	
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	private final PasswordEncoder passwordEncoder;
+	@Bean 
+	public AuthenticationManager getAuthenticationManager() throws Exception { 
+		return authenticationManager(); 
+		}
+	@Autowired
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception { 
+			auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder); 
+		}
+	
+
+	@Override 
+	protected void configure(HttpSecurity http) throws Exception { 
+//		//기능이 올바르게 작동하는지 테스트 하기위해서 시작단계에서는 백엔드 보호되지않게 수정
+//		http.csrf().disable().cors().and().authorizeRequests().anyRequest().permitAll();
 		
+		
+		//두번째 단계에서는 백엔드 보안을 활성화하고 필요한 수정사항을 적용
 		http.csrf().disable().cors().and()
-		.authorizeHttpRequests().anyRequest().permitAll(); 
+		.sessionManagement()
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+		.authorizeRequests()
+		.antMatchers(HttpMethod.POST, "/login","/signup").permitAll()
+		.antMatchers("/verify/**","/tel/**","/Duple/**","/updateRecent/**","/findid/**","/pwdchan/**").permitAll()
+		.antMatchers("/admin/**").hasRole("ADMIN")
+		.antMatchers("/user/**","/corporations/**","/ticket/**").hasRole("USER")
 		
-//		http.csrf().disable()//사이트간 위조요청(정상적인 사용자가 의도치않은 위조요청을 보내는것을 의미) 비활성화
-//				.cors().and()//<-cors()함수 추가
-//				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//				.authorizeRequests()// /login 엔드포인트에 대한 POST요청은 보호되지않음.
-//				.antMatchers(HttpMethod.POST, "/login").permitAll()
-//				.anyRequest().authenticated()// 다른 모든 요청은 보호됨
-//				.and().exceptionHandling()// 예외처리를 위한 부분
-//				.authenticationEntryPoint(exceptionHandler).and() // 예외처리를 위한 부분
-//				.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
-	}
-
-	
-	
-	//보안 구성 클래스에 교차출처 리소스 공유를 위한 CORS필터 추가. 이는 다른 출처에서 요청을 보내는 프런트엔드에 필요하다.//정책규칙에 유연성을 줌
-	//CORS 필터는 요청을 가로채고 해당요청이 교차출처에서 확인되면 적절한 헤더를 요청에 추가한다.
-	//이를 위해 스프링시큐리티의 CorsConfigurationSource 인터페이스를 이용한다.예제에서는 모든 출처의 HTTP방식과 헤더를 허용한다.
-	//허용되는 충처, 방식, 헤더 목록을 정의하면 정의를 더 세분화 할 수 있다.
-	@Bean
-	CorsConfigurationSource corsConfigurationSource() {
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		CorsConfiguration config = new CorsConfiguration();
-//		config.setAllowedOrigins(Arrays.asList("*"));//출처를 명시적으로 정의하려면 아래라인과 같이 설정.
+//		.anyRequest().authenticated().and()
+		.anyRequest().permitAll().and()
+		.exceptionHandling()
+		.authenticationEntryPoint(exceptionHandler).and()
+		.addFilterBefore(authenticationFilter, 
+				UsernamePasswordAuthenticationFilter.class);
+		}
+	@Bean 
+	CorsConfigurationSource corsConfigurationSource() { 
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(); 
+		CorsConfiguration config = new CorsConfiguration(); 
 		config.setAllowedOrigins(Arrays.asList("http://localhost:3000")); 
-		config.setAllowedMethods(Arrays.asList("*"));
-		config.setAllowedHeaders(Arrays.asList("*"));
-		config.setAllowCredentials(false);
-		config.applyPermitDefaultValues();
-		source.registerCorsConfiguration("/**", config);
-		return source;
-	}
+		config.setAllowedMethods(Arrays.asList("*")); 
+		config.setAllowedHeaders(Arrays.asList("*")); 
+		config.setAllowCredentials(false); 
+		config.applyPermitDefaultValues(); 
+		source.registerCorsConfiguration("/**", config); 
+		return source; 
+		}
+	
+	
 
-}
+	 
+	} 

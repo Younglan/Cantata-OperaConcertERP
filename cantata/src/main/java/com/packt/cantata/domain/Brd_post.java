@@ -4,6 +4,7 @@ package com.packt.cantata.domain;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -46,11 +47,11 @@ public class Brd_post {
 	@Column(nullable = false)
 	private long postNum; //BrdNo에 따라 번호를 정렬하는 용도
 	
-	@Column(nullable = false)
+	@Column
 	private String postTitle; // 글제목
 
 
-	@Column(nullable = false)
+	@Column
 	private String postSub; // 글내용
 
 	@Column(name = "postFile1") // 첨부파일 1
@@ -72,18 +73,17 @@ public class Brd_post {
 	private Boolean postStatus = true; //true면 게시판에 보이고 false면 보이지 않는다.
 
 	@Column
-	private LocalDate postDeadline; // 게시표시일자	
+	private Date postDeadline; // 게시표시일자	
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "postNo")
 	private List<Reply> replies;
 	
 	@OneToMany(mappedBy = "brdPost", cascade = CascadeType.REMOVE)
-//    @JsonManagedReference(value = "brd_post-files")
     private List<File> files = new ArrayList<>();
 	
 	public Brd_post( String postTitle,String postFile1, String postFile2, String postFile3,
-			String postSub, LocalDate postDate, LocalDate postDeadline) {
+			String postSub, LocalDate postDate, Date postDeadline) {
 		super();
 		
 		this.postTitle = postTitle;
@@ -113,5 +113,6 @@ public class Brd_post {
 		super();
 		this.postTitle = postTitle;
 	}
+
 
 }
