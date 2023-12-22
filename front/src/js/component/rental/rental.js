@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './css/rental.css'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -29,9 +29,15 @@ export default function RentalApps() {
     rent_regidate:`${moment(new Date()).format("yyyy-MM-DD")}`,
     // payment:0,
   });
+  const [plants, setPlants] = useState([]);
     // const SERVER_URL='http://localhost:8090';
 
     const navigate = useNavigate();
+
+  useEffect(() => {
+      fetchFindPlant();
+      
+  }, []);
 
     
 
@@ -68,6 +74,12 @@ export default function RentalApps() {
       })
       .catch(err => console.error(err))
   }
+  const fetchFindPlant = () => {
+    fetch('http://localhost:8090/plants/filteredPlant')
+    .then(response => response.json())
+    .then(data => setPlants(data))
+    .catch(err => console.error(err));
+}
   
   return (
     <React.Fragment>
@@ -119,10 +131,15 @@ export default function RentalApps() {
                   id= "test1" defaultValue={"장소"} sx={{gridColumn:'1',height:'150px'}}
         /> 
         
-        <Form.Select aria-label="Default select example" className="fullwidth" name="place">
+        <Form.Select aria-label="Default select example" className="fullwidth" name="place" >
                         <option value="">장소선택</option>
-                        <option value="무대">무대</option>
-                        <option value="리허설실">리허설실</option>
+                        {/* <option value="무대">무대</option>
+                        <option value="리허설실">리허설실</option> */}
+                        {plants.map(plant => (
+                                <option key={plant.plantNo} value={plant.plantNo}>
+                                    {plant.plantName}
+                                </option>
+                            ))}
         </Form.Select>
         
     </Box>

@@ -32,6 +32,9 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     const goToPerformCalendar = () =>{
         navigate("/performCalendar");
     }
+    const goToRenalApp = () =>{
+        navigate("/RentApp");
+    }
     
     const goToAdminPage = () =>{
         navigate("/adminpage");
@@ -82,7 +85,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                         <h2>대관</h2>
                         <li><h1>대관안내</h1></li>
                         <li><h1>대관공고</h1></li>
-                        <li><h1>대관신청</h1></li>
+                        <li onClick = {() => {goToRenalApp(); handleToggle();}}><h1>대관신청</h1></li>
                     </ul>
                 </div>
                 <div className = "center_board menu_list">

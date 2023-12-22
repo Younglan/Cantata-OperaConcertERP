@@ -115,8 +115,8 @@ function NewPerform(props) {
 
     //일정 체크
     const performDateCheck = (stDate, edDate, plantNo) => {
-        const sendStartDate = new Date(moment(stDate).format("YYYY-MM-DD"));
-        const sendStartDate2 = format(stDate, 'yyyy-MM-dd', { locale: ko });
+        const sendStartDate = new Date(moment(stDate).format("YYYY-MM-DD"));//Db
+        const sendStartDate2 = format(stDate, 'yyyy-MM-dd', { locale: ko });//중복체크
         const sendEndDate = new Date(moment(edDate).format("YYYY-MM-DD"));
         const sendEndDate2 = format(edDate, 'yyyy-MM-dd', { locale: ko });
 
@@ -487,7 +487,7 @@ function NewPerform(props) {
                             <option value="">공연장을 선택하세요.</option>
                             {plants.map(plant => (
                                 <option key={plant.plantNo} value={plant.plantNo}>
-                                    {plant.plant_name}
+                                    {plant.plantName}
                                 </option>
                             ))}
                         </Form.Select>
