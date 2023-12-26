@@ -37,7 +37,7 @@ function LoginPage() {
   // }
 
   const login = () => {
-    fetch(SERVER_URL + "login", {
+    fetch(SERVER_URL + "/login/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
@@ -57,7 +57,11 @@ function LoginPage() {
       .catch((err) => console.error(err));
   };
   const updateRecentDate = () =>{
-    fetch(SERVER_URL + "updateRecent" + `/?id=${user.id}`)
+    const token = sessionStorage.getItem("jwt");
+    fetch(SERVER_URL + "/member/updateRecent" + `/?id=${user.id}`, {
+      headers: { 'Authorization' : token}
+   })
+
   };
   if (isAuthenticated) {
     return navigate("/");

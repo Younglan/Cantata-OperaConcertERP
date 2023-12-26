@@ -70,7 +70,7 @@ function SignUp() {
   //post
   const postSignUp = () => {
     console.log(formdata);
-    fetch("http://localhost:8090/signup", {
+    fetch("http://localhost:8090//login/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formdata),
