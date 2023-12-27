@@ -6,6 +6,8 @@ import { useContext, useRef } from "react";
 import { TicketContext } from "./Ticket";
 import ReactToPrint from "react-to-print";
 import TicketPaper from "./TicketPaper";
+import CampaignIcon from '@mui/icons-material/Campaign';
+import CircleIcon from '@mui/icons-material/Circle';
 
 function TicketInfo(prop){
     const ticketInfo = useContext(TicketContext);
@@ -35,7 +37,9 @@ function TicketInfo(prop){
                 </TableContainer>
             </div>
             <div className="ti_info">
-                
+                <p><CampaignIcon sx={{color:"red",border:"2.3px solid red",borderRadius:"20%"}}/> <strong> 취소 / 환불 안내</strong></p>
+                <p><CircleIcon sx={{height:"10px",width:"10px"}}/> 구매시 환불이 불가합니다.</p>
+                <p><CircleIcon sx={{height:"10px",width:"10px"}}/> 취소시 다시 복구할 수 없습니다.</p>
             </div>
             
             <div className="ti_button">
