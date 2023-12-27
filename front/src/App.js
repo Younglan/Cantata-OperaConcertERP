@@ -68,7 +68,7 @@ function App() {
           <Route path='/errorPage' element={<ErrorPage/>}/>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/userpage/change" element={<Redirect component={<ChangeInformation />} />} />
+          <Route path="/mypage/change" element={<Redirect component={<ChangeInformation />} />} />
           <Route path="/addcorp" element={<Redirect component={<AddCorp />} />}/>
           <Route path="/userList" element={<Redirect component={< UserList />} />} />
         </Routes>
