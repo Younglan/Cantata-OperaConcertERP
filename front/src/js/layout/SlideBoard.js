@@ -2,8 +2,10 @@ import React from 'react';
 import cantataLogo from '../../img/cantataLogoBlack.png';
 import { useNavigate } from "react-router-dom";
 import "../../css/SlideBoard.css"
+import { Avatar } from '@mui/material';
 
 const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
+    const token = sessionStorage.getItem("jwt");
     const handleToggle = () => {
         toggleBoard();
     };
@@ -41,6 +43,15 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
         navigate(`/adminpage/${page}`);
         handleToggle(); // 메뉴 닫기
     }
+    const loginCheck = () => {
+        if(token){
+            navigate("/mypage/change");
+            handleToggle();
+        }else{
+            navigate("/login");
+            handleToggle();
+        }
+    }
     return (
         <div className='Over_background'>
             <div className={`slide_board ${isOpen ? 'open' : 'close'}`}>
@@ -54,10 +65,10 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                         <img src={cantataLogo} alt="Cantata Logo" onClick={() => { goToMain(); handleToggle(); }} />
                     </div>
                     <div className="slide_right">
-                        <div className="slide_login">
-                            <svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6" transform='rotate(180)'>
+                        <div className="slide_login" onClick={loginCheck}>
+                            {token?<Avatar src="/broken-image.jpg"/>:<svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6" transform='rotate(180)'>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-                            </svg>{/*로그인 svg파일 transform = 'rotate(90)'으로 180도 회전상태*/}
+                            </svg>}{/*로그인 svg파일 transform = 'rotate(90)'으로 180도 회전상태*/}
                         </div>
 
                         <div className="slide_search">

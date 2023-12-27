@@ -22,7 +22,7 @@ function TicketInfo(prop){
                     <tbody>
                       <TableRow>
                         <TableCell align="center" component="th" style={{width:"40%"}}>총 결제금액</TableCell>
-                        <TableCell align="center">{ticketInfo.money}</TableCell>
+                        <TableCell align="center" style={{color:"#BB2649",fontWeight:"bold"}}>{ticketInfo.money.toLocaleString('ko-KR')}<span style={{color:"#f3774d",fontWeight:"bold"}}> 원</span></TableCell>
                       </TableRow>
                       <TableRow>
                         <TableCell align="center" component="th">결제 방법</TableCell>
@@ -30,7 +30,7 @@ function TicketInfo(prop){
                       </TableRow>
                       <TableRow>
                         <TableCell align="center" component="th">결제 금액</TableCell>
-                        <TableCell align="center">{ticketInfo.money}(일시불)</TableCell>
+                        <TableCell align="center" style={{color:"#BB2649"}}>{ticketInfo.money.toLocaleString('ko-KR')}<span style={{color:"#f3774d",fontWeight:"bold"}}> 원</span><span style={{color:"black"}}> - (일시불)</span></TableCell>
                       </TableRow>
                     </tbody>
                   </Table>
