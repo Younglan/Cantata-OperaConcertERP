@@ -15,6 +15,7 @@ import EventPage from './js/page/EventPage';
 import NewPost from './js/component/NewPost';
 import NewEventPost from './js/component/NewEventPost';
 import EditPost from './js/component/EditPost';
+import EditEventPost from './js/component/EditEventPost';
 import PostDetail from './js/component/PostDetail';
 import FAQ from "./js/page/FAQ";
 import QNA from "./js/page/QNA";
@@ -32,7 +33,9 @@ import ChangeInformation from './js/component/UserPage/ChangeInformation'
 import FindId from './js/component/Login/FindId'
 import AddCorp from './js/component/UserPage/AddCorp'
 import UserList from './js/component/UserPage/UserList'
+import Redirect from './Redirect';
 function App() {
+  const token = sessionStorage.getItem("Authorization");
   return (
     <div className="App">
       <Router>
@@ -40,34 +43,34 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/pageTest" element={<PageTest />} />
-          <Route path="/adminPage" element={<AdminPage/>}/>
-          <Route path="/performList" element={<PerformanceList />} />
-          <Route path="/performList/newPerform" element={<NewPerform />} />
+          <Route path="/adminPage/:props" element={<Redirect component={<AdminPage/>} authenticated={token}/>}/>
+          <Route path="/performList" element={<PerformanceList/>}/>
           <Route path="/performanceDetail/:pfCode" element={<PerformanceDetail />} />
-          <Route path="/timeList/:pfCode" element={<TimeList />} />
+          <Route path="/performList/newPerform" element={<Redirect component={<NewPerform />} authenticated={token}/>}/>
+          <Route path="/timeList/:pfCode" element={<Redirect component={<TimeList />} authenticated={token}/>} />
           <Route path="/performCalendar" element={<PerformCalendar />} />
           <Route path='/센터소개' element={<CenterInfo />} />
           <Route path='/센터소식' element={<CenterNews/>}/>
           <Route path='/Event' element={<EventPage/>}/>
           <Route path='/FAQ' element={<FAQ />} />
           <Route path='/QNA' element={<QNA />}/>
-          <Route path='/NewPost/:BoardType' element={<NewPost/>}/>
-          <Route path='/NewEventPost/:BoardType' element={<NewEventPost/>}/>
-          <Route path='/EditPost/:BoardType/:postNo' element={<EditPost/>}/>
+          <Route path='/NewPost/:BoardType' element={<Redirect component={<NewPost/>} authenticated={token}/>}/>
+          <Route path='/NewEventPost/:BoardType' element={<Redirect component={<NewEventPost/>} authenticated={token}/>}/>
+          <Route path='/EditPost/:BoardType/:postNo' element={<Redirect component={<EditPost/>} authenticated={token}/>}/>
+          <Route path="/EditEventPost/:BoardType/:postNo" element={<Redirect component={<EditEventPost/>} authenticated={token}/>}/>
           <Route path='/postDetail/:BoardType/:postNo' element={<PostDetail/>}/>
-          <Route path='/ticket' element={<Ticket/>}/>
-          <Route path='/RentApp' element={<RentalApps/>}/>
-          <Route path='/RentList' element={<RentalList/>}/>
-          <Route path='/Rentcom' element={<RentalComplete/>}/>
-          <Route path='/myticket' element={<TicketFind/>}/>
-          <Route path='/Newplant' element={<Newplant/>}/>
+          <Route path='/ticket' element={<Redirect component={<Ticket/>} authenticated={token}/>}/>
+          <Route path='/RentApp' element={<Redirect component={<RentalApps/>} authenticated={token}/>}/>
+          <Route path='/RentList' element={<Redirect component={<RentalList/>} authenticated={token}/>}/>
+          <Route path='/Rentcom' element={<Redirect component={<RentalComplete/>} authenticated={token}/>}/>
+          <Route path='/myticket' element={<Redirect component={<TicketFind/>} authenticated={token}/>}/>
+          <Route path='/Newplant' element={<Redirect component={<Newplant/>} authenticated={token}/>}/>
           <Route path='/errorPage' element={<ErrorPage/>}/>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/userpage/change" element={<ChangeInformation />} />
-          <Route path="/findId" element={<FindId />} />
-          <Route path="/addcorp" element={<AddCorp />} />
-          <Route path="/userList" element={< UserList />} />
+          <Route path="/userpage/change" element={<Redirect component={<ChangeInformation />} authenticated={token}/>} />
+          <Route path="/addcorp" element={<Redirect component={<AddCorp />} authenticated={token}/>}/>
+          <Route path="/userList" element={<Redirect component={< UserList />} authenticated={token}/>} />
         </Routes>
       </Router>
       <Footer />

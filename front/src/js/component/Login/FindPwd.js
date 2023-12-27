@@ -16,7 +16,7 @@ function FindPwd() {
   const navigate = useNavigate();
   const handleSmsSend = async () => {
     try {
-      const response = await fetch(
+      await fetch(
         `http://localhost:8090/tel/?tel=${tel}`
       );
       // setSmsInputActive(true); // SMS 입력이 활성화됨
@@ -47,9 +47,12 @@ function FindPwd() {
 };
 
 const changePassword = async ()=>{
+  const token = sessionStorage.getItem("jwt");
   try {
-    const response = await fetch(
-      `http://localhost:8090/pwdchan/?id=${id}&pwd=${pwd}`
+    await fetch(
+      `http://localhost:8090/member/pwdchan/?id=${id}&pwd=${pwd}`, {
+        headers: { 'Authorization' : token}
+    }
     );
    navigate("/")
     

@@ -186,7 +186,7 @@ public class FileService {
 //        result.setSpace(space);
 //        result.setEdu(edu);
 //        result.setEduHist(eduHist);
-//        result.setPost(post);
+        result.setBrdPost(brdPost);
 
         return result;
     }

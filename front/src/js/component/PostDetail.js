@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate} from "react-router-dom";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import '../../css/PostDetail.css';
@@ -9,6 +10,7 @@ import '../../css/PostDetail.css';
 const SERVER_URL = 'http://localhost:8090';
 
 function PostDetail() {
+  const navigate = useNavigate();
   const { postNo } = useParams(); //board.js에서 postNo값을 보내주고 링크의 postNo값을 가져온다.
   const { BoardType } = useParams();
   const [post, setPost] = useState({});
@@ -86,6 +88,7 @@ function PostDetail() {
     <div id='PostDetail'>
       <div className="post-detail-container">
         <h2 className="post-title">{post.postTitle}</h2>
+        <button onClick={() => navigate(`/EditPost/${BoardType}/${postNo}`)}>수정</button>
         <div className="post-info">
           <span className="post-date">{post.postDate}</span>
         </div>
@@ -93,8 +96,8 @@ function PostDetail() {
 
 
         {BoardType === '6' && (
-        //댓글 입력 폼
-        <div>
+          //댓글 입력 폼
+          <div>
             <div className="reply-form">
               <ReactQuill value={newReply} modules={{ toolbar: false }} onChange={handleReplyChange} theme="snow" />
               <button onClick={handleAddReply}>댓글 작성</button>
