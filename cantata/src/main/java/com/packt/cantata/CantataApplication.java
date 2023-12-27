@@ -21,6 +21,8 @@ import com.packt.cantata.domain.Performance;
 import com.packt.cantata.domain.PerformanceRepository;
 import com.packt.cantata.domain.Plant;
 import com.packt.cantata.domain.PlantRepository;
+import com.packt.cantata.domain.User;
+import com.packt.cantata.domain.UserRepository;
 
 @SpringBootApplication
 @EnableJpaAuditing 
@@ -42,6 +44,9 @@ public class CantataApplication implements CommandLineRunner {
 	
 	@Autowired
 	private Brd_postRepository postRepository;
+	
+	@Autowired
+	private UserRepository urepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CantataApplication.class, args);
@@ -113,6 +118,8 @@ public class CantataApplication implements CommandLineRunner {
 		for (Brd_post post : postRepository.findAll()) {
 			logger.info(post.getPostTitle());
 		}
+		urepository.save(new User("user", "$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue","USER")); 
+		urepository.save(new User("admin", "$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9.mP9vpMu0ssKi8GW", "ADMIN"));
 
 	}
 }
