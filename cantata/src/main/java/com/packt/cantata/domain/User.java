@@ -54,11 +54,16 @@ public class User {
 	public User(String id, String username, String password, String Auth) {
 		super();
 		this.id = id;
-		this.username=username;
+		this.username = username;
 		this.password = password;
 		this.Auth = Auth;
 	}
-	
+	public User(String id, String password, String Auth) {
+		super();
+		this.id = id;
+		this.password = password;
+		this.Auth = Auth;
+	}
 	public User(String id, String password, String username, String gender, String tel, String email, String address, LocalDate birth) {
 		super();
 		this.id = id;
