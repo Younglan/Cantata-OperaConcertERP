@@ -19,7 +19,8 @@ function PerformanceDetail(){
 
     useEffect(() => {
         fetchPerform();
-        viewContent('');
+        // 마운트될때 최상단 노출
+        window.scrollTo(0, 0);
     }, []);
 
     const fetchPerform= () => {
@@ -73,7 +74,7 @@ function PerformanceDetail(){
                             </li>
                             <li>
                                 <span className='tit'>장소</span>
-                                <span>{plant.floor}층 / {plant.plant_name}</span>
+                                <span>{plant.floor}층 / {plant.plantName}</span>
                             </li>
                             <li>
                                 <span className='tit'>소요시간</span>
