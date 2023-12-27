@@ -33,6 +33,7 @@ import ChangeInformation from './js/component/UserPage/ChangeInformation'
 import AddCorp from './js/component/UserPage/AddCorp'
 import UserList from './js/component/UserPage/UserList'
 import Redirect from './Redirect';
+import Mypage from './js/component/UserPage/Mypage';
 function App() {
   
  
@@ -68,7 +69,7 @@ function App() {
           <Route path='/errorPage' element={<ErrorPage/>}/>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/mypage/change" element={<Redirect component={<ChangeInformation />} />} />
+          <Route path="/mypage" element={<Redirect component={<Mypage />} />} />
           <Route path="/addcorp" element={<Redirect component={<AddCorp />} />}/>
           <Route path="/userList" element={<Redirect component={< UserList />} />} />
         </Routes>

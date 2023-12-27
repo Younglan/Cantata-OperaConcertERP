@@ -45,7 +45,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     }
     const loginCheck = () => {
         if(token){
-            navigate("/mypage/change");
+            navigate("/mypage");
             handleToggle();
         }else{
             navigate("/login");

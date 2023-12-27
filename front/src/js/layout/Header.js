@@ -23,7 +23,7 @@ const Header = () => {
     }
     const loginCheck = () => {
         if(token){
-            navigate("/mypage/change");
+            navigate("/mypage");
         }else{
             navigate("/login");
         }
