@@ -1,10 +1,10 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 
-const Redirect = ({ authenticated, component:Component}) => {
-
+const Redirect = ({component:Component}) => {
+    const token = sessionStorage.getItem("jwt");
     return(
-        authenticated?Component:<Navigate to="/login" {...alert("로그인이 필요합니다.")}></Navigate>
+        token?Component:<Navigate to="/login" {...alert("로그인이 필요합니다.")}></Navigate>
     )
 }
 
