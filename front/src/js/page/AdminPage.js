@@ -48,7 +48,7 @@ const AdminPage = () => {
             {/* 예약관리 버튼에 대한 ButtonGroup */}
             {isContentMenuVisible === 1 && (
                 <ButtonGroup aria-label="ReservationMenu">
-                    <Button variant="secondary">옵션A</Button>
+                    <Button variant="secondary">예매 검표</Button>
                     <Button variant="secondary">옵션B</Button>
                     <Button variant="secondary">옵션C</Button>
                 </ButtonGroup>

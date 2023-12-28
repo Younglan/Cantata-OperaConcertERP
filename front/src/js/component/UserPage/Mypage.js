@@ -31,18 +31,20 @@ function Mypage(){
       }
     return(
         <React.Fragment>
-            <Stack className="modalStack"sx={{width: "50%",
-        backgroundColor: "white",
-        padding: "20px",
-        outline: "none",
-        borderRadius: "5px",
-        margin:"auto"}}> {/* Apply the modalStack style */}
+            <Stack className="modalStack"sx={{
+                width: "80%",
+                minWidth:"1000px",
+                backgroundColor: "white",
+                padding: "20px",
+                outline: "none",
+                borderRadius: "5px",
+                margin:"auto"}}> {/* Apply the modalStack style */}
                 <Stack direction="row" spacing={2} className="tabButtons" sx={{display: "flex"}}> {/* Apply the tabButtons style */}
                     <Button
                         onClick={() => setChange(1)}
                         className="tabButton" // Apply the tabButton style
                         sx={{fontSize: "20px",
-                            color: "#a38ced",
+                            color: "#303030",
                             fontWeight: "bold",
                             width:"50%"}}
                     >
@@ -52,7 +54,7 @@ function Mypage(){
                         onClick={() => setChange(2)}
                         className="tabButton" // Apply the tabButton style
                         sx={{fontSize: "20px",
-                            color: "#a38ced",
+                            color: "#303030",
                             fontWeight: "bold",
                             width:"50%"}}
                     >
@@ -62,7 +64,7 @@ function Mypage(){
                         onClick={() => setChange(3)}
                         className="tabButton" // Apply the tabButton style
                         sx={{fontSize: "20px",
-                            color: "#a38ced",
+                            color: "#303030",
                             fontWeight: "bold",
                             width:"50%"}}
                     >
@@ -72,7 +74,7 @@ function Mypage(){
                         onClick={onDelClick}
                         className="tabButton" // Apply the tabButton style
                         sx={{fontSize: "20px",
-                            color: "#a38ced",
+                            color: "#BB2649",
                             fontWeight: "bold",
                             width:"50%"}}
                     >

@@ -63,8 +63,12 @@ function LoginPage() {
     const token = sessionStorage.getItem("jwt");
     fetch(SERVER_URL + "member/updateRecent" + `/?id=${user.id}`, {
       headers:{'Authorization':token}
-   })
-
+    })
+  
+    .then(response=>response.json())
+    .then(data=>sessionStorage.setItem("role", data.auth))
+    .catch((e)=>console.error(e));
+  
   };
   if (isAuthenticated) {
     return navigate("/");

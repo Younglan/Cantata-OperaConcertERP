@@ -29,9 +29,8 @@ import PerformCalendar from './js/component/calendar/PerformCalendar';
 import ErrorPage from './js/page/ErrorPage';
 import LoginPage from './js/component/Login/LoginPage';
 import SignUp from './js/component/Login/SignUp';
-import ChangeInformation from './js/component/UserPage/ChangeInformation'
 import AddCorp from './js/component/UserPage/AddCorp'
-import UserList from './js/component/UserPage/UserList'
+
 import Redirect from './Redirect';
 import Mypage from './js/component/UserPage/Mypage';
 function App() {
@@ -71,7 +70,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/mypage" element={<Redirect component={<Mypage />} />} />
           <Route path="/addcorp" element={<Redirect component={<AddCorp />} />}/>
-          <Route path="/userList" element={<Redirect component={< UserList />} />} />
+          <Route path="/admin" element={<Redirect component={<AdminPage />} />} />
         </Routes>
       </Router>
       <Footer />
