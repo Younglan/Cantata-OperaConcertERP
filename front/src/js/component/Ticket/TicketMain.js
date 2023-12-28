@@ -25,6 +25,7 @@ function TicketMain(){
     const leftS = [48, 32, 8, 48, 72, 80];
     const fetchtime = () =>{
       const token = sessionStorage.getItem("jwt");
+      if (token){
         fetch("http://localhost:8090/ticket/pftdate",{
           headers: { 
           'Authorization': token
@@ -34,6 +35,8 @@ function TicketMain(){
           return String(new Date(moment(it).format('YYYY-MM-DD')))
         })))
         .catch(err => console.error(err));
+      }
+        
         
     };
     

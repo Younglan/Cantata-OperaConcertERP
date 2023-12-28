@@ -37,11 +37,13 @@ function FindId() {
 };
 const getFindId = async ()=>{
   try {
+    const token = sessionStorage.getItem("jwt");
     const response = await fetch(
-      `http://localhost:8090/findid/?tel=${tel}`
+      `http://localhost:8090/member/findid/?tel=${tel}`, {
+        headers: { 'Authorization' : token}
+    }
     );
     const data = await response.json();
-    console.log(data);
     alert("아이디 : " + data.id.replace(data.id.substring(1,3),"**"));
   } catch (error) {
     // setIsSmsVerified(false); // 인증 실패

@@ -66,13 +66,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 		.authorizeRequests()
-		.antMatchers(HttpMethod.POST, "/login","/signup").permitAll()
-		.antMatchers("/verify/**","/tel/**","/Duple/**","/updateRecent/**","/findid/**","/pwdchan/**").permitAll()
-		.antMatchers("/admin/**").hasRole("ADMIN")
-		.antMatchers("/user/**","/corporations/**","/ticket/**").hasRole("USER")
 		
-//		.anyRequest().authenticated().and()
-		.anyRequest().permitAll().and()
+		.antMatchers("/admin/**").hasRole("ADMIN")
+		.antMatchers("/user/**","/corporations/**","/ticket/**","/member/**").hasAnyRole("USER","ADMIN")
+		.antMatchers("/**").permitAll()
+		.anyRequest().authenticated().and()
+//		.anyRequest().permitAll().and()
 		.exceptionHandling()
 		.authenticationEntryPoint(exceptionHandler).and()
 		.addFilterBefore(authenticationFilter, 

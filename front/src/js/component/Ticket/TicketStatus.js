@@ -42,7 +42,7 @@ function TicketStatus(){
                         <span>총 결제금액 : </span>
                     </div>       
                     <div className="ts_payment">
-                        <em>{ticketInfo.money}</em>
+                        <em>{ticketInfo.money.toLocaleString('ko-KR')}</em>
                         <span>원</span>
                     </div>   
                 </div>

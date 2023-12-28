@@ -30,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping(value="/login")
 public class LoginController { 
 	@Autowired
 	private JwtService jwtService;
@@ -61,29 +62,5 @@ public class LoginController {
 	
         return ResponseEntity.ok(useru);
     }
-	@RequestMapping(value="/updateRecent") 
-	@Transactional
-	public void updateUser(@RequestParam("id") String id) {
-		User userr = usrrepo.findIdById(id);
-		userr.setRecent_date(new Date());
-    }
 	
-	@RequestMapping(value="/Duple", method=RequestMethod.GET) 
-	public ResponseEntity<Boolean> checkDuple(@RequestParam("type") String type, @RequestParam("value") String value) {
-		System.out.println(loginService.checkDuplicate(type, value));
-		 return ResponseEntity.ok(loginService.checkDuplicate(type, value));
-    }
-	
-	@RequestMapping(value="/findid", method=RequestMethod.GET) 
-	public ResponseEntity<User> showId(@RequestParam("tel") String tel) {
-		System.out.println(tel);
-		 return ResponseEntity.ok(usrrepo.findTelByTel(tel));
-    }	
-	@RequestMapping(value="/pwdchan") 
-	@Transactional
-	public void changePwd(@RequestParam("id") String id, @RequestParam("pwd") String pwd){
-		
-		User useru = usrrepo.findIdById(id);
-		useru.setPassword(Encoder.encode(pwd));
-	}
 }

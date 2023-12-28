@@ -115,7 +115,7 @@ function ChangeInformation() {
             주소
           </TextField>
           <div className="MuiFormControl-root MuiTextField-root textGroup css-1u3bzj6-MuiFormControl-root-MuiTextField-root">
-            <Button
+            <Button className="changeInfoButton"
               variant="contained"
               onClick={()=>navigate("/addcorp",{state:{userdata}})}
               sx={{ marginTop:"50px",width:"100%",height:"50px"}}
@@ -128,7 +128,7 @@ function ChangeInformation() {
         </div>
       </div>
       <div className="clickform">
-        <Button
+        <Button className="changeInfoButton"
           variant="contained"
           onClick={()=>updatePassword()}
           //   sx={{ mt: 3, mb: 2 }}

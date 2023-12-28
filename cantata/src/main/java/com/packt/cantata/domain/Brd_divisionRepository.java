@@ -10,5 +10,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface Brd_divisionRepository extends JpaRepository<Brd_division, Long> {
 
 	List<Brd_division> findByBrdName(@Param("brdName") String brdName);
-//	List<Brd_division> findByBrdNo(@Param("brdNo") Long brdNo);
+	Brd_division findByBrdNo(@Param("brdNo") Long brdNo);
 }

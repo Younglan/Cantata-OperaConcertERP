@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import "../../css/AdminPage.css";
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
@@ -7,7 +8,7 @@ import PerformanceList from '../component/performance/PerformanceList';
 const AdminPage = () => {
     const [isContentMenuVisible, setContentMenuVisible] = useState(null);
     const [selectedBoard, setSelectedBoard] = useState(null);
-
+    const { props } = useParams(); 
     const toggleContentMenu = (board) => {
         setContentMenuVisible(board);
     }
@@ -15,6 +16,16 @@ const AdminPage = () => {
     const setSelectedMenu = (boardType) => {
         setSelectedBoard(boardType);
     };
+
+    useEffect(() =>{
+        // setSelectedBoard(1);
+        console.log(props);
+        if(props === 'adminContents'){
+            setSelectedBoard(1);
+        }else if(props === 'adminPerformances'){
+            setSelectedBoard(0);
+        }
+    }, [props]);
 
     return (
         <div className="AdminPage">
@@ -28,7 +39,7 @@ const AdminPage = () => {
             {/* 공연관리 버튼에 대한 ButtonGroup */}
             {isContentMenuVisible === 0 && (
                 <ButtonGroup aria-label="PerformanceMenu">
-                    <Button variant="secondary" onClick={() => setSelectedMenu(0)}>공연일정</Button>
+                    <Button variant="secondary" onClick={() => setSelectedBoard(0)}>공연일정</Button>
                     <Button variant="secondary">옵션2</Button>
                     <Button variant="secondary">옵션3</Button>
                 </ButtonGroup>
@@ -37,7 +48,7 @@ const AdminPage = () => {
             {/* 예약관리 버튼에 대한 ButtonGroup */}
             {isContentMenuVisible === 1 && (
                 <ButtonGroup aria-label="ReservationMenu">
-                    <Button variant="secondary">옵션A</Button>
+                    <Button variant="secondary">예매 검표</Button>
                     <Button variant="secondary">옵션B</Button>
                     <Button variant="secondary">옵션C</Button>
                 </ButtonGroup>
@@ -61,23 +72,24 @@ const AdminPage = () => {
 
             {isContentMenuVisible === 4 && (
                 <ButtonGroup aria-label="ContentMenu">
-                    <Button variant="secondary" onClick={() => setSelectedMenu(1)}>
+                    <Button variant="secondary" onClick={() => setSelectedBoard(1)}>
                         센터소개
                     </Button>
-                    <Button variant="secondary" onClick={() => setSelectedMenu(2)}>
+                    <Button variant="secondary" onClick={() => setSelectedBoard(2)}>
                         시설소개
                     </Button>
-                    <Button variant="secondary" onClick={() => setSelectedMenu(3)}>
+                    <Button variant="secondary" onClick={() => setSelectedBoard(3)}>
                         센터소식
                     </Button>
-                    <Button variant="secondary" onClick={() => setSelectedMenu(4)}>
+                    <Button variant="secondary" onClick={() => setSelectedBoard(4)}>
                         이벤트
                     </Button>
-                    <Button variant="secondary" onClick={() => setSelectedMenu(5)}>
+                    <Button variant="secondary" onClick={() => setSelectedBoard(5)}>
                         자주하는 질문
                     </Button>
-                    <Button variant="secondary" onClick={() => setSelectedMenu(6)}>
+                    <Button variant="secondary" onClick={() => setSelectedBoard(6)}>
                         1:1문의
+                        
                     </Button>
                 </ButtonGroup>
             )}

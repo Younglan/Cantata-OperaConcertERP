@@ -37,7 +37,7 @@ function LoginPage() {
   // }
 
   const login = () => {
-    fetch(SERVER_URL + "login", {
+    fetch(SERVER_URL + "login/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
@@ -45,19 +45,30 @@ function LoginPage() {
       .then((res) => {
         const jwtToken = res.headers.get("Authorization");
         if(res.ok){
-          updateRecentDate();
+          
           if (jwtToken !== null) {
             sessionStorage.setItem("jwt", jwtToken);
             console.log(parseJwt(jwtToken))
             setAuth(true);
+            updateRecentDate();
           }
+        }else{
+          alert("회원 정보를 찾을 수 없습니다.")
         }
         
       })
       .catch((err) => console.error(err));
   };
   const updateRecentDate = () =>{
-    fetch(SERVER_URL + "updateRecent" + `/?id=${user.id}`)
+    const token = sessionStorage.getItem("jwt");
+    fetch(SERVER_URL + "member/updateRecent" + `/?id=${user.id}`, {
+      headers:{'Authorization':token}
+    })
+  
+    .then(response=>response.json())
+    .then(data=>sessionStorage.setItem("role", data.auth))
+    .catch((e)=>console.error(e));
+  
   };
   if (isAuthenticated) {
     return navigate("/");

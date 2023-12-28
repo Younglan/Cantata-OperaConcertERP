@@ -1,7 +1,10 @@
 package com.packt.cantata.domain;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 public interface PlantRepository extends CrudRepository<Plant, Long>{
 	Plant findByPlantNo(Long plantNo);
@@ -13,5 +16,6 @@ public interface PlantRepository extends CrudRepository<Plant, Long>{
 	Iterable<Plant> filteredPlant();
 
 	Plant findTopByOrderByPlantNoDesc();
-
+	
+	List<Rental> findByPlantNo(@Param("plantNo") Rental rental);
 }
