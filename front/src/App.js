@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './js/layout/Header';
 import Footer from './js/layout/Footer';
 import Main from './js/page/Main';
-import PageTest from './js/page/pageTest';
+import PageTest from './js/page/PageTest';
 import AdminPage from './js/page/AdminPage';
 import PerformanceDetail from './js/component/performance/PerformanceDetail';
 import PerformanceList from './js/component/performance/PerformanceList';
@@ -15,6 +15,7 @@ import EventPage from './js/page/EventPage';
 import NewPost from './js/component/NewPost';
 import NewEventPost from './js/component/NewEventPost';
 import EditPost from './js/component/EditPost';
+import EditEventPost from './js/component/EditEventPost';
 import PostDetail from './js/component/PostDetail';
 import FAQ from "./js/page/FAQ";
 import QNA from "./js/page/QNA";
@@ -28,11 +29,13 @@ import PerformCalendar from './js/component/calendar/PerformCalendar';
 import ErrorPage from './js/page/ErrorPage';
 import LoginPage from './js/component/Login/LoginPage';
 import SignUp from './js/component/Login/SignUp';
-import ChangeInformation from './js/component/UserPage/ChangeInformation'
-import FindId from './js/component/Login/FindId'
 import AddCorp from './js/component/UserPage/AddCorp'
-import UserList from './js/component/UserPage/UserList'
+
+import Redirect from './Redirect';
+import Mypage from './js/component/UserPage/Mypage';
 function App() {
+  
+ 
   return (
     <div className="App">
       <Router>
@@ -40,34 +43,34 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/pageTest" element={<PageTest />} />
-          <Route path="/adminPage" element={<AdminPage/>}/>
-          <Route path="/performList" element={<PerformanceList />} />
-          <Route path="/performList/newPerform" element={<NewPerform />} />
+          <Route path="/adminPage/:props" element={<Redirect component={<AdminPage/>} auth="ADMIN"/>}/>
+          <Route path="/performList" element={<PerformanceList/>}/>
           <Route path="/performanceDetail/:pfCode" element={<PerformanceDetail />} />
-          <Route path="/timeList/:pfCode" element={<TimeList />} />
+          <Route path="/performList/newPerform" element={<Redirect component={<NewPerform auth="ADMIN"/>} />}/>
+          <Route path="/timeList/:pfCode" element={<Redirect component={<TimeList auth="ADMIN"/>} />} />
           <Route path="/performCalendar" element={<PerformCalendar />} />
           <Route path='/센터소개' element={<CenterInfo />} />
           <Route path='/센터소식' element={<CenterNews/>}/>
           <Route path='/Event' element={<EventPage/>}/>
           <Route path='/FAQ' element={<FAQ />} />
           <Route path='/QNA' element={<QNA />}/>
-          <Route path='/NewPost/:BoardType' element={<NewPost/>}/>
-          <Route path='/NewEventPost/:BoardType' element={<NewEventPost/>}/>
-          <Route path='/EditPost/:BoardType/:postNo' element={<EditPost/>}/>
+          <Route path='/NewPost/:BoardType' element={<Redirect component={<NewPost/>} auth="USER"/>}/>
+          <Route path='/NewEventPost/:BoardType' element={<Redirect component={<NewEventPost/>} auth="ADMIN"/>}/>
+          <Route path='/EditPost/:BoardType/:postNo' element={<Redirect component={<EditPost/>} />} auth="USER"/>
+          <Route path="/EditEventPost/:BoardType/:postNo" element={<Redirect component={<EditEventPost/>} auth="ADMIN"/>}/>
           <Route path='/postDetail/:BoardType/:postNo' element={<PostDetail/>}/>
-          <Route path='/ticket' element={<Ticket/>}/>
-          <Route path='/RentApp' element={<RentalApps/>}/>
-          <Route path='/RentList' element={<RentalList/>}/>
-          <Route path='/Rentcom' element={<RentalComplete/>}/>
-          <Route path='/myticket' element={<TicketFind/>}/>
-          <Route path='/Newplant' element={<Newplant/>}/>
+          <Route path='/ticket' element={<Redirect component={<Ticket/>} auth="USER"/>}/>
+          <Route path='/RentApp' element={<Redirect component={<RentalApps/>} auth="USER"/>}/>
+          <Route path='/RentList' element={<Redirect component={<RentalList/>} auth="USER"/>}/>
+          <Route path='/Rentcom' element={<Redirect component={<RentalComplete/>} auth="USER"/>}/>
+          <Route path='/myticket' element={<Redirect component={<TicketFind/>} auth="USER"/>}/>
+          <Route path='/Newplant' element={<Redirect component={<Newplant/>} auth="ADMIN"/>}/>
           <Route path='/errorPage' element={<ErrorPage/>}/>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/userpage/change" element={<ChangeInformation />} />
-          <Route path="/findId" element={<FindId />} />
-          <Route path="/addcorp" element={<AddCorp />} />
-          <Route path="/userList" element={< UserList />} />
+          <Route path="/mypage" element={<Redirect component={<Mypage />} auth="USER"/>} />
+          <Route path="/addcorp" element={<Redirect component={<AddCorp />} auth="USER"/>}/>
+          <Route path="/admin" element={<Redirect component={<AdminPage />} auth="ADMIN"/>} />
         </Routes>
       </Router>
       <Footer />

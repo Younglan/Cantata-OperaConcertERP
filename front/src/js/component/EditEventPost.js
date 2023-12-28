@@ -12,12 +12,12 @@ import "react-quill/dist/quill.snow.css";
 Quill.register("modules/imageResize", ImageResize);
 const SERVER_URL = 'http://localhost:8090';
 
-function EditPost(props) {
+function EditEventPost(props) {
     const { postNo } = useParams();
-    const [postTitle, setPostTitle] = useState('');
-    // const [boardName, setBoardName] = useState('');
     //네비게이터
     const navigate = useNavigate();
+    const [validationError, setValidationError] = useState(false); //유동성 검사
+    const [postTitle, setPostTitle] = useState('');
      // 연결된 파일 번호 리스트
      const [filesNumbers, setFilesNumbers] = useState([]);
      const [imageLoading, setImageLoading] = useState(false);
@@ -26,16 +26,31 @@ function EditPost(props) {
     // const [open, setOpen] = useState(false);
 
 
-    const [post, setPost] = useState({
-        postTitle : '',
-        postFile1 : '',
-        postSub : '',
-        postDeadline : '',
-        brdNo : ''
-    });
-    const [postSub, setPostSub] = React.useState('');
-    // const [selectedBrdNo, setSelectedBrdNo] = useState(null);
-  
+    useEffect(() => {
+        // 게시판 이름 가져오기
+        const fetchPost = async () => {
+            try {
+                const response = await fetch(`${SERVER_URL}/brd_posts/${postNo}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setPostTitle(data.postTitle);
+                setPostSub(data.postSub);
+                setPost(prevState => ({ ...prevState, 
+                    postTitle: data.postTitle, 
+                    postSub: data.postSub,
+                    postDeadline: data.postDeadline,
+                    postFile1: data.postFile1
+                })); // post 초기값 설정, 수정 전 데이터 불러오기
+            } catch (error) {
+                console.error('Error fetching brdName:', error);
+            }
+        };
+
+        fetchPost();
+    }, [postNo]);
+
     useEffect(() => {
         // 게시판 이름 가져오기
         const fetchPost = async () => {
@@ -56,6 +71,15 @@ function EditPost(props) {
         fetchPost();
     }, [postNo]);
 
+    const [post, setPost] = useState({
+        postTitle : '',
+        // postFile1 : '',
+        postSub : '',
+        postDeadline : '',
+        brdNo : 4
+    });
+    const [postSub, setPostSub] = React.useState('');
+    // const [selectedBrdNo, setSelectedBrdNo] = useState(null);
 
     //리다이렉션 핸들러
     const handleRedirect = () => {
@@ -196,6 +220,9 @@ function EditPost(props) {
         "width",
     ];
 
+    const validateForm = () => { //제목 또는 내용의 유효성 검사
+        return !(!post.postTitle.trim() || !post.postSub.trim()); //trim()은 공백 제거, 만약 postTitle, postSub중 하나라도 비어있다면 !에 따라 true를 그리고 이중 !에 따라 false를 리턴한다.
+    };
 
     const modules = useMemo(() => {
         return {
@@ -225,38 +252,71 @@ function EditPost(props) {
     const quillRef1 = useRef(null);
     const quillRef2 = useRef(null);
 
-    //글 수정
-    function updatePost() {
-        //글 수정 요청을 서버에 보내기
-       fetch(`${SERVER_URL}/brd_posts/updatePost/${postNo}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            ...post,
-            brdNo: { brdNo: post.brdNo },
-        })
-    })
-        .then(response => {
-            if (response.ok) {
-                alert('수정 완료.');
-                navigate(-1);
-            } else {
-                alert('수정되지 않았습니다.');
-            }
-        })
-        .catch(err => console.error(err));
+    //새로운 글 등록
+    function newPostSave() {
+        const isValid = validateForm();
+        if (isValid) {
+            setValidationError(false);
+            var postFile1Element = document.getElementById("postFile1");
+        // postNum 서버로부터 가져오기
+        fetch(`${SERVER_URL}/brd_posts/lastPostNum/4`)
+            .then(response => response.json())
+            .then(data => {
+                // postNum 값을 이용하여 새로운 글 저장
+                var formData = new FormData();
+                formData.append("postFile", postFile1Element.files[0]);
+                formData.append('post', JSON.stringify({
+                    ...post,
+                    postNum: data + 1, // 마지막 postNum + 1
+                    brdNo: 4 }));
+
+                // formData.append('postNum', data+1);
+                // formData.append('brdNo', 4);
+                fetch(`${SERVER_URL}/brd_posts/newEventPost`, {
+                    method: 'POST',
+                    // headers: { 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarythWrULFMIbQmqSPH' },
+                    body:formData
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('저장완료.');
+                            navigate(-1);
+                        } else {
+                            alert('저장되지않았습니다.');
+                        }
+                    })
+                    .catch(err => console.error(err))
+            })
+            .catch(err => console.error(err));
+        } else {
+            setValidationError(true);
+        }
     }
     return (
         <div className='contentsArea'>
             <div className='contents'>
                 {/* <form> */}
                 <div>
-                    <h1>{postTitle}</h1>
+                    <h1>이벤트 글쓰기</h1>
                 </div>
                 <div className="divrows">
                     <div className="formHeader">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</div>
                     <div className="divcolscont">
-                        <Form.Control type="text" placeholder="" className="fullwidth" name="postTitle" value={postTitle} onChange={handleChange} readOnly/>
+                        <Form.Control type="text" placeholder="" className="fullwidth" name="postTitle" value={post.postTitle} onChange={handleChange} readOnly/>
+                    </div>
+                </div>
+                
+                <div className="divrows">
+                    <div className="formHeader">마&nbsp;&nbsp;&nbsp;&nbsp;침&nbsp;&nbsp;&nbsp;&nbsp;일</div>
+                    <div className="divcolscont">
+                        <Form.Control type="date" placeholder="" className="fullwidth" name = "postDeadline" value={post.postDeadline} onChange={handleChange}/>
+                        {/* 이거는 이벤트에만 쓸 예정 나중에 배너하고도 연결해야함.. */}
+                    </div>
+                </div>
+                <div className="divrows">
+                    <div className="formHeader">첨부&nbsp;&nbsp;파일</div>
+                    <div className="divcolscont">
+                        <Form.Control type="file" id="postFile1" name="postFile1"/>
                     </div>
                 </div>
                 <div className="divrows formTxtArea">
@@ -281,7 +341,7 @@ function EditPost(props) {
                     </div>
                 </div>
                 <div className="divrows formTxtArea">
-                    <Button onClick={updatePost} variant="secondary">등록</Button> &nbsp;
+                <Button onClick={newPostSave} variant="secondary" disabled={!validateForm()}>등록</Button> &nbsp;
                     <Button onClick={handleRedirect} variant="secondary">뒤로가기</Button>
                 </div>
 
@@ -293,4 +353,4 @@ function EditPost(props) {
     )
 };
 
-export default EditPost;
+export default EditEventPost;

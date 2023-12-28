@@ -40,29 +40,8 @@ function Newplant(props) {
     }
 
     
-
-  //새로운 공연 등록
-//   function newPlantSave(){
-//     console.log(plant)
-//     fetch('http://localhost:8090/plants/plantapp',
-//     {
-//         method:'POST',
-//         headers: {'Content-Type':'application/json'},
-//         body:JSON.stringify(plant)
-//     })
-//     .then(response =>{
-//         if(response.ok){
-//             alert('저장완료.');
-//             // navigate("/performList");
-            
-//         }else{
-//             alert('저장되지않았습니다.');
-//         }
-//     })
-//     .catch(err => console.error(err))
-// }
 function newPlantSave(){
-    // pfPoster 요소 가져오기
+    // 이미지 요소 가져오기
     var plantMainimgElement = document.getElementById("plantMainimg");
     var plantSubimg1Element = document.getElementById("plantSubimg1");
     var plantSubimg2Element = document.getElementById("plantSubimg2");
@@ -84,7 +63,7 @@ function newPlantSave(){
         alert("대관 요금을 입력하세요.");
     }else{
         var formData = new FormData();
-        formData.append("plantMainImgFile", plantMainimgElement.files[0]);
+        formData.append("plantMainimgFile", plantMainimgElement.files[0]);
         formData.append("plantSubimg1File", plantSubimg1Element.files[0]);
         formData.append("plantSubimg2File", plantSubimg2Element.files[0]);
         formData.append('plant', JSON.stringify(plant));
@@ -149,7 +128,6 @@ const modules = {
       ["clean"],
     ],
   };
-
     return (
         <div className='contentsArea'>
             <div className='contents'>

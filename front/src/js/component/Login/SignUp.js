@@ -70,7 +70,7 @@ function SignUp() {
   //post
   const postSignUp = () => {
     console.log(formdata);
-    fetch("http://localhost:8090/signup", {
+    fetch("http://localhost:8090/login/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formdata),
@@ -179,7 +179,7 @@ function SignUp() {
     const checkDuplicate = async (type, errorMsg) => {
       try {
         const response = await fetch(
-          `http://localhost:8090/Duple/?type=${type}&value=${value}`
+          `http://localhost:8090/member/Duple/?type=${type}&value=${value}`
         );
         const data = await response.json();
         if (data) {

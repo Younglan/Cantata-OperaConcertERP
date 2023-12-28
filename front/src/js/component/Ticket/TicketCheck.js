@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import {
-    Alert,
-    Vibration,
-  } from "react-native";
+import { Alert, Vibration } from "react-native";
 import { Camera, CameraType } from "react-native-camera-kit";
+
 
 function TicketCheck(){
     
@@ -15,10 +13,11 @@ function TicketCheck(){
           setScaned(true);
         }, []);
         const updateTicketStatus = (ticket) =>{
+            const token = sessionStorage.getItem("jwt");
             fetch(`http://localhost:8090/ticket/ticketcheck/?ticket=${ticket}`, 
                 {
                     method: 'PUT',
-                    headers: { 'Content-Type':'application/json'}
+                    headers: { 'Content-Type':'application/json','Authorization': token}
                 })
             .then(response => {
                 if(response.ok){

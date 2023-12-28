@@ -2,8 +2,11 @@ import React from 'react';
 import cantataLogo from '../../img/cantataLogoBlack.png';
 import { useNavigate } from "react-router-dom";
 import "../../css/SlideBoard.css"
+import { Avatar } from '@mui/material';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
+    const token = sessionStorage.getItem("jwt");
     const handleToggle = () => {
         toggleBoard();
     };
@@ -31,11 +34,26 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     }
     const goToPerformCalendar = () =>{
         navigate("/performCalendar");
+        handleToggle();
+    }
+    const goToRenalApp = () =>{
+        navigate("/RentApp");
     }
     
-    const goToAdminPage = () =>{
-        navigate("/adminpage");
+    const goToAdminPage = (page) =>{
+        navigate(`/adminpage/${page}`);
         handleToggle(); // 메뉴 닫기
+    }
+    const loginCheck = () => {
+        if(token){
+            sessionStorage.clear();
+            alert("로그아웃 되었습니다.")
+            navigate("/");
+            handleToggle();
+        }else{
+            navigate("/login");
+            handleToggle();
+        }
     }
     return (
         <div className='Over_background'>
@@ -50,10 +68,10 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                         <img src={cantataLogo} alt="Cantata Logo" onClick={() => { goToMain(); handleToggle(); }} />
                     </div>
                     <div className="slide_right">
-                        <div className="slide_login">
-                            <svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6" transform='rotate(180)'>
+                        <div className="slide_login" onClick={loginCheck}>
+                            {token?<LogoutIcon style={{height:"50px",width:"50px"}}/>:<svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6" transform='rotate(180)'>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-                            </svg>{/*로그인 svg파일 transform = 'rotate(90)'으로 180도 회전상태*/}
+                            </svg>}{/*로그인 svg파일 transform = 'rotate(90)'으로 180도 회전상태*/}
                         </div>
 
                         <div className="slide_search">
@@ -82,7 +100,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                         <h2>대관</h2>
                         <li><h1>대관안내</h1></li>
                         <li><h1>대관공고</h1></li>
-                        <li><h1>대관신청</h1></li>
+                        <li onClick = {() => {goToRenalApp(); handleToggle();}}><h1>대관신청</h1></li>
                     </ul>
                 </div>
                 <div className = "center_board menu_list">
@@ -103,13 +121,13 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                 </div>
                 {userRole === 'admin' && (//특정권한 확인 admin일 경우에만 보임
                 <div className = "manager_board menu_list">
-                    <ul onClick={goToAdminPage}>
+                    <ul>
                         <h2>관리자메뉴</h2>
-                        <li><h1>공연관리</h1></li>
+                        <li onClick={() => goToAdminPage('adminPerformances')}><h1>공연관리</h1></li>
                         <li><h1>예매관리</h1></li>
                         <li><h1>대관관리</h1></li>
                         <li><h1>회원관리</h1></li>
-                        <li><h1>홈페이지 컨텐츠 관리</h1></li>
+                        <li onClick={() => goToAdminPage('adminContents')}><h1>홈페이지 컨텐츠 관리</h1></li>
                     </ul>
                     
                 </div>
