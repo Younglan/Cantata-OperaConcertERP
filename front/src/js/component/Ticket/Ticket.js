@@ -148,12 +148,11 @@ function Ticket(){
             seat : seatnum, 
             class : styleSeat
         });
-        return seatMax.current;
-        // if(seatMax.current>4){
-        //     return selected ? !selected : selected
-        // }else{
-        //     return !selected
-        // }
+        if(seatMax.current>4){
+            return selected ? !selected : selected
+        }else{
+            return !selected
+        }
 
             
         
