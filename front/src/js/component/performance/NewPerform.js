@@ -90,6 +90,7 @@ function NewPerform(props) {
         }else{
             setStDate(selectedDate);
             if(edDate && selectedDate){
+                console.log(" edDate " +edDate+ " : " +selectedDate)
                 performDateCheck(selectedDate, edDate, perform.plantNo);
             }
         }
@@ -100,6 +101,7 @@ function NewPerform(props) {
         }else{
             setEdDate(selectedDate);
             if(stDate && selectedDate){
+                console.log(" stDate " +stDate+ " : " +selectedDate)
                 performDateCheck(stDate, selectedDate, perform.plantNo);
             }
 
@@ -119,7 +121,7 @@ function NewPerform(props) {
         const sendStartDate2 = format(stDate, 'yyyy-MM-dd', { locale: ko });//중복체크
         const sendEndDate = new Date(moment(edDate).format("YYYY-MM-DD"));
         const sendEndDate2 = format(edDate, 'yyyy-MM-dd', { locale: ko });
-
+        console.log("Start : "+sendStartDate2+", End : "+ sendEndDate2+", plantNo : "+plantNo);
         //백엔드요청
         fetch(SERVER_URL+"/performances/checkPerformDate?plantNo="+plantNo+"&startDate="+sendStartDate2+"&endDate="+sendEndDate2)
         .then(response => response.json())

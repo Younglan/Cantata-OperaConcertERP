@@ -32,6 +32,9 @@ import ChangeInformation from './js/component/UserPage/ChangeInformation'
 import FindId from './js/component/Login/FindId'
 import AddCorp from './js/component/UserPage/AddCorp'
 import UserList from './js/component/UserPage/UserList'
+import PlantList from './js/component/plant/PlantList';
+import PlantDetail from './js/component/plant/plantDetail';
+import RentalListad from './js/component/rental/RentalListad';
 function App() {
   return (
     <div className="App">
@@ -58,9 +61,12 @@ function App() {
           <Route path='/ticket' element={<Ticket/>}/>
           <Route path='/RentApp' element={<RentalApps/>}/>
           <Route path='/RentList' element={<RentalList/>}/>
+          <Route path='/RentListad' element={<RentalListad/>}/>
           <Route path='/Rentcom' element={<RentalComplete/>}/>
           <Route path='/myticket' element={<TicketFind/>}/>
           <Route path='/Newplant' element={<Newplant/>}/>
+          <Route path='/plantList' element={<PlantList/>}/>
+          <Route path='/plantDetail/:plantNo' element={<PlantDetail/>}/>
           <Route path='/errorPage' element={<ErrorPage/>}/>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUp />} />

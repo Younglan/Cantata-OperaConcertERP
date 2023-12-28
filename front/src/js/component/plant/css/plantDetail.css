@@ -1,0 +1,35 @@
+/* .contentsArea {
+    margin: 20px;
+  } */
+  
+  .contentsHeader {
+    /* background-color: #f8f9fa; */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .headLevel {
+    display: flex;
+    align-items: center;
+  }
+  
+  .plantHead {
+    margin-right: 20px;
+  }
+  
+  .plantHeaderImg img {
+    max-width: 50%;
+    height: 50%;
+    /* border-radius: 8px; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .plantHeaderCon {
+    flex-grow: 1;
+  }
+  
+  .detailContent {
+    line-height: 1.5;
+  }
+  
