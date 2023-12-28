@@ -40,7 +40,7 @@ function TimeList(){
     const [open, setOpen] = useState(false);
 
     const columns = [ 
-        {field: 'ptNo', headerName: '등록번호',headerAlign: 'center'}, 
+        {field: 'ptNo', headerName: '등록번호',headerAlign: 'center',align: 'center'}, 
         {field: 'pfCode', headerName: '공연제목',headerAlign: 'center',width: 300, 
             valueGetter: (params) => {
                 const pfTitle = Array.isArray(params.row.pfCode) ? params.row.pfCode : [params.row.pfCode];
@@ -51,6 +51,7 @@ function TimeList(){
          headerName: '날짜', 
          width: 200, 
          headerAlign: 'center',
+         align: 'center',
          valueFormatter: (params) => dayjs(params.value).format('YYYY-MM-DD A hh:mm'),
         }, 
         
@@ -59,6 +60,7 @@ function TimeList(){
          sortable:false,
          filterable: false,
          headerAlign: 'center',
+         align: 'center',
          renderCell: row =>
             <button onClick={() => onDelClick(row.id)}>삭제</button>
         }
