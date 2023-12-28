@@ -30,7 +30,6 @@ import ErrorPage from './js/page/ErrorPage';
 import LoginPage from './js/component/Login/LoginPage';
 import SignUp from './js/component/Login/SignUp';
 import AddCorp from './js/component/UserPage/AddCorp'
-
 import Redirect from './Redirect';
 import Mypage from './js/component/UserPage/Mypage';
 import UserList from './js/component/UserPage/UserList'
@@ -69,9 +68,13 @@ function App() {
           <Route path='/Rentcom' element={<RentalComplete/>}/>
           <Route path='/myticket' element={<TicketFind/>}/>
           <Route path='/Newplant' element={<Newplant/>}/>
+          <Route path='/PlantList' element={<PlantList/>}/>
+          <Route path='/PlantDetail' element={<PlantDetail/>}/>
+          <Route path='/RentalListad' element={<RentalListad/>}/>
           <Route path='/errorPage' element={<ErrorPage/>}/>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/UserList" element={<UserList />} />
           <Route path="/mypage" element={<Redirect component={<Mypage />} auth="USER"/>} />
           <Route path="/addcorp" element={<Redirect component={<AddCorp />} auth="USER"/>}/>
           <Route path="/admin" element={<Redirect component={<AdminPage />} auth="ADMIN"/>} />
