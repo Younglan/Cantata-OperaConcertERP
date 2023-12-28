@@ -72,7 +72,7 @@ function PerformanceDetail(){
             setWhatDetail(<p dangerouslySetInnerHTML={{ __html: perform.pfExplan }} ></p>);
         }
         else if(status ==='refund'){
-            setWhatDetail(<p>내용이없습니다.</p>);
+            setWhatDetail(<img src='https://storage.googleapis.com/cantata_opera/refund/ticketRefund.png' alt='Refund Information' />);
         }        
     }
 

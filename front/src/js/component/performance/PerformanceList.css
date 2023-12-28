@@ -25,6 +25,7 @@
     background-color: dimgrey;
     color: white;
     height: 20px;
+    border-radius: 3px;
 }
 
 .adminButton> button:nth-of-type(2){
