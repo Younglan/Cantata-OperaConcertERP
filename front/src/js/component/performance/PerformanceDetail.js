@@ -3,6 +3,8 @@ import { useNavigate,useParams  } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import './PerformanceDetail.css';
+import { format } from 'date-fns';
+import ko from "date-fns/locale/ko";
 
 const SERVER_URL='http://localhost:8090';
 
@@ -14,10 +16,18 @@ function PerformanceDetail(){
     //데이터호출
     const[perform, setPerform] = useState([]);
     const[plant, setPlant] = useState([]);
-
+    const[isAdmin, setIsAdmin] = useState(false);
     const[whatDetail, setWhatDetail] = useState([]);
 
     useEffect(() => {
+        if (Object.keys(sessionStorage).length > 0) {
+            // sessionStorage에 저장된 값이 하나 이상 있을 때의 처리
+            const role = sessionStorage.getItem("role");
+            if(role == 'ADMIN'){setIsAdmin(true)}
+        } else {
+            // sessionStorage에 저장된 값이 하나도 없을 때의 처리
+            console.log('sessionStorage에 값이 없습니다.');
+        }
         fetchPerform();
         // 마운트될때 최상단 노출
         window.scrollTo(0, 0);
@@ -46,7 +56,13 @@ function PerformanceDetail(){
 
 
     const ticketDetail = () =>{
-        navigate( '/ticket', {state:{perform:perform, pfcode:pfCode}} )
+        const todayDate = new Date();
+        const formatDate = format(todayDate, 'yyyy-MM-dd', { locale: ko });
+        if(formatDate > perform.pfEnd){
+            alert('예매가능한 날짜가 없습니다.');
+        }else{        
+            navigate( '/ticket', {state:{perform:perform, pfcode:pfCode}} )
+        }
     };
 
     const viewContent = (status) =>{
@@ -93,7 +109,8 @@ function PerformanceDetail(){
                                 <span>{perform.agencyTel}</span>
                             </li>
                         </ul>
-                        <p><Button  variant="secondary" onClick={() => pfTimeManage(pfCode)}>회차관리</Button><Button  variant="secondary" >내용수정</Button></p>
+                        {isAdmin ? <p><Button  variant="secondary" onClick={() => pfTimeManage(pfCode)}>회차관리</Button><Button  variant="secondary" >내용수정</Button></p>: null }
+                        
                     </div>
                     <div className='performHead performHeaderImg' id='performHeaderImg'>
                         <img src={perform.pfPoster}></img>
