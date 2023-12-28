@@ -50,7 +50,11 @@ public class User {
 
 	private String Auth;
 	
-	
+	public User(String Auth) {
+		super();
+		
+		this.Auth = Auth;
+	}
 	public User(String id, String username, String password, String Auth) {
 		super();
 		this.id = id;

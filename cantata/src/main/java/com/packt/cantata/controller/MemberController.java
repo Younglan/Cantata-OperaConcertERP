@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.packt.cantata.domain.User;
 import com.packt.cantata.domain.UserRepository;
+
 import com.packt.cantata.service.JwtService;
 import com.packt.cantata.service.LoginService;
 
@@ -34,9 +35,10 @@ public class MemberController {
 	private final PasswordEncoder Encoder;
 	@RequestMapping(value="/updateRecent") 
 	@Transactional
-	public void updateUser(@RequestParam("id") String id) {
+	public ResponseEntity<User> updateUser(@RequestParam("id") String id) {
 		User userr = usrrepo.findIdById(id);
 		userr.setRecent_date(new Date());
+		return ResponseEntity.ok(new User(userr.getAuth()));
     }
 	
 	@RequestMapping(value="/Duple", method=RequestMethod.GET) 
