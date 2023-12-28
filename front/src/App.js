@@ -49,8 +49,8 @@ function App() {
           <Route path="/adminPage/:props" element={<Redirect component={<AdminPage/>} auth="ADMIN"/>}/>
           <Route path="/performList" element={<PerformanceList/>}/>
           <Route path="/performanceDetail/:pfCode" element={<PerformanceDetail />} />
-          <Route path="/performList/newPerform" element={<Redirect component={<NewPerform auth="ADMIN"/>} />}/>
-          <Route path="/timeList/:pfCode" element={<Redirect component={<TimeList auth="ADMIN"/>} />} />
+          <Route path="/performList/newPerform" element={<Redirect component={<NewPerform/>}  auth="ADMIN"/>}/>
+          <Route path="/timeList/:pfCode" element={<Redirect component={<TimeList/>}  auth="ADMIN"/>} />
           <Route path="/performCalendar" element={<PerformCalendar />} />
           <Route path='/센터소개' element={<CenterInfo />} />
           <Route path='/센터소식' element={<CenterNews/>}/>
