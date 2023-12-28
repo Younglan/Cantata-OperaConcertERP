@@ -71,7 +71,7 @@ function LoginPage() {
   
   };
   if (isAuthenticated) {
-    return navigate("/");
+    return <Navigate to="/"/>
   } else {
     return (
       <div className="loginform">
