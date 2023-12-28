@@ -4,3 +4,43 @@
     max-width: 720px;
     text-align: center;
 }
+.contentH3{
+    margin-top: 50px;
+}
+.redButton {
+    background-color: #BB2649;
+    border: 0px;
+    color:white;
+    height: 30px;
+    width: 100px;
+    font-size: 13px;
+    border-radius: 5px;
+    margin-top: 30px;
+}
+.redButton:hover{
+    background-color: #b81138;
+}
+
+.inGrayButton{
+    width:40px;
+    font-size: 10px;
+    border: 0px;
+    background-color: grey;
+    color: white;
+    height: 20px;
+    border-radius: 3px;
+}
+.grayButton {
+    background-color: gray;
+    color:white;
+    border: 0px;
+    height: 30px;
+    width: 100px;
+    font-size: 13px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-bottom: 300px;
+}
+.grayButton:hover {
+    background-color: dimgray;
+}
