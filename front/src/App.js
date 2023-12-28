@@ -59,7 +59,7 @@ function App() {
           <Route path='/QNA' element={<QNA />}/>
           <Route path='/NewPost/:BoardType' element={<Redirect component={<NewPost/>} auth="USER"/>}/>
           <Route path='/NewEventPost/:BoardType' element={<Redirect component={<NewEventPost/>} auth="ADMIN"/>}/>
-          <Route path='/EditPost/:BoardType/:postNo' element={<Redirect component={<EditPost/>} />} auth="USER"/>
+          <Route path='/EditPost/:BoardType/:postNo' element={<Redirect component={<EditPost/>} auth="USER"/> }/>
           <Route path="/EditEventPost/:BoardType/:postNo" element={<Redirect component={<EditEventPost/>} auth="ADMIN"/>}/>
           <Route path='/postDetail/:BoardType/:postNo' element={<PostDetail/>}/>
           <Route path='/ticket' element={<Ticket/>}/>
