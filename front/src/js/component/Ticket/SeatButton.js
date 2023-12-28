@@ -18,14 +18,7 @@ function SeatButton(props){
           disabled={props.seat.includes(seatnum)}
           onChange={() => {
               if(props.disabled!==true){
-                if(props.seatChange(selected,seatnum,styleSeat[0])>=5){
-                  if(selected){
-                    setSelected(!selected)
-                  }
-                }else{
-                  setSelected(!selected)
-                }
-                
+                    setSelected(props.seatChange(selected,seatnum,styleSeat[0]))
 
               }
           }}
