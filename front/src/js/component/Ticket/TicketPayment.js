@@ -1,10 +1,11 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { TicketContext } from "./Ticket";
 
 function TicketPayment(props){
     const [name, setName] = useState("카드");
     const [list, setList] = useState(["농협", "BC", "신한", "현대"]);
+    const [telecom, setTelecom] = useState("");
     const cardlist = ["농협", "BC", "신한", "현대"];
     const mobilelist = ["SKT", "KT", "LG"];
     const ewalletlist = ["삼성페이", "애플페이", "토스페이", "카카오페이"];
@@ -45,17 +46,17 @@ function TicketPayment(props){
     
     return(
         <React.Fragment>
-            <Box sx={{ margin:"20px", minWidth: 120, width:"300px" }}>
-                <FormControl fullWidth>
+            <Box sx={{ margin:"20px", minWidth: 120, width:"600px", display:"flex"}}>
+                <FormControl sx={{width:"30%"}}>
                     <InputLabel id="demo-simple-select-label">{name}</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={ticketInfo.category}
+                        value={telecom}
                         label={name}
                         onChange={(event,val)=>{
-                            ticketInfo.setCategory(event.target.value);
-                            ticketInfo.setButtonOn(true);
+                            setTelecom(event.target.value);
+                            
                         }}
                     > 
                         {list.map((it)=>{return (<MenuItem key={it} value={it||"선택"}>{it}</MenuItem>)})}
@@ -63,6 +64,14 @@ function TicketPayment(props){
                         
                     </Select>
                 </FormControl>
+                {name==="통신사"?<TextField 
+                    label="전화번호"
+                    name="tel"
+                    fullWidth
+                    onChange={(e)=>{
+                        ticketInfo.setCategory(telecom+"-"+e.target.value);
+                        ticketInfo.setButtonOn(true);
+                        }}/>:""}
             </Box>
         </React.Fragment>
     );

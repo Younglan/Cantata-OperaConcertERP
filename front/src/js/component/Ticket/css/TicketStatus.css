@@ -27,6 +27,10 @@
   height: 150px;
   
   }
+.ts_poster > img {
+  width: 100%;
+  height: 150px;
+}
 .ts_sub{
   margin : 0 0 0 5px;
   width: 50%;

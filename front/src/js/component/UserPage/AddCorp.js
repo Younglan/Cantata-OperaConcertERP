@@ -41,7 +41,7 @@ function AddCorp() {
       <div>
         
         <Typography component="h1" variant="h5" textAlign={"center"}>
-          회원가입
+          법인등록
         </Typography>
         <div className="textGroup">
           <TextField
@@ -107,7 +107,7 @@ function AddCorp() {
           onClick={fetchCorp}
         
         >
-          회원가입
+          법인 등록 
         </Button>
         </div>
         </div>

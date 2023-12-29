@@ -72,14 +72,14 @@ function PerformanceDetail(){
             setWhatDetail(<p dangerouslySetInnerHTML={{ __html: perform.pfExplan }} ></p>);
         }
         else if(status ==='refund'){
-            setWhatDetail(<p>내용이없습니다.</p>);
+            setWhatDetail(<img src='https://storage.googleapis.com/cantata_opera/refund/ticketRefund.png' alt='Refund Information' />);
         }        
     }
 
     return(
         <div className='contentsArea'>
             <div className='contentsHeader'>
-                <div className='headLevel'>
+                <div className='performHeadLevel'>
                     
                     <div className='performHead performHeaderCon' id='performHeaderCon'>
                         <h1>[{perform.pfCate}] {perform.pfTitle}</h1>

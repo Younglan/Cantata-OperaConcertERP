@@ -138,22 +138,45 @@ function Ticket(){
             setSeatno(seatno.filter(ele=>ele!==seatcat.seat));
             
         }
-        seatMax.current=seatno.length;
+        
         
     },[seatcat]);
    
     const seatChange=useCallback((selected, seatnum, styleSeat)=>{
-        setSeatcat({
-            select : selected,
-            seat : seatnum, 
-            class : styleSeat
-        });
-        return seatMax.current;
-        // if(seatMax.current>4){
-        //     return selected ? !selected : selected
-        // }else{
-        //     return !selected
-        // }
+        console.log(seatMax.current)
+        if(seatMax.current>=6){
+            if(selected){
+                seatMax.current-=1;
+                setSeatcat({
+                    select : selected,
+                    seat : seatnum, 
+                    class : styleSeat
+                });
+                return !selected
+            }else{
+                
+                return selected
+            }
+          
+        }else{
+            if(selected){
+                seatMax.current-=1;
+                setSeatcat({
+                    select : selected,
+                    seat : seatnum, 
+                    class : styleSeat
+                });
+                return !selected
+            }else{
+                seatMax.current+=1;
+                setSeatcat({
+                    select : selected,
+                    seat : seatnum, 
+                    class : styleSeat
+                });
+                return !selected
+            }
+        }
 
             
         

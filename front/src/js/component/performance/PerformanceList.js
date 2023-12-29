@@ -44,8 +44,8 @@ function PerformanceList(){
     };
 
     const columns = [ 
-        {field: 'pfCode', headerName: '공연 코드',width: 80, headerAlign: 'center'}, 
-        {field: 'pfCate', headerName: '종류', width: 50,headerAlign: 'center'}, 
+        {field: 'pfCode', headerName: '공연 코드',width: 80, headerAlign: 'center',align: 'center'}, 
+        {field: 'pfCate', headerName: '종류', width: 50,headerAlign: 'center',align: 'center'}, 
         {   field: 'pfTitle', 
             headerName: '공연 제목', 
             width: 350,
@@ -59,9 +59,9 @@ function PerformanceList(){
                 </div>
         ),
     }, 
-        {field: 'pfStart', headerName: '공연 시작일', width: 110}, 
-        {field: 'pfEnd', headerName: '공연 종료일', width: 110}, 
-        {field: 'agency', headerName: '배급사', width: 120}, 
+        {field: 'pfStart', headerName: '공연 시작일', headerAlign: 'center',align: 'center',width: 110}, 
+        {field: 'pfEnd', headerName: '공연 종료일', headerAlign: 'center',align: 'center',width: 110}, 
+        {field: 'agency', headerName: '배급사', headerAlign: 'center',align: 'center',width: 120}, 
         // {field: 'expose',
         //  headerName: '관리메뉴',
         //  sortable:false,
@@ -77,6 +77,8 @@ function PerformanceList(){
             {
                 field: 'expose',
                 headerName: '관리메뉴',
+                headerAlign: 'center',
+                align: 'center',
                 sortable: false,
                 filterable: false,
                 renderCell: row => (
@@ -139,7 +141,19 @@ function PerformanceList(){
         }
     }
 
-    
+    if(performances.length === 0){
+        return(
+            <React.Fragment>
+                <div className='contentsArea'>
+                    <div className='contents'>
+                        <h3>등록된 공연이 없습니다.</h3>
+
+                        {isAdmin ? <button className='redButton' onClick={() => navigate("/performList/newPerform")}>새 컨텐츠 등록</button>: null }
+                    </div>
+                </div>
+            </React.Fragment>
+        );
+    }
     return(
         <div className='contentsArea'>
             <div className='contents'>

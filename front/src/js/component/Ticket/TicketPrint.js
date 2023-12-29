@@ -12,7 +12,7 @@ function TicketPrint({ticket}){
         <div className="tf_main">
           <div className="tf_left">
             <div className="tf_left_top">
-              <div>
+              <div className="tf_poster">
                 <img src={ticketInfo.perform["pf_poster"]} alt="tp_poster"/> 
               </div>
             
