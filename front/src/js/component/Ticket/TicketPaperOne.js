@@ -5,7 +5,7 @@ import { Table, TableCell, TableContainer, TableRow } from "@mui/material";
 import QRCode from "qrcode.react";
 import "./css/TicketPaper.css"
 const TicketPaperOne = forwardRef((ticket, ref)=>{
-
+  console.log(ticket);
     return(
         <section ref={ref} className="paper_sec">
         
@@ -27,7 +27,7 @@ const TicketPaperOne = forwardRef((ticket, ref)=>{
                         </TableRow>
                         <TableRow>
                           <TableCell align="center" component="th">장소</TableCell>
-                          <TableCell align="center">{ticket.ticket.pt_no.pfCode.plant_no}</TableCell>
+                          <TableCell align="center">{ticket.ticket.pt_no.pfCode.plantNo.plantName}</TableCell>
                         </TableRow>
                         <TableRow>
                           <TableCell align="center" component="th">일시</TableCell>
@@ -54,7 +54,7 @@ const TicketPaperOne = forwardRef((ticket, ref)=>{
                               </TableRow>
                               <TableRow>
                                   <TableCell align="center" component="th">연락처</TableCell>
-                                  <TableCell align="center">{ticket.ticket.id.tel}</TableCell>
+                                  <TableCell align="center">010-4162-0646</TableCell>
                               </TableRow>
                               <TableRow>
                                   <TableCell align="center" component="th">티켓수령</TableCell>

@@ -8,11 +8,11 @@ import TicketPaperOne from "./TicketPaperOne";
 
 function MyTicket({info, cancle}){
     const ref = useRef();
-    
+    console.log(info);
     return(
         <div key={info.tic_no} className="Mytic_content">
             <div className="Mytic_poster" >
-                <img src={info.pt_no.pfCode.pfPoster} alt="Myticket_poster" style={{height:"100px", margin:"5px"}}></img>
+                <img src={info.pt_no.pfCode.pfPoster} alt="Myticket_poster" style={{height:"110px", margin:"5px"}}></img>
             </div>
             <div className="Mytic_info">
                 <div className="Mytic_info_title">
@@ -20,7 +20,7 @@ function MyTicket({info, cancle}){
                 </div>
                 <div className="Mytic_info_sub">
                     <div>
-                        장소: {info.pt_no.pfCode.plant_no}
+                        장소: {info.pt_no.pfCode.plantNo.plantName}
                     </div>
                     <div>
                         회차정보: {moment(info.pt_no.pt_date).format("yyyy년 MM월 DD일 HH시 mm분")}
