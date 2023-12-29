@@ -91,7 +91,6 @@ public class Performance {
 		this.agency = agency;
 		this.agencyTel = agencyTel;
 		this.pfPoster = pfPoster;
-//		this.pfEximg = pfEximg;
 		this.pfExplan = pfExplan;
 		this.pfNotice = pfNotice;
 		this.pfStart = pfStart;
@@ -103,7 +102,6 @@ public class Performance {
 		this.B = B;
 		this.C = C;
 		this.D = D;
-//		this.pfStatus = pfStatus;
 		this.plantNo = plantNo;	
 	}
 	public Performance(String pfCate, String pfTitle, String agency, String pfPoster, String pfExplan) {
@@ -123,6 +121,29 @@ public class Performance {
 		this.pfTitle = pfTitle;
 		this.agency = agency;
 		this.pfRuntime = pfRuntime;
+	}
+	public Performance(String pfCate, String pfTitle,  String agency, String agencyTel, String pfPoster, String pfExplan,
+			String pfNotice, Date pfStart, Date pfEnd, int pfRuntime, int r, int s, int a, int b, int c, int d,
+			Boolean expose, Plant plantNo) {
+		super();
+		this.pfCate = pfCate;
+		this.pfTitle = pfTitle;
+		this.agency = agency;
+		this.agencyTel = agencyTel;
+		this.pfPoster = pfPoster;
+		this.pfExplan = pfExplan;
+		this.pfNotice = pfNotice;
+		this.pfStart = pfStart;
+		this.pfEnd = pfEnd;
+		this.pfRuntime = pfRuntime;
+		R = r;
+		S = s;
+		A = a;
+		B = b;
+		C = c;
+		D = d;
+		this.expose = expose;
+		this.plantNo = plantNo;
 	}
 	
 

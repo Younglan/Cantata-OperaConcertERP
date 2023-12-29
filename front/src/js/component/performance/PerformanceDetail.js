@@ -79,7 +79,7 @@ function PerformanceDetail(){
     return(
         <div className='contentsArea'>
             <div className='contentsHeader'>
-                <div className='headLevel'>
+                <div className='performHeadLevel'>
                     
                     <div className='performHead performHeaderCon' id='performHeaderCon'>
                         <h1>[{perform.pfCate}] {perform.pfTitle}</h1>
