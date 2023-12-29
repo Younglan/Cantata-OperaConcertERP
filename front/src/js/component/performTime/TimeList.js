@@ -62,7 +62,7 @@ function TimeList(){
          headerAlign: 'center',
          align: 'center',
          renderCell: row =>
-            <button onClick={() => onDelClick(row.id)}>삭제</button>
+            <button className='inGrayButton'onClick={() => onDelClick(row.id)}>삭제</button>
         }
     ];
 
@@ -146,9 +146,9 @@ function TimeList(){
     if(times.length === 0 ){
         return(
             <React.Fragment>
-                <div> 저장된 데이터가 없습니다. </div>
+                <h3 className='contentH3'> 저장된 데이터가 없습니다. </h3>
                 <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime} sendPlantNo={plantNo}/>
-                <button onClick={handleRedirect}>뒤로가기</button> 
+                <button className='grayButton' onClick={handleRedirect}>뒤로가기</button> 
             </React.Fragment>
         ) ;
     }
@@ -157,7 +157,7 @@ function TimeList(){
         <React.Fragment>
             
             <div>
-                회차 리스트
+                <h3 className='contentH3'> 회차리스트 </h3>
                 
                 <DataGrid className='ptList'
                         rows={times} 
@@ -165,8 +165,8 @@ function TimeList(){
                         disableRowSelectionOnClick={true}
                         getRowId={row => row.ptNo}/> 
 
-                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime} sendPlantNo={plantNo}/>
-                <button onClick={handleRedirect}>뒤로가기</button> 
+                <AddTime className='redButton' addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime} sendPlantNo={plantNo}/>
+                <button  className='grayButton' onClick={handleRedirect}>뒤로가기</button> 
             </div>
         </React.Fragment>
     );
