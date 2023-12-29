@@ -85,6 +85,7 @@ public class PlantController {
 	newPlant.setPlantCharge(plant.getPlantCharge());
 	newPlant.setPlantSub(plant.getPlantSub());
 	newPlant.setPlantStatus(plant.getPlantStatus());
+	newPlant.setFloor(plant.getFloor());
 	
 
 	//첨부파일 처리
@@ -104,7 +105,7 @@ public class PlantController {
 		e.printStackTrace();
 	} 
 		
-	//새로운공연 등록
+	//새로운장소 등록
 	Plant pav = plantrepository.save(newPlant);
 	return ResponseEntity.ok(pav);
 	}
@@ -117,5 +118,10 @@ public class PlantController {
 	@GetMapping("/filteredPlant")
 	public Iterable<Plant> filteredPlant(){
 		return plantrepository.filteredPlant();
+	}
+	@GetMapping("/selectedPlant/{plantNo}")
+	public Plant getSelectedPlant(Plant plant) {
+		Plant returnPlant = plantrepository.findByPlantNo(plant.getPlantNo());
+		return returnPlant;
 	}
 }

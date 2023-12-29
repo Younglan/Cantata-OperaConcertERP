@@ -64,6 +64,9 @@ public class Performance {
 	@Column(columnDefinition = "boolean default true",nullable = false)
 	private Boolean pfStatus = true;
 	
+	@Column(columnDefinition = "boolean default false",nullable = false)
+	private Boolean expose = false;
+	
 	@ManyToOne
 	@JoinColumn(name = "plantNo")
 	private Plant plantNo;

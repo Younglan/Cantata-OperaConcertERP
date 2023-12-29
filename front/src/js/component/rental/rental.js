@@ -10,6 +10,8 @@ import Paper from '@mui/material/Paper';
 import Form from 'react-bootstrap/Form';
 import { Grid,styled} from '@mui/material';
 import {useNavigate} from "react-router-dom";
+import { format } from 'date-fns';
+import ko from "date-fns/locale/ko";
 import moment from 'moment/moment';
 
 
@@ -20,17 +22,22 @@ const Item2 = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
   color: theme.palette.text.secondary,
 }));
+const SERVER_URL='http://localhost:8090';
 export default function RentalApps() {
+  const [stDate, setStDate] = useState();
+  const [edDate, setEdDate] = useState();
+  const [dateCheck, setDateCheck] = useState();
   const [text, setText] = useState({
     rent_name:"",
     rent_status:"결제대기",
-    rent_start:`${moment(new Date()).format("yyyy-MM-DD")}`,
-    rent_end:`${moment(new Date()).format("yyyy-MM-DD")}`,
+    rent_start:'',
+    rent_end:'',
     rent_regidate:`${moment(new Date()).format("yyyy-MM-DD")}`,
+    plantNo:'',
     // payment:0,
   });
   const [plants, setPlants] = useState([]);
-    // const SERVER_URL='http://localhost:8090';
+    
 
     const navigate = useNavigate();
 
@@ -77,10 +84,102 @@ export default function RentalApps() {
   const fetchFindPlant = () => {
     fetch('http://localhost:8090/plants/filteredPlant')
     .then(response => response.json())
-    .then(data => setPlants(data))
+    .then(data => {setPlants(data);console.log(data);})
     .catch(err => console.error(err));
+    
 }
+const handlePlantChange = (selectdPlant) =>{console.log(selectdPlant);
+  setStDate('');
+  setEdDate('');
   
+  setText(prevState => ({ ...prevState, plantNo:{plantNo:selectdPlant} }));
+  
+}
+const handleStartChange = (selectedDate) => {
+  if(!text.plantNo){
+      alert('장소를 먼저 선택하세요');
+  }else{
+      setStDate(selectedDate);
+  }
+  
+}
+const handleEndChange = (selectedDate) => {
+  if(!stDate){
+      alert('시작일을 먼저 선택하세요');
+  }else{
+      setEdDate(selectedDate);
+  }
+  
+}
+useEffect(() => {
+  const fetchData = async () => {
+    if (stDate && edDate) {
+      await parformDateCheck();
+      await rentalDateCheck();
+    }
+  };
+
+  fetchData();
+}, [stDate, edDate]);
+
+
+
+//공연 일정 체크
+const parformDateCheck = async () => {
+  try {
+  console.log(stDate+edDate);
+  const sendStartDate = new Date(moment(stDate).format("YYYY-MM-DD"));//Db
+  const sendStartDate2 = format(stDate, 'yyyy-MM-dd', { locale: ko });//중복체크
+  const sendEndDate = new Date(moment(edDate).format("YYYY-MM-DD"));
+  const sendEndDate2 = format(edDate, 'yyyy-MM-dd', { locale: ko });
+  //백엔드요청
+  const response = await fetch(SERVER_URL + "/performances/checkPerformDate?plantNo=" + text.plantNo.plantNo + "&startDate=" + sendStartDate2 + "&endDate=" + sendEndDate2);
+  const data = await response.json();
+
+  console.log(data);
+
+  if (data === true) {
+    setDateCheck(null);
+    setText(prevState => ({ ...prevState, plantNo: text.plantNo, rent_start: sendStartDate, rent_end: sendEndDate }));
+  } else {
+    setDateCheck(() => {
+      alert('해당 날짜와 공연장에 개설할 수 없습니다.');
+      setStDate("");
+      setEdDate("");
+    });
+  }
+} catch (error) {
+  console.error(error);
+}
+}
+
+//대관 일정 체크
+const rentalDateCheck = async () => {
+  try {
+    const toStartDate = new Date(moment(stDate).format("YYYY-MM-DD")); // Db
+    const toStartDate2 = format(stDate, 'yyyy-MM-dd', { locale: ko }); // 중복체크
+    const toEndDate = new Date(moment(edDate).format("YYYY-MM-DD"));
+    const toEndDate2 = format(edDate, 'yyyy-MM-dd', { locale: ko });
+
+    const response = await fetch(SERVER_URL + "/rentals/checkRentalDate?plantNo=" + text.plantNo.plantNo + "&startDate=" + toStartDate2 + "&endDate=" + toEndDate2);
+    const data = await response.json();
+
+    console.log(data);
+
+    if (data === true) {
+      setDateCheck(null);
+      setText(prevState => ({ ...prevState, plantNo: text.plantNo, rent_start: toStartDate, rent_end: toEndDate }));
+    } else {
+      setDateCheck(() => {
+        alert('해당 날짜와 공연장에 대관 할 수 없습니다.');
+        setStDate("");
+        setEdDate("");
+      });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
   return (
     <React.Fragment>
     <div className='apparea'>
@@ -131,10 +230,8 @@ export default function RentalApps() {
                   id= "test1" defaultValue={"장소"} sx={{gridColumn:'1',height:'150px'}}
         /> 
         
-        <Form.Select aria-label="Default select example" className="fullwidth" name="place" >
+        <Form.Select aria-label="Default select example" className="fullwidth" name="plantNo" value={text.plantNo.plantNo} onChange={(event) => handlePlantChange(event.target.value)}>
                         <option value="">장소선택</option>
-                        {/* <option value="무대">무대</option>
-                        <option value="리허설실">리허설실</option> */}
                         {plants.map(plant => (
                                 <option key={plant.plantNo} value={plant.plantNo}>
                                     {plant.plantName}
@@ -165,7 +262,7 @@ export default function RentalApps() {
                     '& > :not(style)': { width: '50ch' },
                   }}/>
     </Box>
-    <Box
+    {/* <Box
       component="form"
       className='model'
       sx={{
@@ -198,7 +295,7 @@ export default function RentalApps() {
                     sx={{
                     '& > :not(style)': { width: '50ch' },
                   }}/>
-    </Box>
+    </Box> */}
     <Box sx={{ flexGrow: 2, marginTop:'50px'}}>
     <div className='applicant2'>
         <h2>대관기간</h2> 
@@ -216,15 +313,14 @@ export default function RentalApps() {
         <h2>대관시작일</h2>
         <DatePicker 
               label="대관시작일"
-              
-              selected={new Date(text.rent_start)}
-              onChange={(e) =>{setText({...text,
-                rent_start:`${moment(e).format("yyyy-MM-DD")}`,
-                })}}
-              value={new Date(text.rent_start)}
+              dateFormat='yyyy-MM-dd'
+              locale={ ko }
+              selected={stDate}
+              onChange={handleStartChange}
               name='rent_start'
               selectsStart
-              startDate={new Date(text.rent_start)}
+              maxDate={edDate}
+              minDate={new Date()}
               />
         <CiCalendarDate />
       </div>
@@ -232,17 +328,13 @@ export default function RentalApps() {
       <h2>대관종료일</h2>
         <DatePicker 
               label="대관종료일"
-              selected={new Date(text.rent_end)}
-              onChange={(e) =>{console.log(moment(e).format("yyyy-MM-DD"));
-                setText({...text,
-                rent_end:`${moment(e).format("yyyy-MM-DD")}`,
-                });
-              }}
+              locale={ ko }
               name='rent_end'
-              value={new Date(text.rent_end)}
+              dateFormat='yyyy-MM-dd'
+              selected={edDate}
+              onChange={handleEndChange}
               selectsEnd
-              endDate={new Date(text.rent_end)}
-              minDate={new Date(text.rent_start)}/>
+              minDate={stDate}/>
         <CiCalendarDate />
       </div>
       </section></Item2>
@@ -263,7 +355,7 @@ export default function RentalApps() {
         /> 
       <TextField id="input1" variant="outlined" name = "payment" sx={{
                     '& > :not(style)': { width: '50ch' },
-                  }}/>
+                  }} value={plants.find((e) => {return Number(e.plantNo) === Number(text.plantNo.plantNo);})?.plantCharge||0}/>
     </Box>
     </Box>
     <div className="rental">

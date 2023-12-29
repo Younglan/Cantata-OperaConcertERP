@@ -1,29 +1,37 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid,GridToolbar} from '@mui/x-data-grid';
 import { Snackbar } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 function PlantList(){
-
+    const navigate = useNavigate();
     const[Plant, setPlant] = useState([]);
     const [open, setOpen] = useState(false);
     const Plantcolumns = [ 
+        { 
+            field: 'plantMainimg', 
+            headerName: '이미지', 
+            width: 150, 
+            headerAlign: 'center', 
+            renderCell: (params) => (
+              <a href={`/plantDetail/${params.row.plantNo}`}>
+              <img src={params.value} alt="Plant Main Image" style={{ width: '100%', height: 'auto' }} />
+              </a>
+            ),
+          },
 
-        {field: 'plantName', headerName: '신청인명',headerAlign: 'center'}, 
+        {field: 'plantName', headerName: '장소명',headerAlign: 'center'}, 
 
-        {field: 'plantUse', headerName: '시작날짜', width: 150,headerAlign: 'center'
+        {field: 'plantUse', headerName: '용도', width: 150,headerAlign: 'center'
         }, 
 
-        {field: 'plantDetail', headerName: '종료날짜', width: 150,headerAlign: 'center'
+        {field: 'plantDetail', headerName: '시설설명', width: 150,headerAlign: 'center',renderCell: (params) => (
+            <div dangerouslySetInnerHTML={{ __html: params.value ? params.value.replace(/<p>/g, '').replace(/<\/p>/g, '') : '' }} />
+          ),
        }, 
 
-        {field: 'capacity', headerName: '신청날짜', width: 150,headerAlign: 'center'
+        {field: 'capacity', headerName: '수용인원', width: 150,headerAlign: 'center'
         }, 
-        {field: 'plantCharge', headerName: '신청날짜', width: 150,headerAlign: 'center'
-        },
-        {field: 'plantSub', headerName: '신청날짜', width: 150,headerAlign: 'center'
-        },
-        {field: 'floor', headerName: '신청날짜', width: 150,headerAlign: 'center'
-        },
-        {field: 'capacity', headerName: '신청날짜', width: 150,headerAlign: 'center'
+        {field: 'floor', headerName: '층수', width: 150,headerAlign: 'center'
         },
          ];
 
@@ -44,11 +52,16 @@ function PlantList(){
     return(
         <div className='contentsArea'>
             <div className='contents'>
+            <h1>시설 목록</h1>
                 <DataGrid className='rentList'
                     rows={Plant}
                     columns={Plantcolumns}
+                    disableColumnMenu
+                    components={{
+                        Toolbar: GridToolbar,
+                      }}
                     disableRowSelectionOnClick={true}
-                    getRowId={row => row.rentNo}/>
+                    getRowId={row => row.plantNo}/>
                  <Snackbar
                     open={open}
                     autoHideDuration={2000}

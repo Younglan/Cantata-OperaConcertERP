@@ -22,7 +22,7 @@ const UserList = () => {
           sortable: false,
           filterable: false,
           renderCell: row =>
-              <IconButton
+              <IconButton className="userListIconButton"
                   onClick={() => onDelClick(row.id)}>
                       <DeleteIcon color="error"/>
               </IconButton>

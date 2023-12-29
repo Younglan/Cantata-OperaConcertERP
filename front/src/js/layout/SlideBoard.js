@@ -46,7 +46,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     }
     const loginCheck = () => {
         if(token){
-            sessionStorage.removeItem("jwt");
+            sessionStorage.clear();
             alert("로그아웃 되었습니다.")
             navigate("/");
             handleToggle();

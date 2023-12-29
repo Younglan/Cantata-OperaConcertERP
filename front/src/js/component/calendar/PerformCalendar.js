@@ -26,7 +26,7 @@ function PerformCalendar (){
     .then(data => {
             //상태 체크 후 pfStatus가 ture인것만 표시
             const filteredTimes 
-              = data.filter((pfTimes) => pfTimes.ptStatus === true).reverse();
+              = data.filter((pfTimes) => pfTimes.ptStatus === true && pfTimes.pfCode.expose ===true).reverse();
             setTimes(filteredTimes);
     })
     .catch(err => console.error(err));

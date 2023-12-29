@@ -76,7 +76,7 @@ function newPlantSave(){
         .then(response =>{
             if(response.ok){
                 alert('저장완료.');
-                // navigate("/performList");
+                navigate('/plantlist')
                 
             }else{
                 alert('저장되지않았습니다.');

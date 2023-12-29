@@ -20,7 +20,7 @@ import "react-quill/dist/quill.snow.css";
 Quill.register("modules/imageResize", ImageResize);
 const SERVER_URL='http://localhost:8090';
 
-function NewPerform(props) {
+function NewPerform() {
     //네비게이터
     const navigate = useNavigate();
    // const [open, setOpen] = useState(false);
