@@ -11,8 +11,8 @@ function MyTicket({info, cancle}){
     
     return(
         <div key={info.tic_no} className="Mytic_content">
-            <div className="Mytic_poster">
-                {info.pt_no.pfCode.pfPoster}
+            <div className="Mytic_poster" >
+                <img src={info.pt_no.pfCode.pfPoster} alt="Myticket_poster" style={{height:"100px", margin:"5px"}}></img>
             </div>
             <div className="Mytic_info">
                 <div className="Mytic_info_title">
