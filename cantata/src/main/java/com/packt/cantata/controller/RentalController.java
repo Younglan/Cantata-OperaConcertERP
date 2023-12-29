@@ -19,12 +19,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.packt.cantata.domain.Performance;
 import com.packt.cantata.domain.Rental;
 import com.packt.cantata.domain.RentalRepository;
 
 @RestController
 //@RequiredArgsConstructor
+@CrossOrigin(origins="http://localhost:3000")
+@RequestMapping(value="/rentals")
 public class RentalController {
 	
 	@Autowired

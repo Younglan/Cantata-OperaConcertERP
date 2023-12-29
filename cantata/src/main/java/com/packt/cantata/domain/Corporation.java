@@ -42,6 +42,11 @@ public class Corporation {
 		this.cp_addre = cp_addre;
 		this.ceo = ceo;
 	}
+	public Corporation(String ceo, String cp_no) { 
+		super();
+		this.cp_no = cp_no;
+		this.ceo = ceo;
+	}
 	
 	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cp_no")
