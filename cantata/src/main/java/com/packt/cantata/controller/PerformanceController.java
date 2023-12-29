@@ -1,11 +1,13 @@
 package com.packt.cantata.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +25,8 @@ import com.packt.cantata.domain.Performance;
 import com.packt.cantata.domain.PerformanceRepository;
 import com.packt.cantata.domain.Plant;
 import com.packt.cantata.domain.PlantRepository;
+import com.packt.cantata.domain.Rental;
+import com.packt.cantata.domain.RentalRepository;
 //import com.packt.cantata.service.PerformanceService;
 import com.packt.cantata.dto.PerformanceFormDto;
 import com.packt.cantata.service.FileService;
@@ -46,12 +50,21 @@ public class PerformanceController {
 	private FileService fileService;
 	@Autowired
 	private Perform_timeRepository timeRepo;
+	@Autowired
+	private RentalRepository rentalrepository;
 	
 	@RequestMapping("/allPerform")
 	public List<Performance> getPerforms(){
 		//전체공연 검색 및 반환
 		return pfRepository.findAll();
 	}
+	
+	@GetMapping("/userPerforms")
+	public List<Performance> getUsetPerforms(){
+		//삭제여부, 노출여부에 따른 공연리스트 반환
+		return pfRepository.findByPfStatusAndExpose();
+	}
+	
 	@GetMapping("/lastPfCode")
 	public ResponseEntity<Long> getLastPostNum() {
 		Performance lastPerformNum = pfRepository.findTopByOrderByPfCodeDesc();
@@ -123,9 +136,13 @@ public class PerformanceController {
 	
 	
 	@GetMapping("/checkPerformDate")
-	public Boolean checkPerformDate(@RequestParam Long plantNo,  @RequestParam String startDate, @RequestParam String endDate) {
+	public Boolean checkPerformDate(@RequestParam Long plantNo,   @RequestParam@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+		    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate){
 		Iterable<Performance> findPerforms = pfRepository.checkPerform(plantNo, startDate, endDate);
+		Iterable<Rental> findRental = rentalrepository.checkRental(plantNo, startDate, endDate);
 		if(findPerforms == null || !findPerforms.iterator().hasNext()) {
+			return true;
+		}else if(findRental == null || !findRental.iterator().hasNext()) {
 			return true;
 		}else {
 			return false;
