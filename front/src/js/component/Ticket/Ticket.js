@@ -20,11 +20,13 @@ function Ticket(){
     const [page, setPage] = useState(1);
     const { state } = useLocation();
     const [ptno, setPtno] = useState("");
+   
     const [perform, setPerform] = useState(state?{
         pf_title:state.perform.pfTitle,
         pf_poster:state.perform.pfPoster,
-        pf_start:state.perform.pf_start,
-        pf_end:state.perform.pf_end,
+        pf_start:state.perform.pfStart,
+        pf_end:state.perform.pfEnd,
+        pf_runtime:state.perform.pfRuntime,
         r:state.perform.r,
         s:state.perform.s,
         a:state.perform.a,
@@ -32,6 +34,7 @@ function Ticket(){
         c:state.perform.c,
         d:state.perform.d
     }:{pf_title:"공연을 선택해주세요."});
+    
     const [seat, setSeat] = useState([]);
     const [seatno, setSeatno] = useState("");
     const [buttonon, setButtonOn] = useState(false);
