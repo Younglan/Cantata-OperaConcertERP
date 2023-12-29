@@ -30,6 +30,8 @@ public interface PerformanceRepository  extends JpaRepository<Performance, Long>
 			+ "	AND pf_status = 1 "
 			+ "	AND ((pf_start BETWEEN :startDate AND :endDate) "
 			+ "	OR (pf_end BETWEEN :startDate AND :endDate));", nativeQuery=true)
-	Iterable<Performance> checkPerform(@Param("plantNo") Long plantNo, @Param("startDate") String startDate,  @Param("endDate")String endDate);
+	Iterable<Performance> checkPerform(@Param("plantNo") Long plantNo, @Param("startDate") LocalDate startDate,  @Param("endDate")LocalDate endDate);
 	
+	@Query(value="SELECT * FROM performance WHERE pf_status=1 AND expose = 1;", nativeQuery=true)
+	List<Performance> findByPfStatusAndExpose();
 }
