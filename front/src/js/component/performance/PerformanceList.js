@@ -62,17 +62,6 @@ function PerformanceList(){
         {field: 'pfStart', headerName: '공연 시작일', headerAlign: 'center',align: 'center',width: 110}, 
         {field: 'pfEnd', headerName: '공연 종료일', headerAlign: 'center',align: 'center',width: 110}, 
         {field: 'agency', headerName: '배급사', headerAlign: 'center',align: 'center',width: 120}, 
-        // {field: 'expose',
-        //  headerName: '관리메뉴',
-        //  sortable:false,
-        //  filterable: false,
-        //  renderCell: row =>(
-        //     <div className='adminButton'>
-        //         <button onClick={() => onDelClick(row.id)}>삭제</button>&nbsp;
-        //         {row.value ? null: <button onClick={() => uploadClick(row.id)} className='redButton'>업로드</button> }
-        //     </div>
-        //     )
-        // }
         ...(isAdmin ? [
             {
                 field: 'expose',
