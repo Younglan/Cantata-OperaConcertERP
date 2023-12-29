@@ -4,19 +4,29 @@
 .ti_header{
     color: antiquewhite;
     background-color : black;
+    display: table-cell;
+    vertical-align: middle;
+
     min-width: 15%;
     width: 270px;
     height: 60px;
-    font-size: 18px;
+    
+    font-size: 20px;
   }
   .ti_header > div{
-    padding-top: 12px;
+    text-align: center;
+   
     font-weight: bold;
   }
 .ti_cont{
     margin-top : 20px;
 }
 .ti_info{
+    margin: 20px 0 20px 0;
+    padding: 8px;
+    text-align: left;
+    border-radius: 2%;
+    background-color: lightgrey;
     height: 250px;
 }
 
