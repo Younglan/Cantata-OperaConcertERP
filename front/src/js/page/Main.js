@@ -1,11 +1,12 @@
 // import QEditor from "../component/QEditor";
-import MainCompo1 from "../component/MainCompo1";
-import MainCompo2 from "../component/MainCompo2";
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
 import { isAfter } from 'date-fns'; //날짜 포맷팅을 위한 라이브러리
 import "../../css/Main.css";
 import { Carousel } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SERVER_URL = 'http://localhost:8090';
@@ -16,6 +17,7 @@ const Main = () => {
     const [eventPosts, setEventPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const pageSize = 5; //게시물이 10개 이상 넘어가면 다음 게시물로
+    const [performs,setPerforms] = useState([]);
 
     const goToCenterNews = () => {
         navigate("/센터소식");
@@ -81,10 +83,35 @@ const Main = () => {
 
         fetchPost();
     }, []);
-
+    
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
     const currentPosts = posts.slice(startIndex, endIndex);
+
+    useEffect(() => {
+        getPerformInfo();    
+    },[]);
+    //공연 정보 가져오기
+    const getPerformInfo = () =>{
+        fetch(`${SERVER_URL}/performances/userPerforms`)
+        .then(response => response.json())
+        .then(data => {
+            // const todayDate=new Date();
+            // const filteredPerforms = data.reverse();
+            // setPerforms(filteredPerforms);
+            const todayDate = new Date();
+            todayDate.setHours(0, 0, 0, 0); // 시간 부분을 00:00:00으로 설정
+            const filteredPerforms = data.filter(perform => new Date(perform.pfEnd) > todayDate).reverse();
+            setPerforms(filteredPerforms);
+            })
+
+    }  
+    const goPerformDetail = (pfCode) => {
+        navigate("/performanceDetail/"+pfCode);
+    };
+    const ticketDetail = (perform,pfCode) =>{
+        navigate( '/ticket', {state:{perform:perform, pfcode:pfCode}} )
+    };
 
     // 현재 보여지는 배너의 인덱스를 관리하는 state
     const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
@@ -105,19 +132,25 @@ const Main = () => {
         //     <MainCompo2 />
         // </div>
         <div id="Main">
-            <div className="perfome">
-                <div className="show">
-
-                </div>
-                <div className="show">
-
-                </div>
-                <div className="show">
-
-                </div>
-                <div className="show">
-
-                </div>
+            <div className="performCard">
+                <Row xs={1} md={5} className="g-4">
+                    {/* {Array.from({ length: 17 }).map((_, idx) => ( */}
+                    {performs.map((perform, idx) => (
+                        <Col key={idx}>
+                        <Card id="mainCard">
+                            {/* <Card.Img src="https://storage.googleapis.com/cantata_opera/performance/1/%EC%85%94%EC%B8%A0.jpg" alt="Card image" /> */}
+                            <Card.Img src={perform.pfPoster} alt="Poster image" />
+                            <Card.ImgOverlay>
+                                <Card.Title>{perform.pfTitle}</Card.Title>
+                                <Card.Text>{perform.pfStart} <br></br> ~ {perform.pfEnd}</Card.Text>
+                                <button onClick={() => goPerformDetail(perform.pfCode)}>상세보기</button>
+                                <button onClick={() => ticketDetail(perform, perform.pfCode)}>예매하기</button>
+                            </Card.ImgOverlay>
+                            
+                        </Card>
+                        </Col>
+                    ))}
+                </Row>
             </div>
             <div className="notice">
                 <div className="noticeHeader">

@@ -2,7 +2,7 @@
     padding-top: 30px;
 }
 
-.headLevel{
+.performHeadLevel{
     margin: 0 auto;
     height: 100%;
     width: 90%;
@@ -65,8 +65,8 @@
 }
 
 #performHeaderImg > p > .redButton:hover{
-    background-color: #b61b3f;
-    border-color: #b61b3f;
+    background-color: #b81138;
+    border-color: #b81138;
 }
 
 
@@ -123,4 +123,5 @@
 }
 .detailContent > p > p > img{
     max-width: 100%;
+    
 }

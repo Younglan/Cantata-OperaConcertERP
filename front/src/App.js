@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './js/layout/Header';
 import Footer from './js/layout/Footer';
 import Main from './js/page/Main';
-import PageTest from './js/page/pageTest';
+import PageTest from './js/page/PageTest';
 import AdminPage from './js/page/AdminPage';
 import PerformanceDetail from './js/component/performance/PerformanceDetail';
 import PerformanceList from './js/component/performance/PerformanceList';
@@ -62,12 +62,11 @@ function App() {
           <Route path='/EditPost/:BoardType/:postNo' element={<Redirect component={<EditPost/>} auth="USER"/> }/>
           <Route path="/EditEventPost/:BoardType/:postNo" element={<Redirect component={<EditEventPost/>} auth="ADMIN"/>}/>
           <Route path='/postDetail/:BoardType/:postNo' element={<PostDetail/>}/>
-          <Route path='/ticket' element={<Ticket/>}/>
+          <Route path='/ticket' element={<Redirect component={<Ticket/>} auth="USER"/>}/>
           <Route path='/RentApp' element={<RentalApps/>}/>
           <Route path='/RentList' element={<RentalList/>}/>
           <Route path='/Rentcom' element={<RentalComplete/>}/>
-          <Route path='/myticket' element={<TicketFind/>}/>
-          <Route path='/Newplant' element={<Newplant/>}/>
+          <Route path='/Newplant' element={<Redirect component={<Newplant/>} auth="ADMIN"/>}/>
           <Route path='/PlantList' element={<PlantList/>}/>
           <Route path='/PlantDetail' element={<PlantDetail/>}/>
           <Route path='/RentalListad' element={<RentalListad/>}/>

@@ -13,6 +13,8 @@ import {useNavigate} from "react-router-dom";
 import { format } from 'date-fns';
 import ko from "date-fns/locale/ko";
 import moment from 'moment/moment';
+import { parseJwt } from '../../../loginUtil';
+import { elementClosest } from '@fullcalendar/core/internal';
 
 
 const Item2 = styled(Paper)(({ theme }) => ({
@@ -34,15 +36,18 @@ export default function RentalApps() {
     rent_end:'',
     rent_regidate:`${moment(new Date()).format("yyyy-MM-DD")}`,
     plantNo:'',
-    // payment:0,
+    cp_no:'',
+    rent_pay:'카드',
   });
   const [plants, setPlants] = useState([]);
-    
+  const [cp, setCp] = useState([]);
+  const token = sessionStorage.getItem("jwt");
 
     const navigate = useNavigate();
 
   useEffect(() => {
       fetchFindPlant();
+      fetchFindcp();
       
   }, []);
 
@@ -81,6 +86,12 @@ export default function RentalApps() {
       })
       .catch(err => console.error(err))
   }
+  const fetchFindcp = () => {
+    fetch(`http://localhost:8090/corporations/getcop/?id=${parseJwt(token)}`, { headers: { 'Authorization': token } })
+      .then(response => response.json())
+      .then((data) => {console.log(data);setCp(data); setText({...text, cp_no:{cp_no:data.cp_no}});})
+      .catch(err => console.error(err));
+  }
   const fetchFindPlant = () => {
     fetch('http://localhost:8090/plants/filteredPlant')
     .then(response => response.json())
@@ -88,7 +99,7 @@ export default function RentalApps() {
     .catch(err => console.error(err));
     
 }
-const handlePlantChange = (selectdPlant) =>{console.log(selectdPlant);
+const handlePlantChange = (selectdPlant) =>{console.log(text);
   setStDate('');
   setEdDate('');
   
@@ -188,7 +199,7 @@ const rentalDateCheck = async () => {
         <h1>대관신청</h1>
     </div>
     <div className='applicant'>
-        <h2>신청자명</h2> 
+        <h2>신청자</h2> 
       </div>
     <Box
       component="form"
@@ -198,16 +209,16 @@ const rentalDateCheck = async () => {
       }}
       
     >
-      
+      {/* value={parseJwt(token)} */}
       
        <TextField InputProps={{ readOnly: true, style: { color: "black"}}} 
                   variant="filled" 
-                  className= "paragraph" defaultValue={"신청자명"}
+                  className= "paragraph" defaultValue={"신청자 명"}
         /> 
       <TextField variant="outlined" name = "Name"
                     sx={{
                     '& > :not(style)': { width: '50ch'}, 
-                  }}></TextField>
+                  }}value={cp.ceo}/>
     </Box>
     <div className='applicant'>
         <h2>장소</h2> 
