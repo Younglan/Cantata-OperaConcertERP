@@ -73,6 +73,7 @@
     justify-content: center;
 }
 .slide_Header .slide_title img{
+    width: 70%;
     cursor: pointer;
 }
 
@@ -105,14 +106,17 @@
 }
 
 .slide_Header .slide_right .slide_search{
-    width: 20%;
+    margin-left: 5%;
+    width: 10%;
 }
 
 .slide_Header .slide_right .slide_calender{
+    margin-left: 5%;
     width: 10%;
 }
 
 .slide_Header .slide_right svg{
+    width:100%;
     cursor: pointer;
 } 
 
