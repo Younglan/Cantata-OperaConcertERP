@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import '../../css/NewPost.css';
+import '../../../css/NewPost.css';
 //QuillEditor
 import ReactQuill, { Quill } from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
@@ -15,6 +15,7 @@ const SERVER_URL = 'http://localhost:8090';
 function EditPost(props) {
     const { postNo } = useParams();
     const [postTitle, setPostTitle] = useState('');
+    const [postSub, setPostSub] = useState('');
     // const [boardName, setBoardName] = useState('');
     //네비게이터
     const navigate = useNavigate();
@@ -24,20 +25,19 @@ function EditPost(props) {
      // 파일의 SRC와 번호를 매핑한 객체
      const [fileSrcToNumberMap, setFileSrcToNumberMap] = useState({});
     // const [open, setOpen] = useState(false);
-
+    
 
     const [post, setPost] = useState({
         postTitle : '',
-        postFile1 : '',
         postSub : '',
         postDeadline : '',
-        brdNo : ''
+        brdNo : '',
+        id: ''
     });
-    const [postSub, setPostSub] = React.useState('');
-    // const [selectedBrdNo, setSelectedBrdNo] = useState(null);
+    
   
     useEffect(() => {
-        // 게시판 이름 가져오기
+        // 게시글 이름 가져오기
         const fetchPost = async () => {
             try {
                 const response = await fetch(`${SERVER_URL}/brd_posts/${postNo}`);
@@ -234,6 +234,7 @@ function EditPost(props) {
         body: JSON.stringify({
             ...post,
             brdNo: { brdNo: post.brdNo },
+            id: {id: post.id}
         })
     })
         .then(response => {
