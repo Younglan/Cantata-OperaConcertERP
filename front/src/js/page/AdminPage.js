@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Board from "../component/Board";
 import PerformanceList from '../component/performance/PerformanceList';
+const SERVER_URL = 'http://localhost:8090';
 // import TicketCheck from '../component/Ticket/TicketCheck';
 const AdminPage = () => {
     const [isContentMenuVisible, setContentMenuVisible] = useState(null);
@@ -18,29 +19,60 @@ const AdminPage = () => {
         setSelectedBoard(boardType);
     };
 
-    useEffect(() =>{
+    useEffect(() => {
         // setSelectedBoard(1);
         console.log(props);
-        if(props === 'adminContents'){
+        if (props === 'adminContents') {
+            setContentMenuVisible(4);
             setSelectedBoard(1);
-        }else if(props === 'adminPerformances'){
-            setSelectedBoard(0);
+        } else if (props === 'adminPerformances') {
+            setContentMenuVisible(0);
+            setSelectedBoard(1);
         }
     }, [props]);
 
+    useEffect(() => {
+        fetchBrdDivisions();
+    }, []); // 두 번째 파라미터에 빈 배열을 전달하여 컴포넌트가 처음 마운트될 때만 호출되도록 함
+    useEffect(() => {
+    })
+// 게시판 목록 가져오기
+    const fetchBrdDivisions = async () => {
+        try {
+            const response = await fetch(`${SERVER_URL}/brd_divisions/allBrd_divisions`);
+            if (!response.ok) {
+                throw new Error('네트워크가 올바르지 않습니다.');
+            }
+            const data = await response.json();
+
+            if (data && Array.isArray(data)) {
+                setBrdDivisions(data);
+            } else {
+                setBrdDivisions([]);
+            }
+        } catch (err) {
+            console.error(err);
+        };
+    };
+
+    // isContentMenuVisible이 바뀔 때마다 selectedBoard에 1 할당
+    useEffect(() => {
+        setSelectedBoard(1);
+    }, [isContentMenuVisible]);
+    
     return (
         <div className="AdminPage">
             <ButtonGroup aria-label="Basic example">
-                <Button variant="secondary" onClick={() => toggleContentMenu(0)}>공연관리</Button>
-                <Button variant="secondary" onClick={() => toggleContentMenu(1)}>예약관리</Button>
-                <Button variant="secondary" onClick={() => toggleContentMenu(2)}>대관관리</Button>
-                <Button variant="secondary" onClick={() => toggleContentMenu(3)}>회원관리</Button>
-                <Button variant="secondary" onClick={() => toggleContentMenu(4)}>홈페이지컨텐츠관리</Button>
+                <Button variant="secondary" onClick={() => setContentMenuVisible(0)}>공연관리</Button>
+                <Button variant="secondary" onClick={() => setContentMenuVisible(1)}>예약관리</Button>
+                <Button variant="secondary" onClick={() => setContentMenuVisible(2)}>대관관리</Button>
+                <Button variant="secondary" onClick={() => setContentMenuVisible(3)}>회원관리</Button>
+                <Button variant="secondary" onClick={() => setContentMenuVisible(4)}>홈페이지컨텐츠관리</Button>
             </ButtonGroup>
             {/* 공연관리 버튼에 대한 ButtonGroup */}
             {isContentMenuVisible === 0 && (
                 <ButtonGroup aria-label="PerformanceMenu">
-                    <Button variant="secondary" onClick={() => setSelectedBoard(0)}>공연일정</Button>
+                    <Button variant="secondary" onClick={() => setSelectedBoard(1)}>공연일정</Button>
                     <Button variant="secondary">옵션2</Button>
                     <Button variant="secondary">옵션3</Button>
                 </ButtonGroup>
@@ -72,33 +104,24 @@ const AdminPage = () => {
             )}
 
             {isContentMenuVisible === 4 && (
-                <ButtonGroup aria-label="ContentMenu">
-                    <Button variant="secondary" onClick={() => setSelectedBoard(1)}>
-                        센터소개
-                    </Button>
-                    <Button variant="secondary" onClick={() => setSelectedBoard(2)}>
-                        시설소개
-                    </Button>
-                    <Button variant="secondary" onClick={() => setSelectedBoard(3)}>
-                        센터소식
-                    </Button>
-                    <Button variant="secondary" onClick={() => setSelectedBoard(4)}>
-                        이벤트
-                    </Button>
-                    <Button variant="secondary" onClick={() => setSelectedBoard(5)}>
-                        자주하는 질문
-                    </Button>
-                    <Button variant="secondary" onClick={() => setSelectedBoard(6)}>
-                        1:1문의
-                        
-                    </Button>
-                </ButtonGroup>
+                <div>
+                    <ButtonGroup aria-label="ContentMenu">
+                        {brdDivisions.map((brdDivision, index) => (
+                            <Button key={index} variant="secondary" onClick={() => setSelectedBoard(brdDivision.brdNo)}>
+                                {brdDivision.brdName}
+                            </Button>
+                        ))}
+                    </ButtonGroup>
+                </div>
             )}
 
             <div className="content">
-                {selectedBoard !== null && selectedBoard >= 1 && selectedBoard <= 6 && <Board BoardType={selectedBoard} />}
+                {selectedBoard !== null && isContentMenuVisible === 0 && <PerformanceList />}
+                {/* {selectedBoard !== null && isContentMenuVisible === 1 && <예약관리 페이지 />} */}
+                {/* {selectedBoard !== null && isContentMenuVisible === 2 && <대관페이지 />} */}
                 {/* {selectedBoard !== null && selectedBoard === 10?<TicketCheck/>:""} */}
-                {selectedBoard !== null && selectedBoard === 0 && <PerformanceList />}
+                {/* {selectedBoard !== null && isContentMenuVisible === 3 && <유저페이지/>} */}
+                {selectedBoard !== null && isContentMenuVisible === 4 && <Board BoardType={selectedBoard} />}
             </div>
 
         </div>
