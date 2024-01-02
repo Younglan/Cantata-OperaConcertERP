@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import '../../css/NewPost.css';
+import '../../../css/NewPost.css';
+import { parseJwt } from '../../../loginUtil';
 //QuillEditor
 import ReactQuill, { Quill } from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
@@ -21,16 +22,29 @@ function NewEventPost(props) {
      const [imageLoading, setImageLoading] = useState(false);
      // 파일의 SRC와 번호를 매핑한 객체
      const [fileSrcToNumberMap, setFileSrcToNumberMap] = useState({});
+     const [userId, setUserId] = useState('');
     // const [open, setOpen] = useState(false);
 
     let postNo;
+
+    useEffect(() => {
+        if (Object.keys(sessionStorage).length > 0) {
+            // sessionStorage에 저장된 값이 하나 이상 있을 때의 처리
+            const token = sessionStorage.getItem('jwt');
+            setUserId(parseJwt(token));
+        } else {
+            // sessionStorage에 저장된 값이 하나도 없을 때의 처리
+        }
+
+    });
 
     const [post, setPost] = useState({
         postTitle : '',
         // postFile1 : '',
         postSub : '',
         postDeadline : '',
-        brdNo : 4
+        brdNo : 4,
+        id : ''
     });
     const [postSub, setPostSub] = React.useState('');
     // const [selectedBrdNo, setSelectedBrdNo] = useState(null);
@@ -222,10 +236,10 @@ function NewEventPost(props) {
                 formData.append('post', JSON.stringify({
                     ...post,
                     postNum: data + 1, // 마지막 postNum + 1
-                    brdNo: 4 }));
-
-                // formData.append('postNum', data+1);
-                // formData.append('brdNo', 4);
+                    brdNo: 4,
+                    id: `${userId}`
+                }));
+                    
                 fetch(`${SERVER_URL}/brd_posts/newEventPost`, {
                     method: 'POST',
                     // headers: { 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarythWrULFMIbQmqSPH' },
