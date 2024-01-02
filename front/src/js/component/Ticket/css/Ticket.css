@@ -2,6 +2,8 @@
     width: 100%;
     height: 56.25%;
     min-width: 1270px;
+    padding: 50px;
+    margin-bottom: 100px;
 }
 .tick_cont{
     display: flex;

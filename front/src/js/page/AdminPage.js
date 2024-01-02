@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Board from "../component/Board";
 import PerformanceList from '../component/performance/PerformanceList';
+// import TicketCheck from '../component/Ticket/TicketCheck';
 const AdminPage = () => {
     const [isContentMenuVisible, setContentMenuVisible] = useState(null);
     const [selectedBoard, setSelectedBoard] = useState(null);
@@ -48,7 +49,7 @@ const AdminPage = () => {
             {/* 예약관리 버튼에 대한 ButtonGroup */}
             {isContentMenuVisible === 1 && (
                 <ButtonGroup aria-label="ReservationMenu">
-                    <Button variant="secondary">예매 검표</Button>
+                    <Button variant="secondary" onClick={()=> setSelectedBoard(10)}>예매 검표</Button>
                     <Button variant="secondary">옵션B</Button>
                     <Button variant="secondary">옵션C</Button>
                 </ButtonGroup>
@@ -96,6 +97,7 @@ const AdminPage = () => {
 
             <div className="content">
                 {selectedBoard !== null && selectedBoard >= 1 && selectedBoard <= 6 && <Board BoardType={selectedBoard} />}
+                {/* {selectedBoard !== null && selectedBoard === 10?<TicketCheck/>:""} */}
                 {selectedBoard !== null && selectedBoard === 0 && <PerformanceList />}
             </div>
 
