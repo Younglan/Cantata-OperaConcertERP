@@ -6,7 +6,21 @@ import { Avatar } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
+    const [brdDivisions, setBrdDivisions] = useState([]);
     const token = sessionStorage.getItem("jwt");
+    const[isAdmin, setIsAdmin] = useState(false);
+
+    useEffect(() => {
+        if (Object.keys(sessionStorage).length > 0) {
+            // sessionStorage에 저장된 값이 하나 이상 있을 때의 처리
+            const role = sessionStorage.getItem("role");
+            if (role === 'ADMIN') { setIsAdmin(true) }
+        } else {
+            // sessionStorage에 저장된 값이 하나도 없을 때의 처리
+        }
+
+    }, [isAdmin]);
+    
     const handleToggle = () => {
         toggleBoard();
     };
@@ -17,18 +31,11 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     const goToCenterInfo = () => {
         navigate("/센터소개");
     }
-    const goToCenterNews = () => {
-        navigate("/센터소식");
+    const goToBoard = (BoardType) => {
+        navigate(`/Board/${BoardType}`)
+        handleToggle();//메뉴닫기
     }
-    const goToEventPage = () =>{
-        navigate("/Event");
-    }
-    const goToFAQ = () =>{
-        navigate("/FAQ");
-    }
-    const goToQNA = () =>{
-        navigate("/QNA");
-    }
+   
     const goToPerformanceList = () =>{
         navigate("/performList");
     }
@@ -44,6 +51,30 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
         navigate(`/adminpage/${page}`);
         handleToggle(); // 메뉴 닫기
     }
+
+    useEffect(() => {
+        fetchBrdDivisions();
+    }, []); // 두 번째 파라미터에 빈 배열을 전달하여 컴포넌트가 처음 마운트될 때만 호출되도록 함
+
+    // 게시판 목록 가져오기
+    const fetchBrdDivisions = async () => {
+        try {
+            const response = await fetch(`${SERVER_URL}/brd_divisions/allBrd_divisions`);
+            if (!response.ok) {
+                throw new Error('네트워크가 올바르지 않습니다.');
+            }
+            const data = await response.json();
+
+            if (data && Array.isArray(data)) {
+                setBrdDivisions(data);
+            } else {
+                setBrdDivisions([]);
+            }
+        } catch (err) {
+            console.error(err);
+        };
+    };
+    
     const loginCheck = () => {
         if(token){
             sessionStorage.clear();
@@ -161,42 +192,16 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
             </ul>
           </div>
           <div className="center_board menu_list">
-            <ul>
-              <h2>소식/고객센터</h2>
-              <li
-                onClick={() => {
-                  goToCenterNews();
-                  handleToggle();
-                }}
-              >
-                <h1>센터소식</h1>
-              </li>
-              <li
-                onClick={() => {
-                  goToEventPage();
-                  handleToggle();
-                }}
-              >
-                <h1>이벤트</h1>
-              </li>
-              <li
-                onClick={() => {
-                  goToFAQ();
-                  handleToggle();
-                }}
-              >
-                <h1>자주하는 질문</h1>
-              </li>
-              <li
-                onClick={() => {
-                  goToQNA();
-                  handleToggle();
-                }}
-              >
-                <h1>1:1 문의</h1>
-              </li>
-            </ul>
-          </div>
+                        <ul>
+                            <h2>소식/고객센터</h2>
+                            {brdDivisions.map((brdDivision, index) => (
+                                (brdDivision.brdNo !== 1 && brdDivision.brdNo !== 2) && // BrdNo가 1, 2인 경우에는 건너뜀
+                                <li key={index} onClick={() => goToBoard(brdDivision.brdNo)}>
+                                    <h1>{brdDivision.brdName}</h1>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
           <div className="intro_board menu_list">
             <ul>
               <h2>기관소개</h2>
