@@ -1,8 +1,10 @@
 .footImg>img{
     width:100%;
 }
+
 .footImg{
     
     position : relative;
     transform : translateY(-100%+100px);
+   
   }

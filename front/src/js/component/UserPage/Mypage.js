@@ -33,6 +33,7 @@ function Mypage(){
         <React.Fragment>
             <Stack className="modalStack"sx={{
                 width: "80%",
+                height:"800px",
                 minWidth:"1000px",
                 backgroundColor: "white",
                 padding: "20px",
