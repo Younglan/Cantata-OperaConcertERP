@@ -8,11 +8,12 @@ import ReactToPrint from "react-to-print";
 import TicketPaper from "./TicketPaper";
 import CampaignIcon from '@mui/icons-material/Campaign';
 import CircleIcon from '@mui/icons-material/Circle';
+import { useNavigate } from "react-router-dom";
 
 function TicketInfo(prop){
     const ticketInfo = useContext(TicketContext);
     const ref = useRef();
-
+    const navigate = useNavigate();
     return(
         <div className="ti_main">
             <div className="ti_header"><div>결제 내역</div></div>
@@ -46,6 +47,7 @@ function TicketInfo(prop){
               <ReactToPrint
                 trigger={() => <ColorButton disabled={!ticketInfo.buttonon} variant="contained">발 권</ColorButton>}
                 content={() => ref.current}
+                onAfterPrint={()=> {navigate("/"); alert("예매가 완료되었습니다!");}}
               />
             </div>
             <div style={{display:"none"}}>
