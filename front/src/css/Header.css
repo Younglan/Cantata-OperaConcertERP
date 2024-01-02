@@ -18,6 +18,7 @@
 }
 
 .Header .header_title img{
+    width: 70%;
     cursor: pointer;
 }
 
@@ -50,13 +51,16 @@
 }
 
 .Header .header_right .search{
-    width: 20%;
+    width: 10%;
+    margin-left: 5%;
 }
 
 .Header .header_right .calender{
+    margin-left:5%;
     width: 10%;
 }
 
 .Header .header_right svg{
+    width: 100%;
     cursor: pointer;
 } 
