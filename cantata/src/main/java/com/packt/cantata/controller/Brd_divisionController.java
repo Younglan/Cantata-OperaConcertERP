@@ -32,7 +32,7 @@ public class Brd_divisionController {
 //		this.BrdRepository = brd_divisionRepository;
 //	}
 	
-	
+	@GetMapping("/allBrd_divisions")
 	public Iterable<Brd_division> getBrd_divisions(){
 		return BrdRepository.findAll();
 	}
