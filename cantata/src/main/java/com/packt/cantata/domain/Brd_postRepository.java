@@ -11,6 +11,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 public interface Brd_postRepository extends JpaRepository<Brd_post, Long> {
 
 	List<Brd_post> findByBrdNo(@Param("brdNo") Brd_division brdNo);
+	List<Brd_post> findIdById(@Param("id") User id);
 	
 	//토막상식 아래의 findByBrdNoAndPostNum을 findByPostNum으로 바꾸면 SpringData JPA네이밍규칙 위반으로 실행 불가
 	List<Brd_post> findByBrdNoAndPostNum(@Param("brdNo") Brd_division brdNo, @Param("postNum") Long postNum);
@@ -18,7 +19,8 @@ public interface Brd_postRepository extends JpaRepository<Brd_post, Long> {
 	@Query("SELECT MAX(p.postNum) FROM Brd_post p WHERE p.brdNo.brdNo = :brdNo")//brdNo별 가장 큰 postNum 호출
 	Long findLastPostNumForBrdNo(@Param("brdNo") Long brdNo);
 	
-	
+	@Query("SELECT MAX(p.postNo) FROM Brd_post p WHERE p.brdNo.brdNo = :brdNo")
+	Long findTopByOrderByPostNoForBrdNo(@Param("brdNo") Long brdNo);
 	//	@Query("SELECT MAX(p.postNum) FROM Brd_post p")
 //	Long findLastPostNum();
 	
