@@ -55,6 +55,13 @@
     margin-left: 5%;
 }
 
+.search-dialog{
+    width: 50%;
+    display:flex;
+    justify-content: center;
+    
+}
+
 .Header .header_right .calender{
     margin-left:5%;
     width: 10%;
