@@ -3,32 +3,39 @@ import { DataGrid,GridPagination   } from '@mui/x-data-grid';
 import './PerformanceList.css';
 import { Snackbar } from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+
 
 const SERVER_URL='http://localhost:8090';
 
 function PerformanceList(){
     const navigate = useNavigate();
     //데이터호출
-    const[performances, setPerformances] = useState([]);
+    const [performances, setPerformances] = useState([]);
     const [delOpen, setDelOpen] = useState(false);
     const [uploadOpen, setUploadOpen] = useState(false);
-    const[isAdmin, setIsAdmin] = useState(false);
-   
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(5);
+    const [totalPages, setTotalPages] = useState(1);
+  
 
     useEffect(() => {
         if (Object.keys(sessionStorage).length > 0) {
             // sessionStorage에 저장된 값이 하나 이상 있을 때의 처리
             const role = sessionStorage.getItem("role");
-            if(role === 'ADMIN'){setIsAdmin(true)}
+            if(role === 'ADMIN'){
+                setIsAdmin(true);
+            }
         } else {
             // sessionStorage에 저장된 값이 하나도 없을 때의 처리
         }        
         fetchPerforms();
           
-    }, [isAdmin]);
+    }, [isAdmin, currentPage, pageSize]);
 
     const fetchPerforms = () => {
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
         fetch(SERVER_URL + '/performances/allPerform')
             .then(response => response.json())
             .then(data => {
@@ -36,9 +43,10 @@ function PerformanceList(){
                 if (isAdmin) {// 상태 체크 후 pfStatus가 ture인 것만 표시
                     filteredPerforms = data.filter((perform) => perform.pfStatus === true).reverse();
                 } else {// 상태 체크 후 pfStatus와 expose가 ture인 것만 표시
-                    filteredPerforms = data.filter(perform => perform.pfStatus === true && perform.expose === true).reverse();
+                    filteredPerforms = data.filter((perform) => perform.pfStatus === true && perform.expose === true).reverse();
                 }
-                setPerformances(filteredPerforms);
+                setTotalPages(Math.ceil(filteredPerforms.length / pageSize));
+                setPerformances(filteredPerforms.slice(startIndex, endIndex));
             })
             .catch(err => console.error(err));
     };
@@ -110,6 +118,7 @@ function PerformanceList(){
     const uploadClick = (pfCode) => {
         const updateExpose = {expose : 'true'};
         if (window.confirm("정말로 해당 컨텐츠를 업로드하시겠습니까?")){
+
             fetch(SERVER_URL+'/performances/'+pfCode,
                  {method: 'PATCH',
                     headers: {
@@ -129,6 +138,23 @@ function PerformanceList(){
         .catch(err => console.error(err))
         }
     }
+
+    const renderPageButtons = () => {
+        const buttons = [];
+        for (let i = 1; i <= totalPages; i++) {
+          buttons.push(
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i)}
+              className={currentPage === i ? 'activeButton' : ''}
+            >
+              {i}
+            </button>
+          );
+        }
+        return buttons;
+      };   
+    
 
     if(performances.length === 0){
         return(
@@ -151,10 +177,29 @@ function PerformanceList(){
                 className='pfList'
                 rows={performances}
                 columns={columns}
-
                 disableRowSelectionOnClick={true}
                 getRowId={row => row.pfCode} 
-                /><br></br>
+                />
+                 {/* 페이징버튼 */}
+                 <div className="pagination">
+                    {/* 가장 첫 페이지로 */}
+                    {currentPage > 1 && (
+                        <>
+                            <button onClick={() => setCurrentPage(1)}>{"<<"}</button>
+                            <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}>{"<"}</button>
+                        </>
+                    )}
+
+                    {renderPageButtons()}
+
+                    {currentPage < totalPages && (
+                        <>
+                            <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}>{">"}</button>
+                            <button onClick={() => setCurrentPage(totalPages)}>{">>"}</button>
+                        </>
+                    )}
+                </div>
+                <br></br>
                 {isAdmin ? <button className='redButton' onClick={() => navigate("/performList/newPerform")}>새 컨텐츠 등록</button>: null }
                 <Snackbar
                 open={delOpen}
