@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import "../../css/AdminPage.css";
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Board from "../component/Board";
+import Board from "../component/Board/Board";
 import PerformanceList from '../component/performance/PerformanceList';
 const SERVER_URL = 'http://localhost:8090';
 // import TicketCheck from '../component/Ticket/TicketCheck';
