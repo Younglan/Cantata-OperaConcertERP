@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import "../../css/SlideBoard.css"
 import { Avatar } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { SERVER_URL } from "../component/constants";
+
 const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     const [brdDivisions, setBrdDivisions] = useState([]);
     const token = sessionStorage.getItem("jwt");
