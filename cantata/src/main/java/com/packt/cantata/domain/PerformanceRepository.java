@@ -34,4 +34,7 @@ public interface PerformanceRepository  extends JpaRepository<Performance, Long>
 	
 	@Query(value="SELECT * FROM performance WHERE pf_status=1 AND expose = 1;", nativeQuery=true)
 	List<Performance> findByPfStatusAndExpose();
+	
+	@Query(value = "SELECT * FROM performance WHERE pf_title LIKE CONCAT('%', :pfTitle, '%')", nativeQuery = true)
+	List<Performance> findByPfTitle(@Param("pfTitle") String pfTitle);
 }
