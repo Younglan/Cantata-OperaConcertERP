@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import cantataLogo from "../../img/cantataLogoBlack.png";
 import { useNavigate } from "react-router-dom";
 import "../../css/SlideBoard.css"
 import { Avatar } from '@mui/material';
 import LogoutIcon from '@mui/icons-material/Logout';
+const SERVER_URL = 'http://localhost:8090';
 
 const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     const [brdDivisions, setBrdDivisions] = useState([]);
