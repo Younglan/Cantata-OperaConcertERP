@@ -4,15 +4,21 @@ import cantataLogo from "../../img/cantataLogo.png";
 import SlideBoard from "./SlideBoard";
 import "../../css/Header.css";
 import { Avatar } from '@mui/material';
+import Form from 'react-bootstrap/Form';
 
 const Header = () => {
     const token = sessionStorage.getItem("jwt");
     const [isBoardOpen, setIsBoardOpen] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
+
     // const [userRole] = useState('admin'); //특정권한 확인용 임시코드 'admin'으로 바꾸면 관리자 메뉴가 나타난다.
     const toggleBoard = () => {
         setIsBoardOpen(!isBoardOpen);
     };
 
+    const toggleSearch = () =>{
+        setSearchOpen(!searchOpen);
+    };
   const navigate = useNavigate();
 
   const goToMain = () => {
@@ -49,11 +55,19 @@ const Header = () => {
                     </svg>}{/*로그인 svg파일 transform = 'rotate(90)'으로 180도 회전상태*/}
                 </div>
 
-                <div className="search">
-                    <svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6" transform='rotate(90)' >
+                {!searchOpen &&(
+                    <div className="search" onClick={toggleSearch}>
+                      <svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6" transform='rotate(90)' >
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                    </svg>{/*돋보기 svg파일 transform = 'rotate(90)'으로 90도 회전상태*/}
-                </div>
+                      </svg>{/*돋보기 svg파일 transform = 'rotate(90)'으로 90도 회전상태*/}
+                    </div>
+                )}
+                {searchOpen &&(
+                    <div className='search-dialog'>
+                        <Form.Control type="text"/>
+                        <button onClick={toggleSearch}>닫기</button>
+                    </div>
+                  )}
 
         <div className="calender">
           <svg

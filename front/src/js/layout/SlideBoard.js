@@ -4,12 +4,14 @@ import { useNavigate } from "react-router-dom";
 import "../../css/SlideBoard.css"
 import { SERVER_URL } from "../component/constants";
 import LogoutIcon from '@mui/icons-material/Logout';
+import Form from 'react-bootstrap/Form';
 
-const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
+const SlideBoard = ({ isOpen, toggleBoard }) => {
     const [brdDivisions, setBrdDivisions] = useState([]);
     const token = sessionStorage.getItem("jwt");
     const[isAdmin, setIsAdmin] = useState(false);
-
+    const [searchOpen, setSearchOpen] = useState(false);
+    
     useEffect(() => {
         if (Object.keys(sessionStorage).length > 0) {
             // sessionStorage에 저장된 값이 하나 이상 있을 때의 처리
@@ -24,6 +26,9 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     const handleToggle = () => {
         toggleBoard();
     };
+    const toggleSearch = () =>{
+    setSearchOpen(!searchOpen);
+    }
     const navigate = useNavigate();
     const goToMain = () => {
         navigate("/");
@@ -105,26 +110,19 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
                             </svg>}{/*로그인 svg파일 transform = 'rotate(90)'으로 180도 회전상태*/}
                         </div>
 
-            <div className="slide_search">
-              <svg
-                width="50px"
-                height="50px"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-                transform="rotate(90)"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                />
-              </svg>
-              {/*돋보기 svg파일 transform = 'rotate(90)'으로 90도 회전상태*/}
-            </div>
+            {!searchOpen && (
+              <div className="slide_search" onClick={toggleSearch}>
+                <svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6" transform='rotate(90)'>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>{/*돋보기 svg파일 transform = 'rotate(90)'으로 90도 회전상태*/}
+              </div>
+            )}
+            {searchOpen && (
+              <div className="search-dialog">
+                <Form.Control type="text" />
+                <button onClick={toggleSearch}>닫기</button>
+              </div>
+            )}
 
             <div className="slide_calender">
               <svg
@@ -218,7 +216,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
               </li>
             </ul>
           </div>
-          {userRole === "admin" && ( //특정권한 확인 admin일 경우에만 보임
+           {isAdmin && ( //특정권한 확인 admin일 경우에만 보임
             <div className="manager_board menu_list">
               <ul>
                 <h2>관리자메뉴</h2>
