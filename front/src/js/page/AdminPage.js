@@ -10,16 +10,10 @@ const SERVER_URL = 'http://localhost:8090';
 const AdminPage = () => {
     const [isContentMenuVisible, setContentMenuVisible] = useState(null);
     const [selectedBoard, setSelectedBoard] = useState(null);
-    const [brdDivisions, setBrdDivisions] = useState();
+   
     
+    const [brdDivisions, setBrdDivisions] = useState([]);
     const { props } = useParams(); 
-    const toggleContentMenu = (board) => {
-        setContentMenuVisible(board);
-    }
-
-    const setSelectedMenu = (boardType) => {
-        setSelectedBoard(boardType);
-    };
 
     useEffect(() => {
         // setSelectedBoard(1);
@@ -36,8 +30,7 @@ const AdminPage = () => {
     useEffect(() => {
         fetchBrdDivisions();
     }, []); // 두 번째 파라미터에 빈 배열을 전달하여 컴포넌트가 처음 마운트될 때만 호출되도록 함
-    useEffect(() => {
-    })
+
 // 게시판 목록 가져오기
     const fetchBrdDivisions = async () => {
         try {
