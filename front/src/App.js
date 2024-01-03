@@ -9,16 +9,14 @@ import PerformanceDetail from './js/component/performance/PerformanceDetail';
 import PerformanceList from './js/component/performance/PerformanceList';
 import NewPerform from './js/component/performance/NewPerform';
 import TimeList from './js/component/performTime/TimeList';
+import Board from './js/component/Board/Board';
 import CenterInfo from './js/page/CenterInfo';
-import CenterNews from './js/page/CenterNews';
-import EventPage from './js/page/EventPage';
-import NewPost from './js/component/NewPost';
-import NewEventPost from './js/component/NewEventPost';
-import EditPost from './js/component/EditPost';
-import EditEventPost from './js/component/EditEventPost';
-import PostDetail from './js/component/PostDetail';
-import FAQ from "./js/page/FAQ";
-import QNA from "./js/page/QNA";
+import NewPost from './js/component/Board/NewPost';
+import NewEventPost from './js/component/Board/NewEventPost';
+import NewCenterInfo from './js/component/Board/NewCenterInfo';
+import EditPost from './js/component/Board/EditPost';
+import EditEventPost from './js/component/Board/EditEventPost';
+import PostDetail from './js/component/Board/PostDetail';
 import Ticket from './js/component/Ticket/Ticket';
 import RentalApps from './js/component/rental/rental';
 import RentalList from './js/component/rental/RentalList';
@@ -44,17 +42,15 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/pageTest" element={<PageTest />} />
+          <Route path="/Board/:BrdType" element={<Board/>}/>
           <Route path="/adminPage/:props" element={<Redirect component={<AdminPage/>} auth="ADMIN"/>}/>
           <Route path="/performList" element={<PerformanceList/>}/>
           <Route path="/performanceDetail/:pfCode" element={<PerformanceDetail />} />
           <Route path="/performList/newPerform" element={<Redirect component={<NewPerform/>}  auth="ADMIN"/>}/>
           <Route path="/timeList/:pfCode" element={<Redirect component={<TimeList/>}  auth="ADMIN"/>} />
           <Route path="/performCalendar" element={<PerformCalendar />} />
-          <Route path='/센터소개' element={<CenterInfo />} />
-          <Route path='/센터소식' element={<CenterNews/>}/>
-          <Route path='/Event' element={<EventPage/>}/>
-          <Route path='/FAQ' element={<FAQ />} />
-          <Route path='/QNA' element={<QNA />}/>
+           <Route path='/센터소개' element={<CenterInfo />} />
+          <Route path='/NewCenterInfo/:BoardType' element={<Redirect component={<NewCenterInfo/>} auth="ADMIN"/>}/>
           <Route path='/NewPost/:BoardType' element={<Redirect component={<NewPost/>} auth="USER"/>}/>
           <Route path='/NewEventPost/:BoardType' element={<Redirect component={<NewEventPost/>} auth="ADMIN"/>}/>
           <Route path='/EditPost/:BoardType/:postNo' element={<Redirect component={<EditPost/>} auth="USER"/> }/>

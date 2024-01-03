@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -40,7 +41,7 @@ public class Brd_post {
 	@JoinColumn(name = "brdNo")
 	private Brd_division brdNo;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "id")
 	private User id; //회원ID
 
@@ -52,6 +53,7 @@ public class Brd_post {
 
 
 	@Column
+	@Lob
 	private String postSub; // 글내용
 
 	@Column(name = "postFile1") // 첨부파일 1

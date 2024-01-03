@@ -15,14 +15,17 @@ const Main = () => {
     const navigate = useNavigate();
     const [posts, setPosts] = useState([]);
     const [eventPosts, setEventPosts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage] = useState(1);
     const pageSize = 5; //게시물이 10개 이상 넘어가면 다음 게시물로
     const [performs,setPerforms] = useState([]);
 
     const goToCenterNews = () => {
-        navigate("/센터소식");
+        navigate("/Board/3");
     }
 
+    const goToEventPost = (postNo) =>{
+        navigate(`postDetail/4/${postNo}`);
+    }   
     useEffect(() => {
         // 게시글 목록 가져오기
         const fetchPost = async () => {
@@ -55,7 +58,7 @@ const Main = () => {
         fetchPost();
     }, []);
 
-    useEffect(() => {
+     useEffect(() => {
         //이벤트 베너 이미지 가져오기
         const fetchPost = async () => {
             try {
@@ -66,10 +69,10 @@ const Main = () => {
                 const data = await response.json();
 
                 if (data && Array.isArray(data)) {
-                    const filteredPosts = data.filter(post => (
-                        post.postDeadline && isAfter(new Date(post.postDeadline), new Date()),
-                        post.postStatus === true
-                    ));
+                    const filteredPosts = data.filter(post => ({
+                      postDeadline: post.postDeadline && isAfter(new Date(post.postDeadline), new Date()),
+                      postStatus: post.postStatus === true
+                }));
 
                     const sortedPosts = filteredPosts.reverse();
                     setEventPosts(sortedPosts);
@@ -114,7 +117,7 @@ const Main = () => {
     };
 
     // 현재 보여지는 배너의 인덱스를 관리하는 state
-    const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
+    const [, setCurrentBannerIndex] = useState(0);
     useEffect(() => {
         // 5초마다 배너 인덱스를 변경하여 다음 배너를 보여줌
         const intervalId = setInterval(() => {
@@ -152,34 +155,36 @@ const Main = () => {
                     ))}
                 </Row>
             </div>
-            <div className="notice">
-                <div className="noticeHeader">
-                    <h4>센터 소식</h4>
-                    <h6 onClick={() => { goToCenterNews(); }}>더보기{'>>'}</h6>
-                </div>
-                <div className="mini">
-                {currentPosts.map((post, index) => (
+            <div id="Board_post">
+                <div className="notice">
+                    <div className="noticeHeader">
+                        <h2>센터 소식</h2>
+                        <h5 onClick={() => { goToCenterNews(); }}>더보기{'>>'}</h5>
+                    </div>
+                    <div className="mini">
+                        {currentPosts.map((post, index) => (
                             <div key={index} className='postItem'>
                                 <div className='postNumber'>{post.postNum}</div>
                                 <Link to={`/postDetail/3/${post.postNo}`} brdno={3} className='postTitle'>{post.postTitle}</Link>
                                 <div className='postViews'>{post.postViews}</div>
                                 <div className='postDate'>{post.postDate}</div>
                                 {/* 작성자 이름 추가 예정 */}
-                             </div>
+                            </div>
                         ))}
+                    </div>
+                </div>
+                <div className="eventBanner">
+                    {eventPosts.length > 0 && (
+                        <Carousel className="h-100">
+                            {eventPosts.map((post, idx) => (
+                                <Carousel.Item key={idx} style={{maxheight: '30%'}}>
+                                    <img onClick={()=>goToEventPost(post.postNo)} src={post.postFile1} alt={`Event Banner ${idx}`} />
+                                </Carousel.Item>
+                            ))}
+                        </Carousel>
+                    )}
                 </div>
             </div>
-            <div className="eventBanner">
-            {eventPosts.length > 0 && (
-  <Carousel className="h-100">
-    {eventPosts.map((post, idx) => (
-      <Carousel.Item key={idx} className="h-100">
-        <img style={{ width: '100%', height: '100%', objectFit: 'cover' }} src={post.postFile1} alt={`Event Banner ${idx}`} />
-      </Carousel.Item>
-    ))}
-  </Carousel>
-)}
-      </div>
         </div>
     );
 };

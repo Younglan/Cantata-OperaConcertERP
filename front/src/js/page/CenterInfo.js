@@ -4,37 +4,47 @@ import "../../css/CenterInfo.css";
 const SERVER_URL = 'http://localhost:8090';
 
 const CenterInfo = () => {
+    const [postNo, setPostNo] = useState('');
+    const [post, setPost] = useState({});
+    const [centerInfo, setCenterInfo] = useState([]);
 
-    const [postData, setPostData] = useState({});
 
     useEffect(() => {
-        // 서버에서 데이터 가져오기
-        fetch(`${SERVER_URL}/brd_posts/getPostData`)
-            .then(response => response.json())
-            .then(data => setPostData(data))
-            .catch(error => console.error(error));
+        const fetchLastPostNo = async () => {
+            try {
+                const postResponse = await fetch(`${SERVER_URL}/brd_posts/lastPostNo/1`);
+                if (!postResponse.ok) {
+                    throw new Error('네트워크가 올바르지 않습니다.')
+                }
+                const postNoData = await postResponse.json();
+
+                setPostNo(postNoData);
+            } catch (error) {
+                console.error('Error fetching postNo', error);
+            }
+        };
+        fetchLastPostNo();
     }, []);
 
-    const separateImageAndText = (combinedData) => {
-        //Data가 없는 경우 빈 객체 반환
-        if(!combinedData){
-            return{
-                imageData: null,
-                textData: null
-            };
-        }
+    useEffect(() => {
+        const fetchPostDetail = async () => {
+            try {
+                const postResponse = await fetch(`${SERVER_URL}/brd_posts/${postNo}`);
+                if (!postResponse.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const postData = await postResponse.json();
+                setPost(postData);
+                setCenterInfo(<p dangerouslySetInnerHTML={{ __html: postData.postSub }} ></p>);
 
-        //BLOB 필드에서 데이터를 읽고 이미지와 텍스트 분리
-        const parts = combinedData.split('|||'); //|||기준으로 분리
-
-        //parts[0] = 이미지, parts[1] = 텍스트
-        return{
-            imageData: parts[0] || null, //이미지반환
-            textData: parts[1] || null//텍스트 반환
+            } catch (error) {
+                console.error('Error fetching post detail:', error);
+            }
         };
-    };
-    
-    const {imageData, textData} = separateImageAndText(postData.postSub);
+
+        fetchPostDetail();
+    }, [postNo]);
+
 
     return (
         <div className="Background">
@@ -44,11 +54,12 @@ const CenterInfo = () => {
                 </div>
                 <div className='postSub'>
                     <div className="image">
-                        {imageData && <img src={SERVER_URL + imageData} alt = "센터 이미지"/>}
+                        <img src={post.postFile1} />
                     </div>
                     <div className="text">
-                        {textData && <p>{textData}</p>}
+                        <h5>{centerInfo}</h5>
                     </div>
+
                 </div>
             </div>
         </div>

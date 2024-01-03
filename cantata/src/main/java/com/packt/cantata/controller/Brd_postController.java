@@ -25,6 +25,8 @@ import com.packt.cantata.domain.Brd_division;
 import com.packt.cantata.domain.Brd_divisionRepository;
 import com.packt.cantata.domain.Brd_post;
 import com.packt.cantata.domain.Brd_postRepository;
+import com.packt.cantata.domain.User;
+import com.packt.cantata.domain.UserRepository;
 import com.packt.cantata.dto.Brd_postDto;
 import com.packt.cantata.service.Brd_postService;
 import com.packt.cantata.service.FileService;
@@ -45,6 +47,9 @@ public class Brd_postController {
     
     @Autowired
     private FileService fileService;
+    
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private Brd_divisionRepository divisionRepository;
@@ -59,6 +64,47 @@ public class Brd_postController {
     	return postRepository.findByBrdNo(brdNo);
     }
     
+    @GetMapping("/searchUserId/{id}")
+    public List<Brd_post>getUserId(User id){
+    	return postRepository.findIdById(id);
+    }
+    
+    @GetMapping("/searchPostNo/{postNo}")
+    public Brd_post getPostNo(Brd_post brdPost){
+    	Brd_post returnPostNo = postRepository.findByPostNo(brdPost.getPostNo());
+    	return returnPostNo;
+    }
+
+    @GetMapping("/postByPostNo/{postNo}")
+    public ResponseEntity<Brd_postDto> getPostByPostNo(@PathVariable Long postNo) {
+        try {
+            // 특정 postNo에 해당하는 글을 찾아옴
+            Brd_post post = postRepository.findByPostNo(postNo);
+
+            if (post == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // 글의 외래키에 해당하는 정보를 찾아옴
+            Brd_division brdNo = post.getBrdNo();
+            User userId = post.getId();
+
+            // Brd_postDto에 필요한 정보를 설정
+            Brd_postDto brdPostDto = new Brd_postDto();
+            brdPostDto.setBrdNo(brdNo.getBrdNo());
+            brdPostDto.setId(userId.getId());
+            brdPostDto.setPostNo(post.getPostNo());
+            brdPostDto.setPostTitle(post.getPostTitle());
+            brdPostDto.setPostSub(post.getPostSub());
+            brdPostDto.setPostDeadline(post.getPostDeadline());
+            brdPostDto.setPostStatus(post.getPostStatus());
+            brdPostDto.setPostDate(post.getPostDate());
+            return ResponseEntity.ok(brdPostDto);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
     @GetMapping("/lastPostNo")
     public ResponseEntity<Long> getLastPostNo() {
         Brd_post lastPostNo = postRepository.findTopByOrderByPostNoDesc();
@@ -67,6 +113,16 @@ public class Brd_postController {
             return ResponseEntity.ok().body(lastPostNo.getPostNo());
         }
         return ResponseEntity.ok().body(0L);  // 0을 반환하거나 다른 기본값을 반환
+    }
+    
+    @GetMapping("/lastPostNo/{brdNo}")
+    public ResponseEntity<Long> getLastPostNoForBrdNo(@PathVariable Long brdNo) {
+    	try {
+        Long lastPostNoForBrdNo = postService.getTopByPostNoForBrdNo(brdNo);
+        return ResponseEntity.ok(lastPostNoForBrdNo);
+    	}catch(Exception e) {
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    	}
     }
     
     @GetMapping("/lastPostNum/{brdNo}")
@@ -133,25 +189,18 @@ public class Brd_postController {
     	Brd_postDto brdPostDto = null;
         try {
         	brdPostDto = objectMapper.readValue(postJson, Brd_postDto.class);
-            //게시물 저장 코드
-//            Brd_post savedPost = postService.savePost(brdPost); //Brd_postService에서 savePost값을 가져온다.
-//            return ResponseEntity.ok(savedPost);
         } catch (JsonProcessingException e1) {
         	// TODO Auto-generated catch block
     		e1.printStackTrace();
-//    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        
-     // postNum과 brdNo 처리
-//        brdPostDto.setPostNum(postNumJson);
-//        brdPostDto.setBrdNo(brdNoJson);
         
         Brd_post newBrdPost = new Brd_post();
         
         //외래키 입력
         Brd_division brdNo = divisionRepository.findByBrdNo(brdPostDto.getBrdNo());
         newBrdPost.setBrdNo(brdNo);
-        
+        User id = userRepository.findIdById(brdPostDto.getId());
+        newBrdPost.setId(id);
 //        newBrdPost.setPostNum(brdPostDto.getPostNum());
         newBrdPost.setPostTitle(brdPostDto.getPostTitle());
         newBrdPost.setPostSub(brdPostDto.getPostSub());

@@ -109,7 +109,10 @@ function PerformanceDetail(){
                                 <span>{perform.agencyTel}</span>
                             </li>
                         </ul>
-                        {isAdmin ? <p><Button  variant="secondary" onClick={() => pfTimeManage(pfCode)}>회차관리</Button><Button  variant="secondary" >내용수정</Button></p>: null }
+                        {isAdmin ? <p><Button  variant="secondary" onClick={() => pfTimeManage(pfCode)}>회차관리</Button>
+                                    {/* <Button  variant="secondary" >내용수정</Button> */}
+                                    </p>
+                                    : null }
                         
                     </div>
                     <div className='performHead performHeaderImg' id='performHeaderImg'>

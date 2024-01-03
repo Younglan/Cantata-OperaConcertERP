@@ -8,7 +8,7 @@ import { Avatar } from '@mui/material';
 const Header = () => {
     const token = sessionStorage.getItem("jwt");
     const [isBoardOpen, setIsBoardOpen] = useState(false);
-    const [userRole] = useState('member'); //특정권한 확인용 임시코드 'admin'으로 바꾸면 관리자 메뉴가 나타난다.
+    // const [userRole] = useState('admin'); //특정권한 확인용 임시코드 'admin'으로 바꾸면 관리자 메뉴가 나타난다.
     const toggleBoard = () => {
         setIsBoardOpen(!isBoardOpen);
     };
@@ -80,7 +80,6 @@ const Header = () => {
         <SlideBoard
           isOpen={isBoardOpen}
           toggleBoard={toggleBoard}
-          userRole={userRole}
         />
       )}
     </div>

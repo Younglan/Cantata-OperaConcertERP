@@ -79,31 +79,42 @@
     }
 }
 
+#Board_post{
+    width: 100%;
+    padding-top: 3%;
+    max-height: 100%;
+    justify-content: space-between; /* 양 끝에 정렬 */
+    display:flex;
+    background-color: #071a52;
+    
+}
+
+.perfome .show{
+    width:20%;
+    height: 100%;
+    margin:0 auto;
+    border: 1px solid red;
+}
+
 .notice{
     position: relative;
-    width: 500px;
+    width: 35%;
     /* height: 300px; */
     /* border: 1px solid rgb(255,255,255); */
     padding-left: 0;
-    margin: 5%;
     color: white;
-    
+    margin-left:5%;
 }
 
 .noticeHeader{
     width: 100%;
-    white-space: nowrap;
-    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between; /* 양 끝에 정렬 */
+    align-items:center;
 }
 
-.noticeHeader h4{
-    display: inline;
-    /* border: 1px solid purple */
-}
-.noticeHeader h6{
-    display: inline;
-    /* border: 1px solid gold; */
-    margin: 65%;
+.noticeHeader h5{
+    margin-left: auto;
     cursor: pointer;
 }
 .notice .mini{
@@ -143,17 +154,16 @@
 
 .eventBanner{
     position:relative;
-    border:1px solid red;
-    width: 500px;
-    height: 400px;
+    width: 35%;
+    height: 10%;
     overflow: hidden;
-    margin-left: 70%;
+    margin-left: auto;
+    margin-right:5%;
 }
 
-/* .eventBanner img{
+.eventBanner img{
     width: 100%;
-    height: 100%;
+    height: 300px;
     object-fit: cover;
-} */
-
-
+    cursor: pointer;
+}

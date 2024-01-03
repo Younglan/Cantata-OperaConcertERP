@@ -19,12 +19,15 @@ public class Brd_postService {
 	@Autowired
 	private Brd_postRepository postRepository;
 
+	public Long getTopByPostNoForBrdNo(Long brdNo) {
+		Long lastPostNo = postRepository.findTopByOrderByPostNoForBrdNo(brdNo);
+		return lastPostNo != null ? lastPostNo : 0L; //null값이 아닐때 brdNo값 기준 가장 큰 postNum 리턴 단 만약 null이라면 Long 0값을 리턴
+	}
 	
 	public Long getLastPostNumForBrdNo(Long brdNo) {
 	    Long lastPostNum = postRepository.findLastPostNumForBrdNo(brdNo);
 	    return lastPostNum != null ? lastPostNum : 0L; //null값이 아닐때 brdNo값 기준 가장 큰 postNum 리턴 단 만약 null이라면 Long 0값을 리턴
-	} //brdNo별로 postNum값을 따로 관리하려 했으나 게시글이 primary key 이외에는 열리지 않아 폐기, 그래도 만약 나중에 쓰일 수도 있으니 주석처리
-
+	} 
 //	public Long getLastPostNum() {
 //		Long lastPostNum = postRepository.findLastPostNum();
 //		return lastPostNum != null ? lastPostNum : 0L;
