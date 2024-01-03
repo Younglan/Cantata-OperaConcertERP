@@ -110,6 +110,13 @@
     width: 10%;
 }
 
+.search-dialog{
+    width: 50%;
+    display:flex;
+    justify-content: center;
+    
+}
+
 .slide_Header .slide_right .slide_calender{
     margin-left: 5%;
     width: 10%;
