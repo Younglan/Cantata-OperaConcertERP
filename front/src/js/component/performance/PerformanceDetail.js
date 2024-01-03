@@ -26,7 +26,7 @@ function PerformanceDetail(){
             if(role == 'ADMIN'){setIsAdmin(true)}
         } else {
             // sessionStorage에 저장된 값이 하나도 없을 때의 처리
-            console.log('sessionStorage에 값이 없습니다.');
+            
         }
         fetchPerform();
         // 마운트될때 최상단 노출

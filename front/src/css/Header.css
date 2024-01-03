@@ -59,7 +59,21 @@
     width: 50%;
     display:flex;
     justify-content: center;
-    
+    align-items: center;
+}
+.search-dialog > button{
+    height: 25px;
+    width: 40px;
+    font-size: 10px;
+    border: 0px;
+    background-color: dimgray;
+    color: white;
+    font-weight: bold;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+.search-dialog > .form-control{
+    font-size: 12px;
 }
 
 .Header .header_right .calender{
