@@ -66,7 +66,7 @@ const TicketPaperOne = forwardRef((ticket, ref)=>{
                   </div>
               </div>
               <div className="paper_qr">
-                  <QRCode value={String(ticket.ticket.tic_no)}/>
+                  <QRCode value={"http://localhost:3000/ticketcheck/"+ticket.ticket.tic_no}/>
               </div>
             </div>
         </section>

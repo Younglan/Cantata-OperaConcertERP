@@ -1,27 +1,26 @@
-import { useEffect, useRef, useState } from "react";
-import { Alert, Vibration } from "react-native";
-import { Camera, CameraType } from "react-native-camera-kit";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
 
 
 function TicketCheck(){
-    
-        const [scaned, setScaned] = useState(true);
-        const ref = useRef(null);
-      
+    const { check: checkticket } = useParams();
+        const navigate = useNavigate();
         useEffect(() => {
           
-          setScaned(true);
+            updateTicketStatus();
         }, []);
         const updateTicketStatus = (ticket) =>{
             const token = sessionStorage.getItem("jwt");
-            fetch(`http://localhost:8090/ticket/ticketcheck/?ticket=${ticket}`, 
+            fetch(`http://localhost:8090/ticket/ticketcheck/?ticket=${checkticket}`, 
                 {
                     method: 'PUT',
                     headers: { 'Content-Type':'application/json','Authorization': token}
                 })
             .then(response => {
                 if(response.ok){
-                    
+                    alert(`${checkticket}번 티켓의 검표가 완료되었습니다!`)
+                    navigate("/");
                 }
                 else{
                     alert('Something went wrong!');
@@ -29,30 +28,10 @@ function TicketCheck(){
             })
             .catch(err => console.error(err))
         };
-        const onBarCodeRead = (event) => {
-            if (!scaned) return;
-            setScaned(false);
-            Vibration.vibrate();
-            updateTicketStatus(event.nativeEvent.codeStringValue);
-             Alert.alert("QR Code", event.nativeEvent.codeStringValue, [
-            { text: `예매번호 : ${event.nativeEvent.codeStringValue} 검표완료`, onPress: () => setScaned(true) },
-          ]);
-        };
+       
     return(
-        <div>
-            <Camera
-                
-                ref={ref}
-                cameraType={CameraType.Back} 
-                zoomMode
-                focusMode
-                scanBarcode
-                showFrame={false}
-                laserColor="rgba(0, 0, 0, 0)"
-                frameColor="rgba(0, 0, 0, 0)"
-                surfaceColor="rgba(0, 0, 0, 0)"
-                onReadCode={onBarCodeRead}
-            />
+        <div >
+            {checkticket}번 티켓의 검표가 완료되었습니다!
         </div>  
     );
 }

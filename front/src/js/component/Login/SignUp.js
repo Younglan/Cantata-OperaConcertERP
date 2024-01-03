@@ -440,7 +440,7 @@ function SignUp() {
           type="password"
           variant="contained"
           onClick={handleSmsSend}
-          disabled={!isSmsBtnActive || errors.tel || isSmsVerified} // SMS가 검증되거나 전화번호에 에러가 있을 때 비활성화
+          disabled={errors.tel || isSmsVerified} // SMS가 검증되거나 전화번호에 에러가 있을 때 비활성화
           sx={{ mt: 1, mb: 1 }}
         >
           인증번호 전송
@@ -514,6 +514,7 @@ function SignUp() {
       </div>
       <Dialog open={addropen} onClose={handleAddrClose}>
         <DaumPostcode
+          style={{width:"500px", height:"700px"}}
           onComplete={(e) => {
             addrCombine({
               target: { name: "addr", value: `${e.address}` },

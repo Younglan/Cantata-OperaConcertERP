@@ -56,7 +56,7 @@ function TicketPayment(props){
                         label={name}
                         onChange={(event,val)=>{
                             setTelecom(event.target.value);
-                            
+                            ticketInfo.setButtonOn(true);
                         }}
                     > 
                         {list.map((it)=>{return (<MenuItem key={it} value={it||"선택"}>{it}</MenuItem>)})}

@@ -33,6 +33,7 @@ import UserList from './js/component/UserPage/UserList'
 import PlantList from './js/component/plant/PlantList';
 import PlantDetail from './js/component/plant/plantDetail';
 import RentalListad from './js/component/rental/RentalListad';
+import TicketCheck from './js/component/Ticket/TicketCheck';
 
 function App() {
   return (
@@ -70,6 +71,7 @@ function App() {
           <Route path="/mypage" element={<Redirect component={<Mypage />} auth="USER"/>} />
           <Route path="/addcorp" element={<Redirect component={<AddCorp />} auth="USER"/>}/>
           <Route path="/admin" element={<Redirect component={<AdminPage />} auth="ADMIN"/>} />
+          <Route path="/ticketcheck/:check" element={<Redirect component={<TicketCheck />} auth="ADMIN"/>} />
         </Routes>
       </Router>
       <Footer />

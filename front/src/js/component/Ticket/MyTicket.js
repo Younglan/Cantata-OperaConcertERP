@@ -28,6 +28,9 @@ function MyTicket({info, cancle}){
                     <div>
                         좌석정보: {info.seat_no}
                     </div>
+                    <div>
+                        상태: {info.tic_status}
+                    </div>
                 </div>
             </div>
             <div className="Mytic_button">
