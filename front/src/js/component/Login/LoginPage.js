@@ -78,7 +78,7 @@ function LoginPage() {
         <Box
           sx={{
             marginTop: 8,
-            height:"600px",
+            height:"1080px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
