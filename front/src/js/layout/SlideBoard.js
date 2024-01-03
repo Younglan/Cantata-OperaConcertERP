@@ -59,7 +59,7 @@ const SlideBoard = ({ isOpen, toggleBoard, userRole }) => {
     // 게시판 목록 가져오기
     const fetchBrdDivisions = async () => {
         try {
-            const response = await fetch(`${SERVER_URL}/brd_divisions/allBrd_divisions`);
+            const response = await fetch(`${SERVER_URL}brd_divisions/allBrd_divisions`);
             if (!response.ok) {
                 throw new Error('네트워크가 올바르지 않습니다.');
             }
