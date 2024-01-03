@@ -57,7 +57,7 @@ public class Ticket {
 		}
 	@PrePersist
     public void prePersist() {
-        this.tic_status = this.tic_status == null ? "1" : this.tic_status;
+        this.tic_status = this.tic_status == null ? "예매완료" : this.tic_status;
     }
 	
 }
