@@ -23,7 +23,6 @@ import Ticket from './js/component/Ticket/Ticket';
 import RentalApps from './js/component/rental/rental';
 import RentalList from './js/component/rental/RentalList';
 import RentalComplete from './js/component/rental/RentalComplete';
-import TicketFind from './js/component/Ticket/TicketFind';
 import Newplant from './js/component/plant/NewPlant';
 import PerformCalendar from './js/component/calendar/PerformCalendar';
 import ErrorPage from './js/page/ErrorPage';
@@ -36,9 +35,8 @@ import UserList from './js/component/UserPage/UserList'
 import PlantList from './js/component/plant/PlantList';
 import PlantDetail from './js/component/plant/plantDetail';
 import RentalListad from './js/component/rental/RentalListad';
+
 function App() {
-  
- 
   return (
     <div className="App">
       <Router>
