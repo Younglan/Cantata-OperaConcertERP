@@ -7,6 +7,7 @@ import Board from "../component/Board/Board";
 import PerformanceList from '../component/performance/PerformanceList';
 import RentalList from '../component/rental/RentalList';
 import UserList from '../component/UserPage/UserList';
+import TicketAdmin from '../component/Ticket/TicketAdmin';
 const SERVER_URL = 'http://localhost:8090';
 // import TicketCheck from '../component/Ticket/TicketCheck';
 const AdminPage = () => {
@@ -32,6 +33,9 @@ const AdminPage = () => {
             setSelectedBoard(1);
         }else if (props === 'adminUsers') {
             setContentMenuVisible(3);
+            setSelectedBoard(1);
+        }else if (props === 'adminTicket'){
+            setContentMenuVisible(1);
             setSelectedBoard(1);
         }
         
@@ -86,7 +90,7 @@ const AdminPage = () => {
             {/* 예약관리 버튼에 대한 ButtonGroup */}
             {isContentMenuVisible === 1 && (
                 <ButtonGroup aria-label="ReservationMenu">
-                    <Button variant="secondary" onClick={()=> setSelectedBoard(10)}>예매 검표</Button>
+                    <Button variant="secondary" onClick={()=> setSelectedBoard(1)}>티켓 관리</Button>
                     <Button variant="secondary">옵션B</Button>
                     <Button variant="secondary">옵션C</Button>
                 </ButtonGroup>
@@ -124,9 +128,10 @@ const AdminPage = () => {
                 {selectedBoard !== null && isContentMenuVisible === 0 && <PerformanceList />}
                 {/* {selectedBoard !== null && isContentMenuVisible === 1 && <예약관리 페이지 />} */}
                 {selectedBoard !== null && isContentMenuVisible === 2 && <RentalList />}
-                {/* {selectedBoard !== null && selectedBoard === 10?<TicketCheck/>:""} */}
+                {selectedBoard !== null && isContentMenuVisible === 1&&<TicketAdmin/>}
                 {selectedBoard !== null && isContentMenuVisible === 3 && <UserList/>}
                 {selectedBoard !== null && isContentMenuVisible === 4 && <Board BoardType={selectedBoard} />}
+
             </div>
 
         </div>

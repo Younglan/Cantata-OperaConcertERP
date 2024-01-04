@@ -206,7 +206,7 @@ const SlideBoard = ({ isOpen, toggleBoard }) => {
                 <li onClick={() => goToAdminPage("adminPerformances")}>
                   <h1>공연관리</h1>
                 </li>
-                <li>
+                <li onClick={()=>goToAdminPage("adminTicket")}>
                   <h1>예매관리</h1>
                 </li>
                 <li onClick={() => goToAdminPage("adminRentals")}>
