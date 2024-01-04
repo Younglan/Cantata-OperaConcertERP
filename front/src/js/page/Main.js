@@ -99,9 +99,6 @@ const Main = () => {
         fetch(`${SERVER_URL}/performances/userPerforms`)
         .then(response => response.json())
         .then(data => {
-            // const todayDate=new Date();
-            // const filteredPerforms = data.reverse();
-            // setPerforms(filteredPerforms);
             const todayDate = new Date();
             todayDate.setHours(0, 0, 0, 0); // 시간 부분을 00:00:00으로 설정
             const filteredPerforms = data.filter(perform => new Date(perform.pfEnd) > todayDate).reverse();
@@ -129,19 +126,12 @@ const Main = () => {
     }, [eventPosts]);
 
     return (
-        // <div>
-        //     <MainCompo1 />
-        //     {/* <QEditor /> */}
-        //     <MainCompo2 />
-        // </div>
-        <div id="Main">
+          <div id="Main">
             <div className="performCard">
                 <Row xs={1} md={5} className="g-4" style={{justifyContent:"center"}}>
-                    {/* {Array.from({ length: 17 }).map((_, idx) => ( */}
                     {performs.map((perform, idx) => (
                         <Col key={idx}>
                         <Card id="mainCard">
-                            {/* <Card.Img src="https://storage.googleapis.com/cantata_opera/performance/1/%EC%85%94%EC%B8%A0.jpg" alt="Card image" /> */}
                             <Card.Img src={perform.pfPoster} alt="Poster image" />
                             <Card.ImgOverlay>
                                 <Card.Title>{perform.pfTitle}</Card.Title>
@@ -166,7 +156,6 @@ const Main = () => {
                             <div key={index} className='postItem'>
                                 <div className='postNumber'>{post.postNum}</div>
                                 <Link to={`/postDetail/3/${post.postNo}`} brdno={3} className='postTitle'>{post.postTitle}</Link>
-                                <div className='postViews'>{post.postViews}</div>
                                 <div className='postDate'>{post.postDate}</div>
                                 {/* 작성자 이름 추가 예정 */}
                             </div>
