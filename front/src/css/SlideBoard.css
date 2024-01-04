@@ -98,6 +98,7 @@
     width: 30%;
     justify-content: end;
     color: black;
+    align-items: center;
 }
 
 
@@ -105,9 +106,9 @@
     width: 10%;
 }
 
-.slide_Header .slide_right .slide_search{
-    margin-left: 5%;
-    width: 10%;
+.search-dialog > .form-control{
+    margin-left:2%;
+    font-size: 12px;
 }
 
 .search-dialog{
