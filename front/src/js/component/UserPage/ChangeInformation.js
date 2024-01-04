@@ -119,7 +119,6 @@ function ChangeInformation() {
               variant="contained"
               onClick={()=>navigate("/addcorp",{state:{userdata}})}
               sx={{ marginTop:"50px",width:"100%",height:"50px"}}
-              disabled={pwd===null?false:pwd!==repwd?true:false}
             >
               <strong>법인 추가</strong>
             </Button>
@@ -132,7 +131,7 @@ function ChangeInformation() {
           variant="contained"
           onClick={()=>updatePassword()}
           //   sx={{ mt: 3, mb: 2 }}
-          disabled={pwd===null?false:pwd!==repwd?true:false}
+          disabled={pwd===""?true:pwd!==repwd?true:false}
         >
           정보 수정 완료
         </Button>
