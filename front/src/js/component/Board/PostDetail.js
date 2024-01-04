@@ -176,7 +176,6 @@ function PostDetail() {
   return (
     <div id='PostDetail'>
       <div className="postDetailContainer">
-
         <h2 className="post-title">{post.postTitle}</h2>
         <div className="post-info">
           <span className="post-date"> 작성일 | {post.postDate} 작성자 | {post.id ? post.id.username : '익명'}</span>
@@ -196,12 +195,13 @@ function PostDetail() {
 
         {BoardType === '6' && (
           <div id="Reply">
+            <h2>답변 & 추가질문</h2>
             {(isAdmin || (post.id && userId === `${post.id.id}`)) && (
               //댓글 입력 폼
               <div className="reply-header">
-                <Button className="ReplyButton" onClick={handleToggleReplyForm}>
+                <button className="ReplyButton" onClick={handleToggleReplyForm}>
                   {showReplyForm ? 'x' : '댓글 작성'}
-                </Button>
+                </button>
                 {showReplyForm && (
                   <div className="reply-form">
                     <ReactQuill
