@@ -19,8 +19,9 @@ public interface Brd_postRepository extends JpaRepository<Brd_post, Long> {
 	@Query("SELECT MAX(p.postNum) FROM Brd_post p WHERE p.brdNo.brdNo = :brdNo")//brdNo별 가장 큰 postNum 호출
 	Long findLastPostNumForBrdNo(@Param("brdNo") Long brdNo);
 	
-	@Query("SELECT MAX(p.postNo) FROM Brd_post p WHERE p.brdNo.brdNo = :brdNo")
+	@Query("SELECT MAX(p.postNo) FROM Brd_post p WHERE post_status = 1 AND p.brdNo.brdNo = :brdNo")
 	Long findTopByOrderByPostNoForBrdNo(@Param("brdNo") Long brdNo);
+	
 	//	@Query("SELECT MAX(p.postNum) FROM Brd_post p")
 //	Long findLastPostNum();
 	
