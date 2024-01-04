@@ -166,7 +166,6 @@ const Main = () => {
                             <div key={index} className='postItem'>
                                 <div className='postNumber'>{post.postNum}</div>
                                 <Link to={`/postDetail/3/${post.postNo}`} brdno={3} className='postTitle'>{post.postTitle}</Link>
-                                <div className='postViews'>{post.postViews}</div>
                                 <div className='postDate'>{post.postDate}</div>
                                 {/* 작성자 이름 추가 예정 */}
                             </div>
