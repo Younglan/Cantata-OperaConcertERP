@@ -136,7 +136,7 @@ const Main = () => {
         // </div>
         <div id="Main">
             <div className="performCard">
-                <Row xs={1} md={5} className="g-4">
+                <Row xs={1} md={5} className="g-4" style={{justifyContent:"center"}}>
                     {/* {Array.from({ length: 17 }).map((_, idx) => ( */}
                     {performs.map((perform, idx) => (
                         <Col key={idx}>
