@@ -10,7 +10,6 @@ const SlideBoard = ({ isOpen, toggleBoard }) => {
     const [brdDivisions, setBrdDivisions] = useState([]);
     const token = sessionStorage.getItem("jwt");
     const[isAdmin, setIsAdmin] = useState(false);
-    const [searchOpen, setSearchOpen] = useState(false);
     
     useEffect(() => {
         if (Object.keys(sessionStorage).length > 0) {
@@ -26,9 +25,7 @@ const SlideBoard = ({ isOpen, toggleBoard }) => {
     const handleToggle = () => {
         toggleBoard();
     };
-    const toggleSearch = () =>{
-    setSearchOpen(!searchOpen);
-    }
+    
     const navigate = useNavigate();
     const goToMain = () => {
         navigate("/");
@@ -105,24 +102,10 @@ const SlideBoard = ({ isOpen, toggleBoard }) => {
                     </div>
                     <div className="slide_right">
                         <div className="slide_login" onClick={loginCheck}>
-                            {token?<LogoutIcon style={{height:"50px",width:"50px"}}/>:<svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6" transform='rotate(180)'>
+                            {token?<LogoutIcon style={{height:"auto",width:"100%"}}/>:<svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6" transform='rotate(180)'>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
                             </svg>}{/*로그인 svg파일 transform = 'rotate(90)'으로 180도 회전상태*/}
                         </div>
-
-            {!searchOpen && (
-              <div className="slide_search" onClick={toggleSearch}>
-                <svg width="50px" height="50px" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6" transform='rotate(90)'>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                </svg>{/*돋보기 svg파일 transform = 'rotate(90)'으로 90도 회전상태*/}
-              </div>
-            )}
-            {searchOpen && (
-              <div className="search-dialog">
-                <Form.Control type="text" />
-                <button onClick={toggleSearch}>닫기</button>
-              </div>
-            )}
 
             <div className="slide_calender">
               <svg
@@ -226,11 +209,11 @@ const SlideBoard = ({ isOpen, toggleBoard }) => {
                 <li>
                   <h1>예매관리</h1>
                 </li>
-                <li>
+                <li onClick={() => goToAdminPage("adminRentals")}>
                   <h1>대관관리</h1>
                 </li>
                 <li>
-                  <h1>회원관리</h1>
+                  <h1 onClick={() => goToAdminPage("adminUsers")}>회원관리</h1>
                 </li>
                 <li onClick={() => goToAdminPage("adminContents")}>
                   <h1>홈페이지 컨텐츠 관리</h1>

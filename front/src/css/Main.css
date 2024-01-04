@@ -83,10 +83,9 @@
     width: 100%;
     padding-top: 3%;
     max-height: 100%;
-    justify-content: space-between; /* 양 끝에 정렬 */
     display:flex;
-    background-color: #071a52;
-    
+    /* justify-content: center; */
+    background-color: #071a52; 
 }
 
 .perfome .show{
@@ -98,19 +97,19 @@
 
 .notice{
     position: relative;
-    width: 35%;
     /* height: 300px; */
-    /* border: 1px solid rgb(255,255,255); */
-    padding-left: 0;
+    /* padding-left: 0; */
     color: white;
-    margin-left:5%;
+    /* margin-left:5%; */
 }
 
 .noticeHeader{
-    width: 100%;
+    /* border-bottom: 1px solid #ccc; */
+    width: 96%;
     display: flex;
     justify-content: space-between; /* 양 끝에 정렬 */
     align-items:center;
+    margin-left: 2%;
 }
 
 .noticeHeader h5{
@@ -118,16 +117,20 @@
     cursor: pointer;
 }
 .notice .mini{
-    border: 1px solid rgb(255,255,255);
+    /* border: 1px solid rgb(255,255,255); */
     max-height: 400px;
 }
 .notice .postItem {
-    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
     padding: 10px;
     margin: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.notice .postItem:last-child{
+    border-bottom: 1px solid #ccc;
 }
 
 .notice .postNumber {
@@ -152,18 +155,45 @@
     color: #ccc;
 }
 
+
+
 .eventBanner{
     position:relative;
-    width: 35%;
-    height: 10%;
+    /* width: 35%; */
+    height: 300px;
     overflow: hidden;
-    margin-left: auto;
-    margin-right:5%;
+    /* margin-left: auto; */
+    /* margin-right:5%; */
 }
 
 .eventBanner img{
-    width: 100%;
+    width: 90%;
     height: 300px;
     object-fit: cover;
     cursor: pointer;
+}
+
+@media(min-width:768px ){
+    #Board_post{
+        /* display:flex; */
+        justify-content: center;
+    }
+    .notice{
+        width: 35%;
+        /* margin-left: auto; */
+    }
+    .eventBanner{
+        margin-left: 3%; /* 이벤트와 notice 사이의 거리 */
+        /* margin-right:auto; */
+        width:35%
+    }
+}
+@media(max-width:767px ){
+    #Board_post{
+        flex-direction: column;
+    }
+    .notice, .eventBanner{
+        margin-top: 5%;
+        margin-bottom: 5%;
+    }
 }

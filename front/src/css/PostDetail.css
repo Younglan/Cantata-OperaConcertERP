@@ -11,6 +11,7 @@
 .postDetailContainer {
   position: relative;
   width: 90%;
+  /* max-width: 1000px; */
   /* max-height: 800px; */
   margin: 0 auto;
   padding: 20px;
@@ -20,17 +21,19 @@
 }
 
 .post-title {
+  max-width: 800px;
   border-bottom: 1px solid black;
+  margin-left:auto;
+  margin-right: auto;
 }
 
 .post-info {
-  /* position: absolute;  */
-  /* justify-content: end; */
-  /* flex-basis: 20%; */
-  /* width: 15%; */
-  /* border:1px solid red; */
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
+  width:100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #Edit {
@@ -53,6 +56,7 @@
 .customPost {
   /* border: 1px solid red; */
   width: 90%;
+  max-width: 800px;
   margin: auto;
   padding-top:10px;
   text-align: justify;
@@ -60,14 +64,26 @@
 }
 
 .customPost .ql-editor{
+  min-height: 580px;
   border:none !important;
 }
+
+/* .customPost .ql-container{
+  border: none;
+} */
 
 #Reply {
   padding-top: 100px;
   position: relative;
   width: 90%;
+  max-width: 800px;
   margin: auto;
+}
+
+#Reply h2{
+  border-bottom: 1px solid black;
+  width: 100%;
+  text-align: left;
 }
 
 .reply-header{
@@ -84,12 +100,16 @@
 
 .ReplyButton{
   align-self:flex-end;
+  color: white;
+  background-color: #BB2649;
+  border: 0px;
 }
 
 .reply{
   width: 100%;
-  border: 1px solid black;
-  background-color: rgb(248, 245, 219);
+  /* border: 1px solid black; */
+  /* background-color: rgb(248, 245, 219); */
+  min-height: 150px;
 }
 
 .repliesItem{
@@ -108,8 +128,24 @@
   font-size: small;
 }
 
+.pagination{
+  margin-top: 20px;
+}
 .pagination button {
   margin: 3px;
   width: auto;
   height: auto;
+}
+
+.pagination > button{
+  border-radius: 35%;
+  border: 0px;
+  background-color: #dbdbdb; 
+  color: black; 
+}
+
+.pagination >.active {
+  background-color: #BB2649; 
+  color: #ffffff; 
+  font-weight: bold;
 }

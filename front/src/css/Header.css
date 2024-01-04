@@ -43,11 +43,13 @@
     width: 30%;
     justify-content: end;
     color: white;
+    align-items: center;
 }
 
 
 .Header .header_right .login{
     width: 10%;
+    /* border: 1px solid red; */
 }
 
 .Header .header_right .search{
@@ -73,6 +75,7 @@
     border-radius: 5px;
 }
 .search-dialog > .form-control{
+    margin-left:2%;
     font-size: 12px;
 }
 
@@ -85,3 +88,9 @@
     width: 100%;
     cursor: pointer;
 } 
+
+.Header .header_right .MuiAvatar-root{
+    width:100%;
+    height: auto;
+    /* border: 1px solid red; */
+}

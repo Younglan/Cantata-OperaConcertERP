@@ -75,6 +75,7 @@ function App() {
           <Route path="/admin" element={<Redirect component={<AdminPage />} auth="ADMIN"/>} />
           <Route path="/ticketcheck/:check" element={<Redirect component={<TicketCheck />} auth="ADMIN"/>} />
           <Route path="/SearchPerformList/:keyword" element={<SearchPerformList />} />
+          <Route path="/UserList" element={<Redirect component={<UserList />} auth="ADMIN"/>} />
         </Routes>
       </Router>
       <Footer />
