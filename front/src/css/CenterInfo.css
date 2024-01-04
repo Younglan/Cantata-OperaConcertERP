@@ -10,15 +10,11 @@
 }
 
 .Background .textground{
-    /* position:absolute; */
     margin: auto;
     width: 90%;
-    height: 800px;
-    min-height: 1080px;
+    min-height: 800px;
     background-color: white;
     margin-left: 5%;
-    /* text-align: left; */
-    /* display: flex; */
 }
 
 .title{

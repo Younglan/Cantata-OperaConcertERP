@@ -1,6 +1,7 @@
 package com.packt.cantata.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -60,7 +61,10 @@ public class RentalController {
 	@GetMapping("/checkRentalDate")
 	public Boolean checkPerformDate(@RequestParam Long plantNo,   @RequestParam@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
 		    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate){
-		Iterable<Rental> findRental = rentalrepository.checkRental(plantNo, startDate, endDate);
+		// endDate에 23:59를 추가하기 위해 LocalDateTime으로 변환 후 시간 설정
+	    LocalDateTime endDateTime = endDate.atTime(23, 59);
+	    
+		Iterable<Rental> findRental = rentalrepository.checkRental(plantNo, startDate, endDateTime);
 		
 		if(findRental == null || !findRental.iterator().hasNext()) {
 			return true;

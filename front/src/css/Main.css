@@ -159,15 +159,17 @@
 
 .eventBanner{
     position:relative;
-    /* width: 35%; */
-    height: 300px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 600px;
     overflow: hidden;
     /* margin-left: auto; */
     /* margin-right:5%; */
 }
 
 .eventBanner img{
-    width: 90%;
+    width: 100%;
+    max-width: 400px;
     height: 300px;
     object-fit: cover;
     cursor: pointer;
@@ -195,5 +197,9 @@
     .notice, .eventBanner{
         margin-top: 5%;
         margin-bottom: 5%;
+    }
+    .eventBanner{
+        margin-left: auto;
+        margin-right: auto;
     }
 }

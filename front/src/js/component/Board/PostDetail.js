@@ -179,20 +179,28 @@ function PostDetail() {
         <h2 className="post-title">{post.postTitle}</h2>
         <div className="post-info">
           <span className="post-date"> 작성일 | {post.postDate} 작성자 | {post.id ? post.id.username : '익명'}</span>
-          {(isAdmin || (post.id && userId === post.id.id)) && (
+        </div>
+        {(BoardType === '1' || BoardType === '4') && isAdmin &&(
+          <div className = "imgBox">
+            {BoardType === '4' && (
+              <h5>배너 이미지</h5>
+            )}
+            <img className = 'posterImg' src={post.postFile1} />
+          </div>
+        )}
+        <ReactQuill value={post.postSub || ''} modules={{ toolbar: false }} theme="snow" readOnly className='customPost' />
+
+        {(isAdmin || (post.id && userId === post.id.id)) && (
             <div id="Edit">
               {BoardType !== '4' && (
-                <button onClick={() => navigate(`/EditPost/${BoardType}/${postNo}`)}>수정</button>
+                <button className = 'editButton' onClick={() => navigate(`/EditPost/${BoardType}/${postNo}`)}>수정</button>
               )}
               {BoardType === '4' && (
-                <button onClick={() => navigate(`/EditEventPost/${BoardType}/${postNo}`)}>수정</button>
+                <button className = 'editButton' onClick={() => navigate(`/EditEventPost/${BoardType}/${postNo}`)}>수정</button>
               )}
               <button className='del' onClick={() => onDelClick(post.postNo)}>삭제</button>
             </div>
           )}
-        </div>
-        <ReactQuill value={post.postSub || ''} modules={{ toolbar: false }} theme="snow" readOnly className='customPost' />
-
         {BoardType === '6' && (
           <div id="Reply">
             <h2>답변 & 추가질문</h2>
