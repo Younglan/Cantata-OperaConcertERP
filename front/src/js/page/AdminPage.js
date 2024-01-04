@@ -127,7 +127,7 @@ const AdminPage = () => {
             <div className="content">
                 {selectedBoard !== null && isContentMenuVisible === 0 && <PerformanceList />}
                 {/* {selectedBoard !== null && isContentMenuVisible === 1 && <예약관리 페이지 />} */}
-                {selectedBoard !== null && isContentMenuVisible === 2 && <RentalList />}
+                {/* {selectedBoard !== null && isContentMenuVisible === 2 && <RentalList />} */}
                 {selectedBoard !== null && isContentMenuVisible === 1&&<TicketAdmin/>}
                 {selectedBoard !== null && isContentMenuVisible === 3 && <UserList/>}
                 {selectedBoard !== null && isContentMenuVisible === 4 && <Board BoardType={selectedBoard} />}
