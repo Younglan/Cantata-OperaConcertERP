@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Board from "../component/Board/Board";
 import PerformanceList from '../component/performance/PerformanceList';
-import RentalList from '../component/rental/RentalList';
+import RentalListad from '../component/rental/RentalListad';
 import UserList from '../component/UserPage/UserList';
 const SERVER_URL = 'http://localhost:8090';
 // import TicketCheck from '../component/Ticket/TicketCheck';
@@ -123,7 +123,7 @@ const AdminPage = () => {
             <div className="content">
                 {selectedBoard !== null && isContentMenuVisible === 0 && <PerformanceList />}
                 {/* {selectedBoard !== null && isContentMenuVisible === 1 && <예약관리 페이지 />} */}
-                {selectedBoard !== null && isContentMenuVisible === 2 && <RentalList />}
+                {selectedBoard !== null && isContentMenuVisible === 2 && <RentalListad />}
                 {/* {selectedBoard !== null && selectedBoard === 10?<TicketCheck/>:""} */}
                 {selectedBoard !== null && isContentMenuVisible === 3 && <UserList/>}
                 {selectedBoard !== null && isContentMenuVisible === 4 && <Board BoardType={selectedBoard} />}

@@ -28,9 +28,7 @@ const Header = () => {
   const goToPerformCalendar = () => {
     navigate("/performCalendar");
   };
-  const goToLogin = () => {
-    navigate("/login");
-  };
+  
     const loginCheck = () => {
         if(token){
             navigate("/mypage");
