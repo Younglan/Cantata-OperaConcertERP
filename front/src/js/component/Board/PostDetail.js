@@ -1,202 +1,268 @@
-/* PostDetail.css */
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom"
+import { parseJwt } from '../../../loginUtil';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { Button } from 'react-bootstrap';
+import '../../../css/PostDetail.css';
 
-#PostDetail {
-  background-color: #071a52;
-  width: 100%;
-  /* max-height: 100%; */
-  display: flex;
-  /* align-items: center; */
+// import AddReply from './AddReply';
+
+const SERVER_URL = 'http://localhost:8090';
+
+function PostDetail() {
+  const navigate = useNavigate();
+  const { postNo } = useParams(); //board.js에서 postNo값을 보내주고 링크의 postNo값을 가져온다.
+  const { BoardType } = useParams();
+  const [post, setPost] = useState({});
+  const [userId, setUserId] = useState('');
+  const [replies, setReplies] = useState([]);
+  const [newReply, setNewReply] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10; //게시물이 10개 이상 넘어가면 다음 게시물로
+  const maxPageButtons = 10; // 페이징 버튼을 보여줄 최대 개수
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [, setValidationError] = useState(false) //댓글 유동성 검사
+  const [showReplyForm, setShowReplyForm] = useState(false);
+
+  const handleToggleReplyForm = () => {
+    setShowReplyForm((prev) => !prev);
+  };
+  useEffect(() => {
+    if (Object.keys(sessionStorage).length > 0) {
+      // sessionStorage에 저장된 값이 하나 이상 있을 때의 처리
+      const role = sessionStorage.getItem("role");
+      const token = sessionStorage.getItem('jwt');
+      setUserId(parseJwt(token));
+      if (role === 'ADMIN') { setIsAdmin(true) }
+    } else {
+      // sessionStorage에 저장된 값이 하나도 없을 때의 처리
+    }
+
+  }, [isAdmin]);
+
+  useEffect(() => {
+    fetchPostDetail();
+  }, [postNo]);
+
+  const fetchPostDetail = async () => {
+    try {
+      const postResponse = await fetch(`${SERVER_URL}/brd_posts/searchPostNo/${postNo}`);
+      if (!postResponse.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const postData = await postResponse.json();
+      setPost(postData);
+      // 해당 글의 댓글만 가져오도록 수정
+      const repliesResponse = await fetch(`${SERVER_URL}/replies/searchPostNo/${postNo}`);
+      if (!repliesResponse.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const repliesData = await repliesResponse.json();
+      setReplies(Array.isArray(repliesData) ? repliesData : []);
+    } catch (error) {
+      console.error('Error fetching post detail:', error);
+    }
+  };
+
+  const validateForm = () => { //제목 또는 내용의 유효성 검사
+    return newReply.trim() !== ''; //trim()은 공백 제거, 만약 postTitle, postSub중 하나라도 비어있다면 !에 따라 true를 그리고 이중 !에 따라 false를 리턴한다.
+  };
+
+
+  const handleReplyChange = (value) => {
+    setNewReply(value);
+  };
+
+  const handleAddReply = async () => {
+    const isValid = validateForm();
+    if (isValid) {
+      setValidationError(false);
+      try {
+        const response = await fetch(`${SERVER_URL}/replies/addReply`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            postNo: { postNo }, // postNo를 서버로 보냄
+            repSub: newReply,
+            id: { id: userId }
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Network response was not ok. Server response: ${await response.text()}`);
+        }
+
+        // 댓글이 추가되면 목록을 다시 불러와 갱신
+        const updatedRepliesResponse = await fetch(`${SERVER_URL}/replies/searchPostNo/${postNo}`);
+        if (!updatedRepliesResponse.ok) {
+          throw new Error(`Network response was not ok. Server response: ${await updatedRepliesResponse.text()}`);
+        }
+        const updatedRepliesData = await updatedRepliesResponse.json();
+        setReplies(Array.isArray(updatedRepliesData) ? updatedRepliesData : []);
+        // 댓글 입력창 초기화
+        setNewReply('');
+      } catch (error) {
+        console.error('Error adding reply:', error);
+      }
+      setShowReplyForm((prev) => !prev);
+    } else {
+      setValidationError(true);
+    }
+  };
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const currentreplies = replies.slice(startIndex, endIndex);
+
+  // 댓글페이징 버튼을 렌더링하는 함수
+  const renderPageButtons = () => {
+    const totalPages = Math.ceil(replies.length / pageSize);
+
+    // 현재 페이지를 중심으로 좌우로 maxPageButtons 개수만큼 버튼을 표시
+    let startPage = Math.max(currentPage - Math.floor(maxPageButtons / 2), 1);
+    let endPage = Math.min(startPage + maxPageButtons - 1, totalPages);
+
+    // 만약 endPage가 maxPageButtons만큼 되기 전에는 startPage를 조정
+    if (endPage - startPage + 1 < maxPageButtons) {
+      startPage = Math.max(endPage - maxPageButtons + 1, 1);
+    }
+
+    const buttons = [];
+    for (let i = startPage; i <= endPage; i++) {
+      buttons.push(
+        <button
+          key={i}
+          onClick={() => setCurrentPage(i)}
+          className={currentPage === i ? 'active' : ''}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return buttons;
+  };
+
+  const onDelClick = (postNo) => {
+    const updatedSatusData = { postStatus: 'false' };
+    if (window.confirm("정말로 해당 컨텐츠를 삭제하시겠습니까?")) {
+      fetch(SERVER_URL + '/brd_posts/' + postNo,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedSatusData)
+        })
+        .then(response => {
+          if (response.ok) {
+            fetchPostDetail();
+            // setOpen(true);
+            navigate(-1);
+          } else {
+            alert("잘못된 시도입니다!");
+          }
+
+        })
+        .catch(err => console.error(err))
+    }
+
+  }
+
+
+  return (
+    <div id='PostDetail'>
+      <div className="postDetailContainer">
+        <h2 className="post-title">{post.postTitle}</h2>
+        <div className="post-info">
+          <span className="post-date"> 작성일 | {post.postDate} 작성자 | {post.id ? post.id.username : '익명'}</span>
+        </div>
+        {(BoardType === '1' || BoardType === '4') && isAdmin &&(
+          <div className = "imgBox">
+            {BoardType === '4' && (
+              <h5>배너 이미지</h5>
+            )}
+            <img className = 'posterImg' src={post.postFile1} />
+          </div>
+        )}
+        <ReactQuill value={post.postSub || ''} modules={{ toolbar: false }} theme="snow" readOnly className='customPost' />
+
+        {(isAdmin || (post.id && userId === post.id.id)) && (
+            <div id="Edit">
+              {BoardType !== '4' && (
+                <button className = 'editButton' onClick={() => navigate(`/EditPost/${BoardType}/${postNo}`)}>수정</button>
+              )}
+              {BoardType === '4' && (
+                <button className = 'editButton' onClick={() => navigate(`/EditEventPost/${BoardType}/${postNo}`)}>수정</button>
+              )}
+              <button className='del' onClick={() => onDelClick(post.postNo)}>삭제</button>
+            </div>
+          )}
+        {BoardType === '6' && (
+          <div id="Reply">
+            <h2>답변 & 추가질문</h2>
+            {(isAdmin || (post.id && userId === `${post.id.id}`)) && (
+              //댓글 입력 폼
+              <div className="reply-header">
+                <button className="ReplyButton" onClick={handleToggleReplyForm}>
+                  {showReplyForm ? 'x' : '댓글 작성'}
+                </button>
+                {showReplyForm && (
+                  <div className="reply-form">
+                    <ReactQuill
+                      value={newReply}
+                      modules={{ toolbar: false }}
+                      onChange={handleReplyChange}
+                      theme="snow"
+                    />
+                    <Button className="ReplyButton" onClick={handleAddReply} variant="secondary" disabled={!validateForm()}>올리기</Button>
+                  </div>
+                )}
+              </div>
+            )}
+            <div className="reply">
+              {currentreplies.map((reply, index) => (
+                <div key={index} className="repliesItem">
+                  <div className="repName">
+                    {reply.id.username}
+                  </div>
+                  <div className="repDate">
+                    {reply.repDate}
+                  </div>
+                  <div className="repSub">
+                    <div dangerouslySetInnerHTML={{ __html: reply.repSub || '' }} />
+                  </div>
+                  {/* 작성자 이름 추가 예정 */}
+                </div>
+              ))}
+            </div>
+            {/* 댓글 페이지네이션 추가 */}
+            <div className="pagination">
+              {/* 가장 첫 페이지로 */}
+              {currentPage > 1 && (
+                <>
+                  <button onClick={() => setCurrentPage(1)}>{"<<"}</button>
+                  <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}>{"<"}</button>
+                </>
+              )}
+
+              {renderPageButtons()}
+              {currentPage < Math.ceil(replies.length / pageSize) && (
+                <>
+                  <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(replies.length / pageSize)))}>{">"}</button>
+                  {/* 가장 마지막 페이지로 */}
+                  <button onClick={() => setCurrentPage(Math.ceil(replies.length / pageSize))}>{">>"}</button>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
+    </div >
+  );
 }
 
-.postDetailContainer {
-  position: relative;
-  width: 90%;
-  /* max-width: 1000px; */
-  /* max-height: 800px; */
-  margin: 0 auto;
-  padding: 20px;
-  background-color: white;
-  /* display:flex; */
-  /* justify-content: center; */
-}
-
-.post-title {
-  max-width: 800px;
-  border-bottom: 1px solid black;
-  margin-left:auto;
-  margin-right: auto;
-  margin-top: 25px;
-}
-
-.post-info {
-  display: flex;
-  justify-content: flex-end;
-  width:100%;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.imgBox{
-  width:100%;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right:auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  /* border-bottom: 1px solid black; */
-}
-
-.imgBox h5{
-  text-align: left;
-}
-
-.posterImg {
-  width:100%;
-  max-width: 300px;
-  max-height: 500px;
-  padding-bottom: 15px;
-  /* max-width: 300px;
-  max-height: 500px; */
-  /* border: 1px solid red; */
-}
-
-
-
-.customPost {
-  /* border: 1px solid red; */
-  width: 90%;
-  max-width: 800px;
-  margin: auto;
-  padding-top:10px;
-  text-align: justify;
-  /* border:0px solid; */
-}
-
-.customPost .ql-editor{
-  min-height: 450px;
-  border:none !important;
-}
-
-.customPost .ql-container{
-  border: none;
-}
-
-#Edit {
-  width: 100%;
-  max-width: 800px;
-  display: flex;
-  justify-content: flex-end;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#Edit button {
-  /* height: 25px; */
-  text-align: center;
-  font-size: 80%;
-}
-
-#Edit .editButton{
-  border:0px;
-  color: white;
-  background-color: #BB2649;
-  border-radius: 5px;
-}
-
-#Edit .del {
-  /* margin-right: auto; */
-  margin-left: 3px;
-}
-
-#Reply {
-  padding-top: 100px;
-  position: relative;
-  width: 90%;
-  max-width: 800px;
-  margin: auto;
-}
-
-#Reply h2{
-  border-bottom: 1px solid black;
-  width: 100%;
-  text-align: left;
-}
-
-.reply-header{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.reply-form{
-  width:100%;
-  display:flex;
-  flex-direction: column;
-}
-
-.ReplyButton{
-  align-self:flex-end;
-  color: white;
-  background-color: #BB2649;
-  border: 0px;
-}
-
-.reply{
-  width: 100%;
-  /* border: 1px solid black; */
-  /* background-color: rgb(248, 245, 219); */
-  min-height: 150px;
-}
-
-.repliesItem{
-  border-bottom: 1px solid black;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.repName, .repDate, .repSub {
-  text-align: left;
-  /* 다른 필요한 스타일을 추가할 수 있습니다. */
-}
-
-.repDate{
-  font-size: small;
-}
-
-.pagination{
-  margin-top: 20px;
-}
-.pagination button {
-  margin: 3px;
-  width: auto;
-  height: auto;
-}
-
-.pagination > button{
-  border-radius: 35%;
-  border: 0px;
-  background-color: #dbdbdb; 
-  color: black; 
-}
-
-.pagination >.active {
-  background-color: #BB2649; 
-  color: #ffffff; 
-  font-weight: bold;
-}
-
-.pagination > button{
-  border-radius: 35%;
-  border: 0px;
-  background-color: #dbdbdb; 
-  color: black; 
-}
-
-.pagination >.active {
-  background-color: #BB2649; 
-  color: #ffffff; 
-  font-weight: bold;
-}
+export default PostDetail;
