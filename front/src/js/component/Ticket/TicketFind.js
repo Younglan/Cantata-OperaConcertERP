@@ -47,11 +47,11 @@ function TicketFind(){
     },[]);
     useEffect(()=>{
         setSliceData(ticketingData.slice((currentPage-1)*5,currentPage*5));
-       
+       console.log(Math.ceil(ticketingData.length / 5));
     },[currentPage,ticketingData]);
     
     return(
-        <React.Fragment>
+        <div>
             {sliceData.map((ele)=>{
                 return(
                     <div key={ele.tic_no}>
@@ -77,7 +77,7 @@ function TicketFind(){
                     <PaginationItem {...item} sx={{ fontSize: 12 }} />
                 )}
             />
-        </React.Fragment>
+        </div>
     );
 }
 
