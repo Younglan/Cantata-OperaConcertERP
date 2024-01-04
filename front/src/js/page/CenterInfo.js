@@ -24,9 +24,6 @@ const CenterInfo = () => {
             }
         };
         fetchLastPostNo();
-    }, []);
-
-    useEffect(() => {
         const fetchPostDetail = async () => {
             try {
                 const postResponse = await fetch(`${SERVER_URL}/brd_posts/${postNo}`);
