@@ -37,6 +37,13 @@
     margin-top:auto;
 }
 
+#newPost button{
+    border:0px;
+    border-radius: 5px;
+    background-color: #BB2649;
+    color: white;
+}
+
 @keyframes title {
     from{
         transform: translateY(-100%);
@@ -81,7 +88,7 @@
     align-items: center;
 }
 
-.postItem {
+.BoardList .postItem {
     border-bottom: 1px solid #ccc;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -131,7 +138,12 @@
 }
 
 .deleteBtn button{
+    font-size: 10px;
     margin-left: auto;
+    border: 0px;
+    background-color: grey;
+    border-radius: 3px;
+    color: white;
 }
 
 /* .postItem Button{
@@ -151,4 +163,17 @@
     width: auto;
     height: auto;
 
+}
+
+.pagination > button{
+    border-radius: 35%;
+    border: 0px;
+    background-color: #dbdbdb; 
+    color: black; 
+}
+
+.pagination >.active {
+    background-color: #BB2649; 
+    color: #ffffff; 
+    font-weight: bold;
 }

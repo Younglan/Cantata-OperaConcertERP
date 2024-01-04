@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import "../../css/SlideBoard.css"
 import { SERVER_URL } from "../component/constants";
 import LogoutIcon from '@mui/icons-material/Logout';
-import Form from 'react-bootstrap/Form';
 
 const SlideBoard = ({ isOpen, toggleBoard }) => {
     const [brdDivisions, setBrdDivisions] = useState([]);

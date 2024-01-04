@@ -16,7 +16,8 @@ function RentalListad(){
 
     const columns = [ 
 
-        {field: 'cp_no', headerName: '신청인명',headerAlign: 'center'}, 
+        {field: 'cp_no', headerName: '신청인명',headerAlign: 'center'
+        ,valueFormatter: (params) => params.value.ceo},  
 
         {field: 'rent_start', headerName: '시작날짜', width: 150,headerAlign: 'center'
         ,valueFormatter: (params) => dayjs(params.value).format('YYYY/MM/DD'),}, 

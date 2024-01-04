@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Board from "../component/Board/Board";
 import PerformanceList from '../component/performance/PerformanceList';
-import RentalList from '../component/rental/RentalList';
+import RentalListad from '../component/rental/RentalListad';
 import UserList from '../component/UserPage/UserList';
 import TicketAdmin from '../component/Ticket/TicketAdmin';
 const SERVER_URL = 'http://localhost:8090';

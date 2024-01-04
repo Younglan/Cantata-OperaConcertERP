@@ -25,6 +25,7 @@
   border-bottom: 1px solid black;
   margin-left:auto;
   margin-right: auto;
+  margin-top: 25px;
 }
 
 .post-info {
@@ -36,22 +37,32 @@
   margin-right: auto;
 }
 
-#Edit {
-  width: 15%;
-  /* height: 25px; */
-  /* border: 1px solid black; */
+.imgBox{
+  width:100%;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right:auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* border-bottom: 1px solid black; */
 }
 
-#Edit button {
-  /* height: 25px; */
-  text-align: center;
-  font-size: 80%;
+.imgBox h5{
+  text-align: left;
 }
 
-#Edit .del {
-  margin-right: 5%;
-  margin-left: 5%;
+.posterImg {
+  width:100%;
+  max-width: 300px;
+  max-height: 500px;
+  padding-bottom: 15px;
+  /* max-width: 300px;
+  max-height: 500px; */
+  /* border: 1px solid red; */
 }
+
+
 
 .customPost {
   /* border: 1px solid red; */
@@ -64,13 +75,40 @@
 }
 
 .customPost .ql-editor{
-  min-height: 580px;
+  min-height: 450px;
   border:none !important;
 }
 
-/* .customPost .ql-container{
+.customPost .ql-container{
   border: none;
-} */
+}
+
+#Edit {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#Edit button {
+  /* height: 25px; */
+  text-align: center;
+  font-size: 80%;
+}
+
+#Edit .editButton{
+  border:0px;
+  color: white;
+  background-color: #BB2649;
+  border-radius: 5px;
+}
+
+#Edit .del {
+  /* margin-right: auto; */
+  margin-left: 3px;
+}
 
 #Reply {
   padding-top: 100px;
@@ -135,6 +173,19 @@
   margin: 3px;
   width: auto;
   height: auto;
+}
+
+.pagination > button{
+  border-radius: 35%;
+  border: 0px;
+  background-color: #dbdbdb; 
+  color: black; 
+}
+
+.pagination >.active {
+  background-color: #BB2649; 
+  color: #ffffff; 
+  font-weight: bold;
 }
 
 .pagination > button{
