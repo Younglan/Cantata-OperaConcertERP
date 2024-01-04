@@ -75,14 +75,9 @@ public class FileService {
     }
 	
 	public String attachUploadAndGetUri (MultipartFile posterFile, String tableName, Long number) throws IOException {
-//		// 로컬 파일 경로
-//        String localFilePath = posterFile;
-//        //파일명
-//        Path path = Paths.get(localFilePath);
-//        String originalFileName = path.getFileName().toString();
+
 		String originalFileName = posterFile.getOriginalFilename();
-//        //파일데이터
-//        byte[] fileContent = java.nio.file.Files.readAllBytes(path);
+
         
         // Set up Google Cloud Storage
         Storage storage = StorageOptions.getDefaultInstance().getService();
@@ -92,7 +87,6 @@ public class FileService {
         
         BlobInfo blobInfo = BlobInfo.newBuilder(bucketName, cloudObjectName).build();
         Blob blob = storage.create(blobInfo, posterFile.getBytes());
-        
         
         String fileUrl = "https://storage.googleapis.com/" + bucketName + "/" + cloudObjectName;      
         
