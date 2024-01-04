@@ -46,7 +46,10 @@ function PerformanceDetail(){
         .then(response => response.json())
         .then(data => {setPlant(data);
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+            console.error(err);
+            navigate("/errorPage");
+        });
         
     };
 

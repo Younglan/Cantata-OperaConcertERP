@@ -10,15 +10,6 @@ dayjs.locale("ko");
 
 const SERVER_URL='http://localhost:8090';
 
-// function CustomToolbar() {
-//     return(
-//         <GridToolbarContainer
-//             className={gridClasses.toolbarContainer}>
-//                 <GridToolbarExport />
-//         </GridToolbarContainer>
-//     );
-// }
-
 function TimeList(){
     // pfCode : URL로부터 가져옴
     const { pfCode: pfCodeFromParams } = useParams();
@@ -67,8 +58,7 @@ function TimeList(){
     ];
 
     useEffect(() => {
-        fetchTimeList();
-        
+        fetchTimeList();     
     }, []);
 
     const fetchTimeList= () => {
@@ -80,7 +70,10 @@ function TimeList(){
                 = data.filter((pfTimes) => pfTimes.ptStatus === true).reverse();
                 setTimes(filteredTimes);
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+            console.error(err);
+            navigate("/errorPage");
+        });
 
         fetch(SERVER_URL+'/performances/selectedPerform/'+pfCode)
         .then(response => response.json())
@@ -117,8 +110,11 @@ function TimeList(){
                     alert("잘못된 시도입니다!");
                 }
                 
-        })
-        .catch(err => console.error(err))
+            })
+            .catch(err => {
+                console.error(err);
+                navigate("/errorPage");
+            });
         }
         
     }
@@ -140,7 +136,10 @@ function TimeList(){
                 alert('Somthing went wrong!');
             }
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            console.error(err);
+            navigate("/errorPage");
+        });
     }
 
     if(times.length === 0 ){

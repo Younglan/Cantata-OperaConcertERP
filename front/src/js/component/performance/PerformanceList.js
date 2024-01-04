@@ -48,7 +48,10 @@ function PerformanceList(){
                 setTotalPages(Math.ceil(filteredPerforms.length / pageSize));
                 setPerformances(filteredPerforms.slice(startIndex, endIndex));
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err);
+                navigate("/errorPage");
+            });
     };
 
     const columns = [ 
@@ -110,8 +113,11 @@ function PerformanceList(){
                     alert("잘못된 시도입니다!");
                 }
                 
-        })
-        .catch(err => console.error(err))
+            })
+            .catch(err => {
+                console.error(err);
+                navigate("/errorPage");
+            });
         }
         
     }
@@ -134,8 +140,11 @@ function PerformanceList(){
                     alert("잘못된 시도입니다!");
                 }
                 
-        })
-        .catch(err => console.error(err))
+            })
+            .catch(err => {
+                console.error(err);
+                navigate("/errorPage");
+            });
         }
     }
 

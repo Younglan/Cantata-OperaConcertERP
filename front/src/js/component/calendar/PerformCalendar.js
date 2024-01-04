@@ -29,7 +29,10 @@ function PerformCalendar (){
               = data.filter((pfTimes) => pfTimes.ptStatus === true && pfTimes.pfCode.expose ===true).reverse();
             setTimes(filteredTimes);
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+      console.error(err);
+      navigate("/errorPage");
+  });
   };
 
   const handleEventClick = (eventInfo) => {

@@ -75,7 +75,10 @@ function NewPerform() {
         fetch(SERVER_URL+'/plants/filteredPlantToPerForm')
         .then(response => response.json())
         .then(data => setPlants(data))
-        .catch(err => console.error(err));
+        .catch(err => {
+            console.error(err);
+            navigate("/errorPage");
+        });
     }
 
     // 폼의 input 값 변경 핸들러
@@ -133,7 +136,10 @@ function NewPerform() {
                   });
             }
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+            console.error(err);
+            navigate("/errorPage");
+        });
     }
 
     // Quill 에디터의 컨텐츠 변경 핸들러 (이미지 태그가 제거될 경우 관련 파일 번호도 제거)

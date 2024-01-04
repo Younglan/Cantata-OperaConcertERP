@@ -1,4 +1,5 @@
 import React, { useState} from "react";
+import { useNavigate  } from "react-router-dom";
 import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -13,6 +14,7 @@ function AddTime(props){
     const [time, setTime] = useState(null);
     const { sendPfCode, sendPfStart, sendPfEnd,sendPfTitle,sendRunTime,sendPlantNo  } = props;
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
     const [performTime, setPerformTime] = useState({
         ptDate:'',
         ptEndtime:'',
@@ -82,7 +84,10 @@ function AddTime(props){
                 setTimesCheck(<div className="timesCheck">해당날짜와 시간에 이미 다른공연이 존재합니다.</div>);
             }
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+            console.error(err);
+            navigate("/errorPage");
+        });
     }
 
     const renderTimesCheck = () => {
