@@ -33,6 +33,7 @@ function MyTicket({info, cancle}){
                     </div>
                 </div>
             </div>
+            {info.tic_status!=="검표"?
             <div className="Mytic_button">
                 
                 
@@ -57,7 +58,7 @@ function MyTicket({info, cancle}){
                 <div style={{display:"none"}}>
                         <TicketPaperOne ref={ref} ticket={info}/>
                 </div>
-            </div>
+            </div>:""}
           
             
                        
