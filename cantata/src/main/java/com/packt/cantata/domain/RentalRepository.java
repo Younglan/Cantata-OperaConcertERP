@@ -17,6 +17,8 @@ public interface RentalRepository  extends JpaRepository<Rental, Long>{
 			+ "	WHERE plant_no= :plantNo "
 			+ "	AND (rent_status = '결제대기' OR rent_status = '결제완료') "
 			+ "	AND ((rent_start BETWEEN :startDate AND :endDate) "
+			+ "	OR (rent_end BETWEEN :startDate AND :endDate)"
+			+ "	OR (rent_start BETWEEN :startDate AND :endDate) "
 			+ "	OR (rent_end BETWEEN :startDate AND :endDate));", nativeQuery=true)
 	Iterable<Rental> checkRental(@Param("plantNo") Long plantNo, @Param("startDate") LocalDate startDate,  @Param("endDate")LocalDateTime endDate);
 	Rental findByRentNo(Long rentno);
