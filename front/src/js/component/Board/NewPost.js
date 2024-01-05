@@ -239,32 +239,30 @@ function NewPost(props) {
         const isValid = validateForm();
         if (isValid) {
             setValidationError(false);
-            // postNum 서버로부터 가져오기
-            fetch(`${SERVER_URL}/brd_posts/lastPostNum/${BoardType}`)
-                .then(response => response.json())
-                .then(data => {
-                    // postNum 값을 이용하여 새로운 글 저장
-                    fetch(`${SERVER_URL}/brd_posts/newPost`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            ...post,
-                            postNum: data + 1, // 마지막 postNum + 1
-                            brdNo: { brdNo: BoardType },
-                            id: {id: userId}
-                        })
-                    })
-                        .then(response => {
-                            if (response.ok) {
-                                alert('저장완료.');
-                                navigate(-1);
-                            } else {
-                                alert('저장되지않았습니다.');
-                            }
-                        })
-                        .catch(err => console.error(err))
+            var postFile1Element = document.getElementById("postFile1");
+            var formData = new FormData();
+            formData.append("postFile", postFile1Element.files[0]);
+            formData.append('post', JSON.stringify({
+                ...post,
+                // postNum: data + 1, // 마지막 postNum + 1
+                brdNo: 1,
+                id: `${userId}`
+            }));
+
+            fetch(`${SERVER_URL}/brd_posts/newEventPost`, {
+                method: 'POST',
+                // headers: { 'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundarythWrULFMIbQmqSPH' },
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('저장완료.');
+                        navigate(-1);
+                    } else {
+                        alert('저장되지않았습니다.');
+                    }
                 })
-                .catch(err => console.error(err));
+                .catch(err => console.error(err))
         } else {
             setValidationError(true);
         }
