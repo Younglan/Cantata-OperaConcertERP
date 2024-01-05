@@ -282,7 +282,7 @@ function NewEventPost(props) {
                     </div>
                 </div>
                 <div className="divrows">
-                    <div className="formHeader">첨부&nbsp;&nbsp;파일</div>
+                    <div className="formHeader">포&nbsp;&nbsp;스&nbsp;&nbsp;터</div>
                     <div className="divcolscont">
                         <Form.Control type="file" id="postFile1" name="postFile1"/>
                     </div>
