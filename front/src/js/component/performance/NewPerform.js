@@ -265,7 +265,7 @@ function NewPerform() {
                 });
             })
             .catch(error => {
-                console.error("There was a problem with the fetch operation:", error.message);
+                // console.error("There was a problem with the fetch operation:", error.message);
             })
             .finally(() => {
                 setImageLoading(false);
@@ -333,7 +333,7 @@ function NewPerform() {
                 });
             })
             .catch(error => {
-                console.error("There was a problem with the fetch operation:", error.message);
+                // console.error("There was a problem with the fetch operation:", error.message);
             })
             .finally(() => {
                 setImageLoading(false);
@@ -455,7 +455,10 @@ function NewPerform() {
                 alert('저장되지않았습니다.');
             }
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+            // console.error(err);
+            navigate("/errorPage");
+        })
     }
     
 }

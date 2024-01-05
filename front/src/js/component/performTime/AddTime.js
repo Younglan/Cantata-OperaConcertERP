@@ -85,7 +85,7 @@ function AddTime(props){
             }
         })
         .catch(err => {
-            console.error(err);
+            // console.error(err);
             navigate("/errorPage");
         });
     }

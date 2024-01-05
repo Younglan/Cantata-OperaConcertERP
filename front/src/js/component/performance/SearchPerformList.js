@@ -55,7 +55,7 @@ function SearchPerformList(){
                 setPerformances(filteredPerforms.slice(startIndex, endIndex));
             })
             .catch(err => {
-                console.error(err);
+                // console.error(err);
                 navigate("/errorPage");
             });
     };
@@ -121,7 +121,7 @@ function SearchPerformList(){
                 
         })
         .catch(err => {
-            console.error(err);
+            // console.error(err);
             navigate("/errorPage");
         });
         }
@@ -148,7 +148,7 @@ function SearchPerformList(){
                 
         })
         .catch(err => {
-            console.error(err);
+            // console.error(err);
             navigate("/errorPage");
         });
         }
