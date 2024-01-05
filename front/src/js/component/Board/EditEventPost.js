@@ -278,7 +278,7 @@ return (
         <div className='contents'>
             {/* <form> */}
             <div>
-                <h1>이벤트 글쓰기</h1>
+                <h1>이벤트 수정</h1>
             </div>
             <div className="divrows">
                 <div className="formHeader">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</div>
