@@ -5,11 +5,11 @@ import {useNavigate} from "react-router-dom";
 function RentalComplete(){
     const navigate = useNavigate();
     const gorent = () => {
-         navigate("/rentList");
+         navigate("/mypage");
     }
 
     const handleRedirect = () => {
-        navigate(-1);
+        navigate("/");
       };
     return(     
     <div className="background">

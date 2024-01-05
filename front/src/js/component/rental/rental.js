@@ -133,37 +133,6 @@ useEffect(() => {
   fetchData();
 }, [stDate, edDate]);
 
-
-
-//공연 일정 체크
-// const parformDateCheck = async () => {
-//   try {
-//   console.log(stDate+edDate);
-//   const sendStartDate = new Date(moment(stDate).format("YYYY-MM-DD"));//Db
-//   const sendStartDate2 = format(stDate, 'yyyy-MM-dd', { locale: ko });//중복체크
-//   const sendEndDate = new Date(moment(edDate).format("YYYY-MM-DD"));
-//   const sendEndDate2 = format(edDate, 'yyyy-MM-dd', { locale: ko });
-//   //백엔드요청
-//   const response = await fetch(SERVER_URL + "/performances/checkPerformDate?plantNo=" + text.plantNo.plantNo + "&startDate=" + sendStartDate2 + "&endDate=" + sendEndDate2);
-//   const data = await response.json();
-
-//   console.log(data);
-
-//   if (data === true) {
-//     setDateCheck(null);
-//     setText(prevState => ({ ...prevState, plantNo: text.plantNo, rent_start: sendStartDate, rent_end: sendEndDate }));
-//   } else {
-//     setDateCheck(() => {
-//       alert('해당 날짜와 공연장에 개설할 수 없습니다.');
-//       setStDate("");
-//       setEdDate("");
-//     });
-//   }
-// } catch (error) {
-//   console.error(error);
-// }
-// }
-
 //대관 일정 체크
 const rentalDateCheck = async () => {
   try {
