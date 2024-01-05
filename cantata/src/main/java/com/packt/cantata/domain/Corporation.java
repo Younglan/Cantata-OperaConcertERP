@@ -24,7 +24,7 @@ import lombok.Setter;
 public class Corporation {
 	@Id
 	@Column(nullable = false, updatable=false)
-	private String cp_no;
+	private String cpNo;
 	@Column(nullable = false)
 	private String cp_name;
 	private String cp_addre;
@@ -34,21 +34,21 @@ public class Corporation {
 	@JoinColumn(name = "id")
 	private User id;
 	
-	public Corporation(String cp_no, User id, String cp_name, String cp_addre, String ceo) { 
+	public Corporation(String cpNo, User id, String cp_name, String cp_addre, String ceo) { 
 		super();
-		this.cp_no = cp_no;
+		this.cpNo = cpNo;
 		this.id = id;
 		this.cp_name = cp_name;
 		this.cp_addre = cp_addre;
 		this.ceo = ceo;
 	}
-	public Corporation(String ceo, String cp_no) { 
+	public Corporation(String ceo, String cpNo) { 
 		super();
-		this.cp_no = cp_no;
+		this.cpNo = cpNo;
 		this.ceo = ceo;
 	}
 	
 	@JsonIgnore
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cp_no")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cpNo")
 	private List<Rental> rentals;
 }
