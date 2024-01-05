@@ -109,11 +109,12 @@ function NewPerform() {
         }
     }
     const handlePlantChange = (selectdPlant) =>{
+        setPerform(prevState => ({ ...prevState, plantNo: selectdPlant }));
         if(stDate && edDate && selectdPlant){
-            console.log("Start : "+stDate+", End : "+ edDate+", plantNo : "+selectdPlant);
+            
             performDateCheck(stDate, edDate, selectdPlant);
         }
-        setPerform(prevState => ({ ...prevState, plantNo: selectdPlant }));
+        
     }
 
     //일정 체크
@@ -264,7 +265,7 @@ function NewPerform() {
                 });
             })
             .catch(error => {
-                console.error("There was a problem with the fetch operation:", error.message);
+                // console.error("There was a problem with the fetch operation:", error.message);
             })
             .finally(() => {
                 setImageLoading(false);
@@ -332,7 +333,7 @@ function NewPerform() {
                 });
             })
             .catch(error => {
-                console.error("There was a problem with the fetch operation:", error.message);
+                // console.error("There was a problem with the fetch operation:", error.message);
             })
             .finally(() => {
                 setImageLoading(false);
@@ -454,7 +455,10 @@ function NewPerform() {
                 alert('저장되지않았습니다.');
             }
         })
-        .catch(err => console.error(err))
+        .catch(err => {
+            // console.error(err);
+            navigate("/errorPage");
+        })
     }
     
 }
@@ -487,8 +491,6 @@ function NewPerform() {
                     <div className="formHeader">장&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</div>
                         <div className="divcolscont">
                         <Form.Select aria-label="Default select example" className="fullwidth" name="plantNo" value={perform.plantNo} onChange={(event) => handlePlantChange(event.target.value)} >
-                            {/* <option value="오디토리움">오디토리움</option>
-                            <option value="퍼포먼스홀">퍼포먼스홀</option> */}
                             {/* plants 리스트를 매핑하여 option 요소를 동적으로 생성 */}
                             <option value="">공연장을 선택하세요.</option>
                             {plants.map(plant => (

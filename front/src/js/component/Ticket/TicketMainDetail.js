@@ -26,7 +26,7 @@ function TicketMainDetail(){
     const leftS = [48, 32, 8, 48, 72, 80];
     
     useEffect(()=>{
-     console.log(ticketInfo);
+     
       fetch(`http://localhost:8090/ticket/pftimeDtl/?pfCode=${ticketInfo.state.pfcode}`,{
         headers: { 
         'Authorization': token
@@ -74,7 +74,7 @@ function TicketMainDetail(){
                 }});
           const data = await response.json();
           await setTime(data);
-          console.log(data);
+          
         }
         catch(e){
           console.error(e);

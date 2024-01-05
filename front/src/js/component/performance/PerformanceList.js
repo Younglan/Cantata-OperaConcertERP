@@ -15,7 +15,7 @@ function PerformanceList(){
     const [uploadOpen, setUploadOpen] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [pageSize, setPageSize] = useState(5);
+    const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
   
 
@@ -49,7 +49,7 @@ function PerformanceList(){
                 setPerformances(filteredPerforms.slice(startIndex, endIndex));
             })
             .catch(err => {
-                console.error(err);
+                // console.error(err);
                 navigate("/errorPage");
             });
     };
@@ -115,7 +115,7 @@ function PerformanceList(){
                 
             })
             .catch(err => {
-                console.error(err);
+                // console.error(err);
                 navigate("/errorPage");
             });
         }
@@ -142,7 +142,7 @@ function PerformanceList(){
                 
             })
             .catch(err => {
-                console.error(err);
+                // console.error(err);
                 navigate("/errorPage");
             });
         }

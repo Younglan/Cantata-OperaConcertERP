@@ -54,7 +54,7 @@ function RentalListad(){
         .then(response => response.json())
         .then(data => {
             // const filteredrental = data.filter((rental) => rental.rent_status === "wait");
-                console.log(data);
+                
                 setRental(data);
             })
         .catch(err => console.error(err));
@@ -75,7 +75,7 @@ function RentalListad(){
                  {method: 'DELETE',
             })
             .then(response => {
-                console.log(response)
+                
                 if(response.ok){
                     setRental(prevRental => prevRental.filter(row => row.rentNo !== rentNo));
                 }else{

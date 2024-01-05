@@ -5,12 +5,12 @@ import { Snackbar } from "@mui/material";
 import './TimeList.css';
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-import AddTime from './AddTime';
+import AddAllTime from './AddAllTime';
 dayjs.locale("ko");
 
 const SERVER_URL='http://localhost:8090';
 
-function TimeList(){
+function AllTimeList(){
     // pfCode : URL로부터 가져옴
     const { pfCode: pfCodeFromParams } = useParams();
     const [pfCode, setPfCode] = useState(pfCodeFromParams);
@@ -67,7 +67,7 @@ function TimeList(){
     const fetchTimeList= () => {
         const startIndex = (currentPage - 1) * pageSize;
         const endIndex = startIndex + pageSize;
-        fetch(SERVER_URL+'/perform_times/pfTimeList/'+pfCode)
+        fetch(SERVER_URL+'/perform_times/allTimeList')
         .then(response => response.json())
         .then(data => {
             //상태 체크 후 pfStatus가 ture인것만 표시
@@ -81,21 +81,6 @@ function TimeList(){
             navigate("/errorPage");
         });
 
-        fetch(SERVER_URL+'/performances/selectedPerform/'+pfCode)
-        .then(response => response.json())
-        .then(data => {
-            setPfTitle(data.pfTitle);
-            setPfStart(data.pfStart);
-            setPfEnd(data.pfEnd);
-            setPfRuntime(data.pfRuntime);
-            // data 객체에서 plant_no의 plantNo 속성만을 가져와서 setPlantNo로 설정
-            const plantNo = data.plantNo?.plantNo;
-            setPlantNo(plantNo);
-        })
-        .catch(err => {
-            // console.error(err);
-            navigate("/errorPage");
-        });
     };
 
     const onDelClick = (ptNo) => {
@@ -143,7 +128,6 @@ function TimeList(){
             }
         })
         .catch(err => {
-            // console.error(err);
             navigate("/errorPage");
         });
     }
@@ -168,7 +152,7 @@ function TimeList(){
         return(
             <React.Fragment>
                 <h3 className='contentH3'> 저장된 데이터가 없습니다. </h3>
-                <AddTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime} sendPlantNo={plantNo}/>
+                <AddAllTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime} sendPlantNo={plantNo}/>
                 <button className='grayButton' onClick={handleRedirect}>뒤로가기</button> 
             </React.Fragment>
         ) ;
@@ -204,7 +188,7 @@ function TimeList(){
                         </>
                     )}
                 </div>
-                <AddTime className='redButton' addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime} sendPlantNo={plantNo}/>
+                <AddAllTime className='redButton'addTime={addTime}/>
                 <button  className='grayButton' onClick={handleRedirect}>뒤로가기</button> 
             </div>
         </React.Fragment>
@@ -212,4 +196,4 @@ function TimeList(){
 }
 
 
-export default  TimeList;
+export default  AllTimeList;

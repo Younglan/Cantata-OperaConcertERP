@@ -47,7 +47,7 @@ function PerformanceDetail(){
         .then(data => {setPlant(data);
         })
         .catch(err => {
-            console.error(err);
+            // console.error(err);
             navigate("/errorPage");
         });
         
@@ -97,7 +97,7 @@ function PerformanceDetail(){
                             </li>
                             <li>
                                 <span className='tit'>소요시간</span>
-                                <span>{perform.pfStart} ~ {perform.pfEnd}</span>
+                                <span>{perform.pfRuntime}분</span>
                             </li>
                             <li>
                                 <span className='tit'>좌석가격</span>

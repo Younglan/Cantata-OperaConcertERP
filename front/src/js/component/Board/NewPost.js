@@ -10,7 +10,7 @@ import ReactQuill, { Quill } from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
 import "react-quill/dist/quill.snow.css";
 
-Quill.register("modules/imageResize", ImageResize);
+// Quill.register("modules/imageResize", ImageResize);
 const SERVER_URL = 'http://localhost:8090';
 
 function NewPost(props) {
@@ -274,7 +274,7 @@ function NewPost(props) {
             <div className='contents'>
                 {/* <form> */}
                 <div>
-                    <h1>글쓰기 폼</h1>
+                    <h1>글쓰기</h1>
                 </div>
                 <div className="divrows">
                     <div className="formHeader"><p>{boardName}</p></div>

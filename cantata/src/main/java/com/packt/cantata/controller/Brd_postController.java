@@ -115,15 +115,17 @@ public class Brd_postController {
         return ResponseEntity.ok().body(0L);  // 0을 반환하거나 다른 기본값을 반환
     }
     
-    @GetMapping("/lastPostNo/{brdNo}")
-    public ResponseEntity<Long> getLastPostNoForBrdNo(@PathVariable Long brdNo) {
-    	try {
-        Long lastPostNoForBrdNo = postService.getTopByPostNoForBrdNo(brdNo);
-        return ResponseEntity.ok(lastPostNoForBrdNo);
-    	}catch(Exception e) {
-    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-    	}
+     @GetMapping("/latest/{brdNo}")
+    public ResponseEntity<Brd_post> getLatestPost(@PathVariable Brd_division brdNo) {
+        Brd_post latestPost = postService.findLatestPostByStatusAndBrdNo(true, brdNo);
+        if (latestPost != null) {
+            return ResponseEntity.ok(latestPost);
+        } else {
+            // 원하는 응답 형태에 맞게 수정
+            return ResponseEntity.notFound().build();
+        }
     }
+    
     
     @GetMapping("/lastPostNum/{brdNo}")
     public ResponseEntity<Long> getLastPostNumForBrdNo(@PathVariable Long brdNo) {
