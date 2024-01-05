@@ -8,6 +8,7 @@ import PerformanceList from '../component/performance/PerformanceList';
 import RentalListad from '../component/rental/RentalListad';
 import UserList from '../component/UserPage/UserList';
 import TicketAdmin from '../component/Ticket/TicketAdmin';
+import PerformAdminMenu from '../component/performance/PerformAdminMenu';
 const SERVER_URL = 'http://localhost:8090';
 // import TicketCheck from '../component/Ticket/TicketCheck';
 const AdminPage = () => {
@@ -82,8 +83,8 @@ const AdminPage = () => {
             {isContentMenuVisible === 0 && (
                 <ButtonGroup aria-label="PerformanceMenu">
                     <Button variant="secondary" onClick={() => setSelectedBoard(1)}>공연일정</Button>
-                    <Button variant="secondary">옵션2</Button>
-                    <Button variant="secondary">옵션3</Button>
+                    <Button variant="secondary" onClick={() => setSelectedBoard(2)}>전체 회차 리스트</Button>
+
                 </ButtonGroup>
             )}
 
@@ -125,9 +126,9 @@ const AdminPage = () => {
             )}
 
             <div className="content">
-                {selectedBoard !== null && isContentMenuVisible === 0 && <PerformanceList />}
+                {selectedBoard !== null && isContentMenuVisible === 0 && <PerformAdminMenu ListType={selectedBoard} />}
                 {/* {selectedBoard !== null && isContentMenuVisible === 1 && <예약관리 페이지 />} */}
-                {/* {selectedBoard !== null && isContentMenuVisible === 2 && <RentalList />} */}
+                {selectedBoard !== null && isContentMenuVisible === 2 && <RentalListad />}
                 {selectedBoard !== null && isContentMenuVisible === 1&&<TicketAdmin/>}
                 {selectedBoard !== null && isContentMenuVisible === 3 && <UserList/>}
                 {selectedBoard !== null && isContentMenuVisible === 4 && <Board BoardType={selectedBoard} />}

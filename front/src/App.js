@@ -35,6 +35,7 @@ import PlantDetail from './js/component/plant/plantDetail';
 import RentalListad from './js/component/rental/RentalListad';
 import TicketCheck from './js/component/Ticket/TicketCheck';
 import SearchPerformList from './js/component/performance/SearchPerformList';
+import AllTimeList from './js/component/performTime/AllTimeList';
 
 
 function App() {
@@ -76,6 +77,7 @@ function App() {
           <Route path="/ticketcheck/:check" element={<Redirect component={<TicketCheck />} auth="ADMIN"/>} />
           <Route path="/SearchPerformList/:keyword" element={<SearchPerformList />} />
           <Route path="/UserList" element={<Redirect component={<UserList />} auth="ADMIN"/>} />
+          <Route path="/AllTimeList" element={<Redirect component={<AllTimeList />} auth="ADMIN"/>} />
         </Routes>
       </Router>
       <Footer />
