@@ -44,3 +44,22 @@
 .grayButton:hover {
     background-color: dimgray;
 }
+.ptList > .css-wop1k0-MuiDataGrid-footerContainer{
+    display: none;
+}
+.ptContent >.pagination{
+    margin-top: 20px;
+}
+.ptContent >.pagination > button{
+    border-radius: 20px;
+    width: 40px;
+    height: 40px;
+    border: 0px;
+    background-color: #dbdbdb; 
+    color: black; 
+}
+.ptContent >.pagination >.activeButton {
+    background-color: #BB2649; 
+    color: #ffffff; 
+    font-weight: bold;
+}

@@ -42,7 +42,7 @@ function TicketAdmin(){
                 }})
             .then(response => response.json())
             .then(data => {
-                console.log(moment(data[0].tic_date).format("YYYY년 MM월 DD일 (dd) HH시mm분"));
+                
                 setTicket(data);
             })
             .catch(err => {

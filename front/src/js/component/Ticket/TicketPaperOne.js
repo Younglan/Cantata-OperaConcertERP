@@ -5,7 +5,7 @@ import { Table, TableCell, TableContainer, TableRow } from "@mui/material";
 import QRCode from "qrcode.react";
 import "./css/TicketPaper.css"
 const TicketPaperOne = forwardRef((ticket, ref)=>{
-  console.log(ticket);
+  
     return(
         <section ref={ref} className="paper_sec">
         

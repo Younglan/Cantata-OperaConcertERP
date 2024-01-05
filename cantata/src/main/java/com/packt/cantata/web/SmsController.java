@@ -4,10 +4,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.packt.cantata.domain.User;
+import com.packt.cantata.domain.UserRepository;
+import com.packt.cantata.service.LoginService;
 
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
@@ -18,6 +24,10 @@ import net.nurigo.sdk.message.service.DefaultMessageService;
 @RestController 
 public class SmsController {
 	final DefaultMessageService messageService;
+	@Autowired
+	private LoginService loginService;
+	@Autowired
+	private UserRepository usrrepo;
 	private Map<String, String> phoneVerificationMap = new HashMap<>();
     public SmsController() {
         // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
@@ -49,4 +59,15 @@ public class SmsController {
         }
         
 	}
+	@RequestMapping(value="/Duple", method=RequestMethod.GET) 
+	public ResponseEntity<Boolean> checkDuple(@RequestParam("type") String type, @RequestParam("value") String value) {
+		System.out.println(loginService.checkDuplicate(type, value));
+		 return ResponseEntity.ok(loginService.checkDuplicate(type, value));
+    }
+	
+	@RequestMapping(value="/findid", method=RequestMethod.GET) 
+	public ResponseEntity<User> showId(@RequestParam("tel") String tel) {
+		System.out.println(tel);
+		 return ResponseEntity.ok(usrrepo.findTelByTel(tel));
+    }	
 }

@@ -9,7 +9,7 @@ import ReactQuill, { Quill } from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
 import "react-quill/dist/quill.snow.css";
 
-Quill.register("modules/imageResize", ImageResize);
+// Quill.register("modules/imageResize", ImageResize);
 const SERVER_URL = 'http://localhost:8090';
 
 function EditEventPost(props) {
@@ -278,7 +278,7 @@ return (
         <div className='contents'>
             {/* <form> */}
             <div>
-                <h1>이벤트 글쓰기</h1>
+                <h1>이벤트 수정</h1>
             </div>
             <div className="divrows">
                 <div className="formHeader">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</div>

@@ -20,7 +20,7 @@ function ChangeInformation() {
       };
     const updatePassword = () =>{
       if(pwd!==null){
-      console.log(pwd);
+      
       const token = sessionStorage.getItem("jwt");
         fetch(`http://localhost:8090/user/pwdchange/?pwd=${pwd}`, {
           method: "POST",

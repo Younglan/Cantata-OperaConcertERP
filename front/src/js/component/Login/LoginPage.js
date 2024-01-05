@@ -48,7 +48,7 @@ function LoginPage() {
           
           if (jwtToken !== null) {
             sessionStorage.setItem("jwt", jwtToken);
-            console.log(parseJwt(jwtToken))
+            
             setAuth(true);
             updateRecentDate();
           }

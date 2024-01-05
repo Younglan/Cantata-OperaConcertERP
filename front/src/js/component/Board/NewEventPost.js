@@ -10,7 +10,7 @@ import ReactQuill, { Quill } from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
 import "react-quill/dist/quill.snow.css";
 
-Quill.register("modules/imageResize", ImageResize);
+// Quill.register("modules/imageResize", ImageResize);
 const SERVER_URL = 'http://localhost:8090';
 
 function NewEventPost(props) {
@@ -265,7 +265,7 @@ function NewEventPost(props) {
             <div className='contents'>
                 {/* <form> */}
                 <div>
-                    <h1>이벤트 글쓰기</h1>
+                    <h1>이벤트</h1>
                 </div>
                 <div className="divrows">
                     <div className="formHeader">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</div>
@@ -282,7 +282,7 @@ function NewEventPost(props) {
                     </div>
                 </div>
                 <div className="divrows">
-                    <div className="formHeader">첨부&nbsp;&nbsp;파일</div>
+                    <div className="formHeader">베너&nbsp;&nbsp;썸네일</div>
                     <div className="divcolscont">
                         <Form.Control type="file" id="postFile1" name="postFile1"/>
                     </div>

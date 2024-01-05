@@ -59,7 +59,7 @@ function RentalList(){
         .then(response => response.json())
         .then(data => {
             // const filteredrental = data.filter((rental) => rental.rent_status === "wait");
-                console.log(data);
+                
                 setRental(data);
             })
         .catch(err => console.error(err));
@@ -80,7 +80,7 @@ function RentalList(){
                  {method: 'DELETE',
             })
             .then(response => {
-                console.log(response)
+                
                 if(response.ok){
                     setRental(prevRental => prevRental.filter(row => row.rentNo !== rentNo));
                 }else{
@@ -103,7 +103,7 @@ function RentalList(){
           }),
         })
           .then((response) => {
-            console.log(response);
+            
             if (response.ok) {
                 setRental((prevRental) => prevRental.map(row => row.rentNo === rentNo ? { ...row, rent_status: '결제완료' } : row));
             } else {

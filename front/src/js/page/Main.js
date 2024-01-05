@@ -51,7 +51,7 @@ const Main = () => {
                     setPosts([]);
                 }
             } catch (err) {
-                console.error(err);
+                navigate("/errorPage");
             }
         };
 
@@ -80,7 +80,7 @@ const Main = () => {
                     setEventPosts([]);
                 }
             } catch (err) {
-                console.error(err);
+                navigate("/errorPage");
             }
         };
 

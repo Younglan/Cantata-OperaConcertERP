@@ -17,7 +17,7 @@ function PlantDetail(){
   useEffect(() => {
     // 5초마다 이미지 변경
     const interval = setInterval(() => {
-      setImageIndex((prevIndex) => (prevIndex + 1) % imageURLs.length);console.log(imageURLs);
+      setImageIndex((prevIndex) => (prevIndex + 1) % imageURLs.length);
     }, 5000);
 
     // 컴포넌트 언마운트 시 clearInterval로 메모리 누수 방지

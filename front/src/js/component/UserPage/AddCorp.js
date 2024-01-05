@@ -15,8 +15,7 @@ function AddCorp() {
     const handleInputChange = (e) =>{
         const {name, value} = e.target;
         setCorpdata({...corpdata, [name]:value})
-        console.log(corpdata);
-        console.log(state)
+       
     }
     const fetchCorp = () =>{
         const token = sessionStorage.getItem("jwt");
@@ -28,7 +27,7 @@ function AddCorp() {
           })
            
             .then((response) => {
-              console.log(response)
+              
               if (response.ok) {
                 navigate("/");
               } else {
