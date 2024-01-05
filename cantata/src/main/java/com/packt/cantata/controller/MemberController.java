@@ -41,17 +41,6 @@ public class MemberController {
 		return ResponseEntity.ok(new User(userr.getAuth()));
     }
 	
-	@RequestMapping(value="/Duple", method=RequestMethod.GET) 
-	public ResponseEntity<Boolean> checkDuple(@RequestParam("type") String type, @RequestParam("value") String value) {
-		System.out.println(loginService.checkDuplicate(type, value));
-		 return ResponseEntity.ok(loginService.checkDuplicate(type, value));
-    }
-	
-	@RequestMapping(value="/findid", method=RequestMethod.GET) 
-	public ResponseEntity<User> showId(@RequestParam("tel") String tel) {
-		System.out.println(tel);
-		 return ResponseEntity.ok(usrrepo.findTelByTel(tel));
-    }	
 	@RequestMapping(value="/pwdchan") 
 	@Transactional
 	public void changePwd(@RequestParam("id") String id, @RequestParam("pwd") String pwd){

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.packt.cantata.domain.Brd_division;
 import com.packt.cantata.domain.Brd_post;
 import com.packt.cantata.domain.Brd_postRepository;
 
