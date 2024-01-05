@@ -36,7 +36,7 @@ export default function RentalApps() {
     rent_end:'',
     rent_regidate:`${moment(new Date()).format("yyyy-MM-DD")}`,
     plantNo:'',
-    cp_no:'',
+    cpNo:'',
     rent_pay:'카드',
   });
   const [plants, setPlants] = useState([]);
@@ -78,7 +78,7 @@ export default function RentalApps() {
       .then(response =>{console.log(response)
           if(response){
               alert('저장완료.');
-              navigate("/Rentcom");
+              navigate("/Rentcom"); // 마이페이지 대관내역으로 이동후 본인내역만 보이도록 수정 요망.
               
           }else{
               alert('저장되지않았습니다.');
@@ -89,7 +89,7 @@ export default function RentalApps() {
   const fetchFindcp = () => {
     fetch(`http://localhost:8090/corporations/getcop/?id=${parseJwt(token)}`, { headers: { 'Authorization': token } })
       .then(response => response.json())
-      .then((data) => {console.log(data);setCp(data); setText({...text, cp_no:{cp_no:data.cp_no}});})
+      .then((data) => {console.log(data);setCp(data); setText({...text, cpNo:{cpNo:data.cpNo}});})
       .catch(err => console.error(err));
   }
   const fetchFindPlant = () => {
@@ -125,7 +125,7 @@ const handleEndChange = (selectedDate) => {
 useEffect(() => {
   const fetchData = async () => {
     if (stDate && edDate) {
-      await parformDateCheck();
+      // await parformDateCheck();
       await rentalDateCheck();
     }
   };
@@ -136,33 +136,33 @@ useEffect(() => {
 
 
 //공연 일정 체크
-const parformDateCheck = async () => {
-  try {
-  console.log(stDate+edDate);
-  const sendStartDate = new Date(moment(stDate).format("YYYY-MM-DD"));//Db
-  const sendStartDate2 = format(stDate, 'yyyy-MM-dd', { locale: ko });//중복체크
-  const sendEndDate = new Date(moment(edDate).format("YYYY-MM-DD"));
-  const sendEndDate2 = format(edDate, 'yyyy-MM-dd', { locale: ko });
-  //백엔드요청
-  const response = await fetch(SERVER_URL + "/performances/checkPerformDate?plantNo=" + text.plantNo.plantNo + "&startDate=" + sendStartDate2 + "&endDate=" + sendEndDate2);
-  const data = await response.json();
+// const parformDateCheck = async () => {
+//   try {
+//   console.log(stDate+edDate);
+//   const sendStartDate = new Date(moment(stDate).format("YYYY-MM-DD"));//Db
+//   const sendStartDate2 = format(stDate, 'yyyy-MM-dd', { locale: ko });//중복체크
+//   const sendEndDate = new Date(moment(edDate).format("YYYY-MM-DD"));
+//   const sendEndDate2 = format(edDate, 'yyyy-MM-dd', { locale: ko });
+//   //백엔드요청
+//   const response = await fetch(SERVER_URL + "/performances/checkPerformDate?plantNo=" + text.plantNo.plantNo + "&startDate=" + sendStartDate2 + "&endDate=" + sendEndDate2);
+//   const data = await response.json();
 
-  console.log(data);
+//   console.log(data);
 
-  if (data === true) {
-    setDateCheck(null);
-    setText(prevState => ({ ...prevState, plantNo: text.plantNo, rent_start: sendStartDate, rent_end: sendEndDate }));
-  } else {
-    setDateCheck(() => {
-      alert('해당 날짜와 공연장에 개설할 수 없습니다.');
-      setStDate("");
-      setEdDate("");
-    });
-  }
-} catch (error) {
-  console.error(error);
-}
-}
+//   if (data === true) {
+//     setDateCheck(null);
+//     setText(prevState => ({ ...prevState, plantNo: text.plantNo, rent_start: sendStartDate, rent_end: sendEndDate }));
+//   } else {
+//     setDateCheck(() => {
+//       alert('해당 날짜와 공연장에 개설할 수 없습니다.');
+//       setStDate("");
+//       setEdDate("");
+//     });
+//   }
+// } catch (error) {
+//   console.error(error);
+// }
+// }
 
 //대관 일정 체크
 const rentalDateCheck = async () => {
@@ -273,40 +273,6 @@ const rentalDateCheck = async () => {
                     '& > :not(style)': { width: '50ch' },
                   }}/>
     </Box>
-    {/* <Box
-      component="form"
-      className='model'
-      sx={{
-        '& > :not(style)': {width: '20ch' },
-      }}
-      
-    > 
-       <TextField InputProps={{ readOnly: true, style: { color: "black"}}} 
-                  variant="filled"
-                  className= "paragraph" defaultValue={"장르"}
-        /> 
-      <TextField id="input1" variant="outlined" name = "Genre"
-                     sx={{
-                    '& > :not(style)': { width: '50ch' },
-                  }}/>
-    </Box>
-    <Box
-      component="form"
-      className='model'
-      sx={{
-        '& > :not(style)': {width: '20ch' },
-      }}
-      
-    > 
-       <TextField InputProps={{ readOnly: true, style: { color: "black"}}} 
-                  variant="filled"
-                  className= "paragraph" defaultValue={"활동주요내용"}
-        /> 
-      <TextField id="input1" variant="outlined"  name = "Content"
-                    sx={{
-                    '& > :not(style)': { width: '50ch' },
-                  }}/>
-    </Box> */}
     <Box sx={{ flexGrow: 2, marginTop:'50px'}}>
     <div className='applicant2'>
         <h2>대관기간</h2> 

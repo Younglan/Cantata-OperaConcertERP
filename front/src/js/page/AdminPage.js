@@ -9,6 +9,7 @@ import RentalListad from '../component/rental/RentalListad';
 import UserList from '../component/UserPage/UserList';
 import TicketAdmin from '../component/Ticket/TicketAdmin';
 import PerformAdminMenu from '../component/performance/PerformAdminMenu';
+import PlantList from '../component/plant/PlantList';
 const SERVER_URL = 'http://localhost:8090';
 // import TicketCheck from '../component/Ticket/TicketCheck';
 const AdminPage = () => {
@@ -37,6 +38,9 @@ const AdminPage = () => {
             setSelectedBoard(1);
         }else if (props === 'adminTicket'){
             setContentMenuVisible(1);
+            setSelectedBoard(1);
+        }else if (props === 'adminPlantList'){
+            setContentMenuVisible(5);
             setSelectedBoard(1);
         }
         
@@ -75,6 +79,7 @@ const AdminPage = () => {
             <ButtonGroup aria-label="Basic example">
                 <Button variant="secondary" onClick={() => setContentMenuVisible(0)}>공연관리</Button>
                 <Button variant="secondary" onClick={() => setContentMenuVisible(1)}>예약관리</Button>
+                <Button variant="secondary" onClick={() => setContentMenuVisible(5)}>시설관리</Button>
                 <Button variant="secondary" onClick={() => setContentMenuVisible(2)}>대관관리</Button>
                 <Button variant="secondary" onClick={() => setContentMenuVisible(3)}>회원관리</Button>
                 <Button variant="secondary" onClick={() => setContentMenuVisible(4)}>홈페이지컨텐츠관리</Button>
@@ -124,11 +129,20 @@ const AdminPage = () => {
                     </ButtonGroup>
                 </div>
             )}
+             {/* 시설관리 버튼에 대한 ButtonGroup */}
+             {isContentMenuVisible === 5 && (
+                <ButtonGroup aria-label="PlantMenu">
+                    <Button variant="secondary">옵션X</Button>
+                    <Button variant="secondary">옵션Y</Button>
+                    <Button variant="secondary">옵션Z</Button>
+                </ButtonGroup>
+            )}
 
             <div className="content">
                 {selectedBoard !== null && isContentMenuVisible === 0 && <PerformAdminMenu ListType={selectedBoard} />}
                 {/* {selectedBoard !== null && isContentMenuVisible === 1 && <예약관리 페이지 />} */}
                 {selectedBoard !== null && isContentMenuVisible === 2 && <RentalListad />}
+                {selectedBoard !== null && isContentMenuVisible === 5&&<PlantList/>}
                 {selectedBoard !== null && isContentMenuVisible === 1&&<TicketAdmin/>}
                 {selectedBoard !== null && isContentMenuVisible === 3 && <UserList/>}
                 {selectedBoard !== null && isContentMenuVisible === 4 && <Board BoardType={selectedBoard} />}

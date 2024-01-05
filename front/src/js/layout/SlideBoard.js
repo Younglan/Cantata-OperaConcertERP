@@ -47,6 +47,9 @@ const SlideBoard = ({ isOpen, toggleBoard }) => {
     const goToRenalApp = () =>{
         navigate("/RentApp");
     }
+    const goToPlantList = () =>{
+      navigate("/PlantList");
+    }
     
     const goToAdminPage = (page) =>{
         navigate(`/adminpage/${page}`);
@@ -193,7 +196,10 @@ const SlideBoard = ({ isOpen, toggleBoard }) => {
               >
                 <h1>센터소개</h1>
               </li>
-              <li>
+              <li onClick={() => {
+                goToPlantList();
+                handleToggle();
+                }}>
                 <h1>시설소개</h1>
               </li>
             </ul>
@@ -207,6 +213,9 @@ const SlideBoard = ({ isOpen, toggleBoard }) => {
                 </li>
                 <li onClick={()=>goToAdminPage("adminTicket")}>
                   <h1>예매관리</h1>
+                </li>
+                <li onClick={() => goToAdminPage("adminPlantList")}>
+                  <h1>시설관리</h1>
                 </li>
                 <li onClick={() => goToAdminPage("adminRentals")}>
                   <h1>대관관리</h1>
