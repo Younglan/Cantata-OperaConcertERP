@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import dayjs from 'dayjs';
 import { Snackbar } from '@mui/material';
+import "./css/RentalList.css";
+import { parseJwt } from '../../../loginUtil';
 // import { useNavigate } from "react-router-dom";
 
 // const SERVER_URL='http://localhost:8090';
@@ -17,7 +19,7 @@ function RentalList(){
 
     const columns = [ 
 
-        {field: 'cp_no', headerName: '신청인명',headerAlign: 'center'
+        {field: 'cpNo', headerName: '신청인명',headerAlign: 'center'
         ,valueFormatter: (params) => params.value.ceo}, 
 
         {field: 'rent_start', headerName: '시작날짜', width: 150,headerAlign: 'center'
@@ -49,9 +51,11 @@ function RentalList(){
          )
         }
     ];
+
     
     const fetchRentals= () => {
-        fetch('http://localhost:8090/rentals/allrental',{method:"GET"})
+        
+        fetch(`http://localhost:8090/rentals/selectrent?id=${parseJwt(token)}`,{method:"GET"})
         .then(response => response.json())
         .then(data => {
             // const filteredrental = data.filter((rental) => rental.rent_status === "wait");
@@ -110,14 +114,14 @@ function RentalList(){
       };
 
     return(
-        <div className='contentsArea'>
+        <div className='Mytic_content' >
             <div className='contents'>
             <h1>대관 신청 목록</h1>
                 <DataGrid className='rentList'
                     rows={Rental}
                     columns={columns}
                     disableRowSelectionOnClick={true}
-                    getRowId={row => row.rentNo}/>
+                    getRowId={row => row.cpNo}/>
                  <Snackbar
                     open={open}
                     autoHideDuration={2000}

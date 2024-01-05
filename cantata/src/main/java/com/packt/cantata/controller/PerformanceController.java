@@ -138,15 +138,17 @@ public class PerformanceController {
 	
 	
 	@GetMapping("/checkPerformDate")
-	public Boolean checkPerformDate(@RequestParam Long plantNo,   @RequestParam@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-		    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate){
+	public Boolean checkPerformDate(@RequestParam Long plantNo,  
+									@RequestParam@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+								    @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate){
 		// endDate에 23:59를 추가하기 위해 LocalDateTime으로 변환 후 시간 설정
 	    LocalDateTime endDateTime = endDate.atTime(23, 59);
 	    
 		Iterable<Performance> findPerforms = pfRepository.checkPerform(plantNo, startDate, endDateTime);
 		Iterable<Rental> findRental = rentalrepository.checkRental(plantNo, startDate, endDateTime);
 
-		if((findPerforms == null || !findPerforms.iterator().hasNext()) && (findRental == null || !findRental.iterator().hasNext())) {
+		if((findPerforms == null || !findPerforms.iterator().hasNext()) 
+				&& (findRental == null || !findRental.iterator().hasNext())) {
 			return true;
 		}else {
 			return false;

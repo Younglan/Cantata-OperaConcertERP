@@ -61,12 +61,12 @@ function App() {
           <Route path="/EditEventPost/:BoardType/:postNo" element={<Redirect component={<EditEventPost/>} auth="ADMIN"/>}/>
           <Route path='/postDetail/:BoardType/:postNo' element={<PostDetail/>}/>
           <Route path='/ticket' element={<Redirect component={<Ticket/>} auth="USER"/>}/>
-          <Route path='/RentApp' element={<RentalApps/>}/>
+          <Route path='/RentApp' element={<Redirect component={<RentalApps/>}auth="USER"/>}/>
           <Route path='/RentList' element={<RentalList/>}/>
           <Route path='/Rentcom' element={<RentalComplete/>}/>
           <Route path='/Newplant' element={<Redirect component={<Newplant/>} auth="ADMIN"/>}/>
           <Route path='/PlantList' element={<PlantList/>}/>
-          <Route path='/PlantDetail' element={<PlantDetail/>}/>
+          <Route path='/PlantDetail/:plantNo' element={<PlantDetail/>}/>
           <Route path='/RentalListad' element={<RentalListad/>}/>
           <Route path='/errorPage' element={<ErrorPage/>}/>
           <Route path="/login" element={<LoginPage />} />

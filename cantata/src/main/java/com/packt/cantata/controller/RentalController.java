@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.packt.cantata.domain.Performance;
+import com.packt.cantata.domain.PerformanceRepository;
 import com.packt.cantata.domain.Rental;
 import com.packt.cantata.domain.RentalRepository;
 
@@ -32,10 +34,18 @@ public class RentalController {
 	@Autowired
 	private RentalRepository rentalrepository;
 	
+	@Autowired
+	private PerformanceRepository pfRepository;
+	
 //	@RequestMapping(value="/rentallist", method = RequestMethod.GET)
 //	public List<Rental> testget(@RequestParam("cp") String cpno){
 //		return rentalrepository.findByCpNo(cpno);
 //	}
+	@GetMapping("/selectrent")
+	public List<Rental> getselect(@RequestParam("id") String id){
+	    List<Rental> rentals = rentalrepository.findByUserIdQuery(id);
+	    return rentals;
+	}
 	@GetMapping("/allrental")
 	public List<Rental> getRental(){
 		return rentalrepository.findAll();
@@ -47,8 +57,8 @@ public class RentalController {
 		return ResponseEntity.status(HttpStatus.OK).body(tlt);
 	}
 	@DeleteMapping("/delrental")
-	public void delRental(@RequestParam("rent_no")Long rent_no){
-		 rentalrepository.deleteById(rent_no);
+	public void delRental(@RequestParam("rentNo")Long rentNo){
+		 rentalrepository.deleteById(rentNo);
 	}
 	@Transactional
 	@PutMapping("/updateStatus")
@@ -64,9 +74,10 @@ public class RentalController {
 		// endDate에 23:59를 추가하기 위해 LocalDateTime으로 변환 후 시간 설정
 	    LocalDateTime endDateTime = endDate.atTime(23, 59);
 	    
+	    Iterable<Performance> findPerforms = pfRepository.checkPerform(plantNo, startDate, endDateTime);
 		Iterable<Rental> findRental = rentalrepository.checkRental(plantNo, startDate, endDateTime);
 		
-		if(findRental == null || !findRental.iterator().hasNext()) {
+		if((findPerforms == null || !findPerforms.iterator().hasNext()) && (findRental == null || !findRental.iterator().hasNext())) {
 			return true;
 		}else {
 			return false;

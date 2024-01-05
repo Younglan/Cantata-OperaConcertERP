@@ -6,6 +6,7 @@ import ChangeInformation from "./ChangeInformation";
 import { Navigate, useNavigate } from "react-router-dom";
 import TicketFind from "../Ticket/TicketFind";
 import { flexibleCompare } from "@fullcalendar/core/internal";
+import RentalList from "../rental/RentalList";
 function Mypage(){
     const [change, setChange] = useState(1);
     const navigate = useNavigate();
@@ -83,7 +84,7 @@ function Mypage(){
                     </Button>
                 </Stack>
                 <hr />
-                {change===1?<TicketFind/>:change===2?<div>대관내역</div>:<ChangeInformation/>}
+                {change===1?<TicketFind/>:change===2?<RentalList/>:<ChangeInformation/>}
             </Stack>
         </React.Fragment>
     );
