@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import { useNavigate  } from "react-router-dom";
-import { Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
+import { Dialog, DialogActions, DialogContent} from "@mui/material";
 import Form from 'react-bootstrap/Form';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -42,6 +42,7 @@ function AddAllTime(props){
         setDate(null);
         setTime(null);
         setTimesCheck(null);
+   
         setOpen(true);
     };
     //모달 폼 닫기 
@@ -80,15 +81,18 @@ function AddAllTime(props){
 
 
     const handleDateChange = (selectedDate) => {
-        setDate(selectedDate);
+        if(!performinfo.plantNo){
+            alert('장소를 먼저 선택하세요');
+        }else{
+            setDate(selectedDate);
+            // 선택된 날짜와 시간을 이용하여 일정 중복 체크 함수 호출
+            if (selectedDate && time) {
+                //선택한 날짜값과 시간값 하나의 데이터로 합치기
+                const selectedDateTime = new Date(selectedDate);
+                selectedDateTime.setHours(time.getHours(), time.getMinutes());
 
-        // 선택된 날짜와 시간을 이용하여 일정 중복 체크 함수 호출
-        if (selectedDate && time) {
-            //선택한 날짜값과 시간값 하나의 데이터로 합치기
-            const selectedDateTime = new Date(selectedDate);
-            selectedDateTime.setHours(time.getHours(), time.getMinutes());
-
-            timeformatting(selectedDateTime);
+                timeformatting(selectedDateTime);
+            }
         }
     }
 
@@ -105,7 +109,6 @@ function AddAllTime(props){
     }
     // 선택된 날짜와 시간을 이용하여 일정 중복 체크 함수 
     const timeformatting = (selectedDateTime) =>{
-        console.log(selectedDateTime);
             const formatDate = new Date(moment(selectedDateTime).format("YYYY-MM-DD HH:mm"));
             const formatDate2 = format(selectedDateTime, 'yyyy-MM-dd HH:mm', { locale: ko });
             const ptEndtime = new Date(formatDate);

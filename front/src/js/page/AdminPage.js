@@ -74,7 +74,7 @@ const AdminPage = () => {
         <div className="AdminPage">
             <ButtonGroup aria-label="Basic example">
                 <Button variant="secondary" onClick={() => setContentMenuVisible(0)}>공연관리</Button>
-                <Button variant="secondary" onClick={() => setContentMenuVisible(1)}>예약관리</Button>
+                <Button variant="secondary" onClick={() => setContentMenuVisible(1)}>예매관리</Button>
                 <Button variant="secondary" onClick={() => setContentMenuVisible(2)}>대관관리</Button>
                 <Button variant="secondary" onClick={() => setContentMenuVisible(3)}>회원관리</Button>
                 <Button variant="secondary" onClick={() => setContentMenuVisible(4)}>홈페이지컨텐츠관리</Button>

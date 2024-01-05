@@ -7,7 +7,6 @@ const PerformAdminMenu = (props) => {
         <div>
             {listType===1 && <PerformanceList/>}
             {listType===2 && <AllTimeList/>}
-            
         </div>
     );
 }

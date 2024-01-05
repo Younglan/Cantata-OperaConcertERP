@@ -11,14 +11,6 @@ dayjs.locale("ko");
 const SERVER_URL='http://localhost:8090';
 
 function AllTimeList(){
-    // pfCode : URL로부터 가져옴
-    const { pfCode: pfCodeFromParams } = useParams();
-    const [pfCode, setPfCode] = useState(pfCodeFromParams);
-    const [pfTitle, setPfTitle] = useState([]);
-    const [pfStart, setPfStart] = useState([]);
-    const [pfEnd, setPfEnd] = useState([]);
-    const [pfRuntime, setPfRuntime] = useState([]);
-    const [plantNo, setPlantNo] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
@@ -152,7 +144,7 @@ function AllTimeList(){
         return(
             <React.Fragment>
                 <h3 className='contentH3'> 저장된 데이터가 없습니다. </h3>
-                <AddAllTime addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime} sendPlantNo={plantNo}/>
+                <AddAllTime addTime={addTime}/>
                 <button className='grayButton' onClick={handleRedirect}>뒤로가기</button> 
             </React.Fragment>
         ) ;

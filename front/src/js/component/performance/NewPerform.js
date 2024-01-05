@@ -125,7 +125,8 @@ function NewPerform() {
         const sendEndDate2 = format(edDate, 'yyyy-MM-dd', { locale: ko });
 
         //백엔드요청
-        fetch(SERVER_URL+"/performances/checkPerformDate?plantNo="+plantNo+"&startDate="+sendStartDate2+"&endDate="+sendEndDate2)
+        fetch(SERVER_URL+"/performances/checkPerformDate?plantNo="+plantNo+"&startDate="
+                +sendStartDate2+"&endDate="+sendEndDate2)
         .then(response => response.json())
         .then(data =>{
             if(data === true){
