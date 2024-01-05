@@ -46,7 +46,7 @@ function AddCorp() {
         <div className="textGroup">
           <TextField
             label="사업자 등록번호"
-            name="cp_no"
+            name="cpNo"
             fullWidth
             // value={formData.memId}
             onChange={handleInputChange}
