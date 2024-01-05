@@ -8,7 +8,7 @@ import TicketPaperOne from "./TicketPaperOne";
 
 function MyTicket({info, cancle}){
     const ref = useRef();
-    console.log(info);
+    
     return(
         <div key={info.tic_no} className="Mytic_content">
             <div className="Mytic_poster" >

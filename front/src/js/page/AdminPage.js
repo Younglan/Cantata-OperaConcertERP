@@ -20,7 +20,7 @@ const AdminPage = () => {
 
     useEffect(() => {
         // setSelectedBoard(1);
-        console.log(props);
+        
         if (props === 'adminContents') {
             setContentMenuVisible(4);
             setSelectedBoard(1);

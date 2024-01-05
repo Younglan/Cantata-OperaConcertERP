@@ -47,7 +47,7 @@ function TicketFind(){
     },[]);
     useEffect(()=>{
         setSliceData(ticketingData.slice((currentPage-1)*5,currentPage*5));
-       console.log(Math.ceil(ticketingData.length / 5));
+       
     },[currentPage,ticketingData]);
     
     return(

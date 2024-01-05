@@ -31,7 +31,7 @@ const UserList = () => {
 
     const getMemList = async() => {
         const token = sessionStorage.getItem("jwt");
-        console.log(token);
+        
         fetch(`http://localhost:8090/admin/member`, {
             headers: { 'Authorization' : token}
         })
@@ -60,9 +60,7 @@ const UserList = () => {
       } 
     }
 
-    useEffect(() => {
-        console.log(memList);
-    }, [memList]);
+  
 
     useEffect(() => {
         getMemList();

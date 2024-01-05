@@ -45,12 +45,12 @@ function SignUp() {
   const [addropen, setAddropen] = useState(false);
   const [submit, setSubmit] = useState(true);
   useEffect(() => {
-    console.log(formdata);
+    
     handleSubmit();
   }, [formdata]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    console.log(formdata);
+    
     setFormData(
       name === "addr_dtl"
         ? { ...formdata, address: `${addrall} ${value}` }
@@ -69,7 +69,7 @@ function SignUp() {
 
   //post
   const postSignUp = () => {
-    console.log(formdata);
+    
     fetch("http://localhost:8090/login/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -77,7 +77,7 @@ function SignUp() {
     })
      
       .then((response) => {
-        console.log(response)
+        
         if (response.ok) {
           navigate("/Login");
         } else {
@@ -217,7 +217,7 @@ function SignUp() {
       const response = await fetch(
         `http://localhost:8090/tel/?tel=${formdata.tel}`
       );
-      console.log(response);
+      
       setSmsInputActive(true); // SMS 입력이 활성화됨
     } catch (error) {
       console.error("SMS 발송 에러:", error);
@@ -236,15 +236,15 @@ function SignUp() {
     for (const key in formdata) {
       if (submitList.includes(key)) {
         const error = validate(key, formdata[key]);
-        console.log(error);
+        
         if (error) {
           setErrors((prevErrors) => ({ ...prevErrors, [key]: error }));
           setSubmit(true);
-          console.log("호환성확인");
+          
           return;
         }
       } else {
-        console.log("중복체크확인");
+        
         setSubmit(true);
         return;
       }
@@ -252,17 +252,17 @@ function SignUp() {
 
     if (!isSmsVerified) {
       setSmsError("SMS 인증을 완료해주세요.");
-      console.log("휴대폰인증");
+      
       setSubmit(true);
       return;
     }
     
     if (formdata.password !== passwordConfirm) {
-      console.log("비밀번호중복");
+      
       setSubmit(true);
       return;
     }
-    console.log("aaa");
+    
     setSubmit(false);
   };
 

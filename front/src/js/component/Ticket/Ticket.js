@@ -146,7 +146,7 @@ function Ticket(){
     },[seatcat]);
    
     const seatChange=useCallback((selected, seatnum, styleSeat)=>{
-        console.log(seatMax.current)
+        
         if(seatMax.current>=6){
             if(selected){
                 seatMax.current-=1;

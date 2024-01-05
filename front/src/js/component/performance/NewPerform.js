@@ -111,7 +111,7 @@ function NewPerform() {
     const handlePlantChange = (selectdPlant) =>{
         setPerform(prevState => ({ ...prevState, plantNo: selectdPlant }));
         if(stDate && edDate && selectdPlant){
-            console.log("Start : "+stDate+", End : "+ edDate+", plantNo : "+selectdPlant);
+            
             performDateCheck(stDate, edDate, selectdPlant);
         }
         
