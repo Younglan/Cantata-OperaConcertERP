@@ -10,7 +10,7 @@ import ReactQuill, { Quill } from "react-quill";
 import ImageResize from "quill-image-resize-module-react";
 import "react-quill/dist/quill.snow.css";
 
-Quill.register("modules/imageResize", ImageResize);
+// Quill.register("modules/imageResize", ImageResize);
 const SERVER_URL = 'http://localhost:8090';
 
 function NewEventPost(props) {
