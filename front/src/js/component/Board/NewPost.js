@@ -274,7 +274,7 @@ function NewPost(props) {
             <div className='contents'>
                 {/* <form> */}
                 <div>
-                    <h1>글쓰기 폼</h1>
+                    <h1>글쓰기</h1>
                 </div>
                 <div className="divrows">
                     <div className="formHeader"><p>{boardName}</p></div>
