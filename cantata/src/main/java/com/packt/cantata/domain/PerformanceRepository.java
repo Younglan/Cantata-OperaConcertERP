@@ -1,6 +1,7 @@
 package com.packt.cantata.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,9 +29,11 @@ public interface PerformanceRepository  extends JpaRepository<Performance, Long>
 	@Query(value="SELECT * FROM performance "
 			+ "	WHERE plant_no= :plantNo "
 			+ "	AND pf_status = 1 "
-			+ "	AND ((pf_start BETWEEN :startDate AND :endDate) "
+			+ " AND ((:startDate BETWEEN pf_start AND pf_end)"
+			+ " OR (:endDate BETWEEN pf_start AND pf_end)"
+			+ "	OR (pf_start BETWEEN :startDate AND :endDate) "
 			+ "	OR (pf_end BETWEEN :startDate AND :endDate));", nativeQuery=true)
-	Iterable<Performance> checkPerform(@Param("plantNo") Long plantNo, @Param("startDate") LocalDate startDate,  @Param("endDate")LocalDate endDate);
+	Iterable<Performance> checkPerform(@Param("plantNo") Long plantNo, @Param("startDate") LocalDate startDate,  @Param("endDate")LocalDateTime endDate);
 	
 	@Query(value="SELECT * FROM performance WHERE pf_status=1 AND expose = 1;", nativeQuery=true)
 	List<Performance> findByPfStatusAndExpose();

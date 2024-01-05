@@ -19,10 +19,9 @@ public class Brd_postService {
 	@Autowired
 	private Brd_postRepository postRepository;
 
-	public Long getTopByPostNoForBrdNo(Long brdNo) {
-		Long lastPostNo = postRepository.findTopByOrderByPostNoForBrdNo(brdNo);
-		return lastPostNo != null ? lastPostNo : 0L; //null값이 아닐때 brdNo값 기준 가장 큰 postNum 리턴 단 만약 null이라면 Long 0값을 리턴
-	}
+	public Brd_post findLatestPostByStatusAndBrdNo(Boolean postStatus, Brd_division brdNo) {
+        return postRepository.findTopByPostStatusAndBrdNoOrderByPostNoDesc(postStatus, brdNo);
+    }
 	
 	public Long getLastPostNumForBrdNo(Long brdNo) {
 	    Long lastPostNum = postRepository.findLastPostNumForBrdNo(brdNo);

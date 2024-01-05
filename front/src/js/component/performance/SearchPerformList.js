@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import { DataGrid,GridPagination   } from '@mui/x-data-grid';
 import './PerformanceList.css';
 import { Snackbar } from '@mui/material';
@@ -20,7 +21,10 @@ function SearchPerformList(){
     const [pageSize, setPageSize] = useState(5);
     const [totalPages, setTotalPages] = useState(1);
   
-
+    //리다이렉션 핸들러
+    const handleRedirect = () => {
+        navigate(-1);
+    };
     useEffect(() => {
         if (Object.keys(sessionStorage).length > 0) {
             // sessionStorage에 저장된 값이 하나 이상 있을 때의 처리
@@ -173,7 +177,7 @@ function SearchPerformList(){
                 <div className='contentsArea'>
                     <div className='contents'>
                         <h3>검색 된 공연이 없습니다.</h3>
-
+                        <button  className='grayButton' onClick={handleRedirect}>뒤로가기</button> 
                         {isAdmin ? <button className='redButton' onClick={() => navigate("/performList/newPerform")}>새 컨텐츠 등록</button>: null }
                     </div>
                 </div>
