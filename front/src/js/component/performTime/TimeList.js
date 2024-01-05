@@ -19,6 +19,9 @@ function TimeList(){
     const [pfEnd, setPfEnd] = useState([]);
     const [pfRuntime, setPfRuntime] = useState([]);
     const [plantNo, setPlantNo] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(1);
 
 
     const navigate = useNavigate();
@@ -59,19 +62,22 @@ function TimeList(){
 
     useEffect(() => {
         fetchTimeList();     
-    }, []);
+    }, [currentPage, pageSize]);
 
     const fetchTimeList= () => {
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
         fetch(SERVER_URL+'/perform_times/pfTimeList/'+pfCode)
         .then(response => response.json())
         .then(data => {
             //상태 체크 후 pfStatus가 ture인것만 표시
             const filteredTimes 
                 = data.filter((pfTimes) => pfTimes.ptStatus === true).reverse();
-                setTimes(filteredTimes);
+                setTotalPages(Math.ceil(filteredTimes.length / pageSize));
+                setTimes(filteredTimes.slice(startIndex, endIndex));
         })
         .catch(err => {
-            console.error(err);
+            // console.error(err);
             navigate("/errorPage");
         });
 
@@ -87,7 +93,7 @@ function TimeList(){
             setPlantNo(plantNo);
         })
         .catch(err => {
-            console.error(err);
+            // console.error(err);
             navigate("/errorPage");
         });
     };
@@ -137,10 +143,26 @@ function TimeList(){
             }
         })
         .catch(err => {
-            console.error(err);
+            // console.error(err);
             navigate("/errorPage");
         });
     }
+
+    const renderPageButtons = () => {
+        const buttons = [];
+        for (let i = 1; i <= totalPages; i++) {
+          buttons.push(
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i)}
+              className={currentPage === i ? 'activeButton' : ''}
+            >
+              {i}
+            </button>
+          );
+        }
+        return buttons;
+      };   
 
     if(times.length === 0 ){
         return(
@@ -155,7 +177,7 @@ function TimeList(){
     return(
         <React.Fragment>
             
-            <div>
+            <div className='ptContent'>
                 <h3 className='contentH3'> 회차리스트 </h3>
                 
                 <DataGrid className='ptList'
@@ -163,7 +185,25 @@ function TimeList(){
                         columns={columns}
                         disableRowSelectionOnClick={true}
                         getRowId={row => row.ptNo}/> 
+                {/* 페이징버튼 */}
+                <div className="pagination">
+                    {/* 가장 첫 페이지로 */}
+                    {currentPage > 1 && (
+                        <>
+                            <button onClick={() => setCurrentPage(1)}>{"<<"}</button>
+                            <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}>{"<"}</button>
+                        </>
+                    )}
 
+                    {renderPageButtons()}
+
+                    {currentPage < totalPages && (
+                        <>
+                            <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}>{">"}</button>
+                            <button onClick={() => setCurrentPage(totalPages)}>{">>"}</button>
+                        </>
+                    )}
+                </div>
                 <AddTime className='redButton' addTime={addTime} sendPfCode={pfCode} sendPfStart={pfStart} sendPfEnd={pfEnd} sendPfTitle={pfTitle} sendRunTime={pfRuntime} sendPlantNo={plantNo}/>
                 <button  className='grayButton' onClick={handleRedirect}>뒤로가기</button> 
             </div>
