@@ -54,7 +54,14 @@ function PerformanceDetail(){
     };
 
     const pfTimeManage = (pfCode) =>{
-        navigate("/timeList/"+pfCode);
+        const nowDate =new Date();
+        const endDate = new Date(perform.pfEnd);
+        if(endDate < nowDate){
+            alert("과거에 종료 된 공연입니다.")
+        }else{
+            navigate("/timeList/"+pfCode);
+        }
+        
     };
 
 

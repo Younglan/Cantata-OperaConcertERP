@@ -54,7 +54,11 @@ function AddAllTime(props){
     const fetchFindPerformList = () => {
         fetch(SERVER_URL+'/performances/allPerform')
         .then(response => response.json())
-        .then(data => setPerforms(data))
+        .then(data => {
+            const nowDate =new Date();
+            const filteredPerforms =  data.filter((perform) => new Date(perform.pfEnd) > nowDate).reverse();
+            setPerforms(filteredPerforms);
+        })
         .catch(err => {
             console.error(err);
             navigate("/errorPage");
@@ -70,12 +74,19 @@ function AddAllTime(props){
             const pfEnd = selectedOptionElement.getAttribute('data-pfend');
             const plantNo = selectedOptionElement.getAttribute('data-plantno');
             const pfRuntime = selectedOptionElement.getAttribute('data-pfruntime');
-    
-            setPerformTime({ ...performTime, pfCode: pfCode });
-            setPerforminfo({ pfStart: pfStart, pfEnd: pfEnd, plantNo: plantNo, pfRuntime: pfRuntime });
-    
-            setDate();
-            setTime();
+            
+            const nowDate =new Date();
+            const endDate = new Date(pfEnd);
+            if(endDate < nowDate){
+                alert("과거에 종료 된 공연입니다.")
+            }else{
+                setPerformTime({ ...performTime, pfCode: pfCode });
+                setPerforminfo({ pfStart: pfStart, pfEnd: pfEnd, plantNo: plantNo, pfRuntime: pfRuntime });
+        
+                setDate();
+                setTime();
+            }
+            
         }
     };
 

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './js/layout/Header';
 import Footer from './js/layout/Footer';
 import Main from './js/page/Main';
-import PageTest from './js/page/PageTest';
 import AdminPage from './js/page/AdminPage';
 import PerformanceDetail from './js/component/performance/PerformanceDetail';
 import PerformanceList from './js/component/performance/PerformanceList';
@@ -45,7 +44,6 @@ function App() {
         <Header />{/* 여기에 있어야 헤더에서 다른 페이지로 이동기능 사용이 가능함 */}
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/pageTest" element={<PageTest />} />
           <Route path="/Board/:BrdType" element={<Board/>}/>
           <Route path="/adminPage/:props" element={<Redirect component={<AdminPage/>} auth="ADMIN"/>}/>
           <Route path="/performList" element={<PerformanceList/>}/>
