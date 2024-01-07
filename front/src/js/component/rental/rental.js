@@ -63,7 +63,7 @@ export default function RentalApps() {
     }
 
     const handleRedirect = () => {
-      navigate(-1);
+      navigate("/");
     };
 
     function newRentalSave(){

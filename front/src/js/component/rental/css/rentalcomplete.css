@@ -3,6 +3,9 @@
     margin-top: 150px;
     margin-left: 100px;
     border-radius: 10px;
+    border: 0px;
+    color:white;
+    font-weight: bold;
     background-color: rgb(187, 38, 73);
     cursor: pointer;
     width: 250px;
@@ -12,20 +15,24 @@
 .rentalcom .button2 {
     margin-left: 100px;
     margin-top: 10px;
+    border: 0px;
     border-radius: 10px;
+    color:white;
+    font-weight: bold;
+    background-color: dimgray;
     cursor: pointer;
     width: 250px;
     height: 40px;
 }
 .background{
     background-color:#071a52 ;
-    height: 800px;
+    min-height: 500px;
+    height: auto;
   }
   .rentalcom{
-    background-image: url(../../../../img/background.jpg);
+    background-image: url(../../../../img/background2.jpg);
     background-size: cover;
-    /* background-color: white; */
-    height: 300px;
     width: 90%;
+    min-height: 400px;
     margin: auto;
   }

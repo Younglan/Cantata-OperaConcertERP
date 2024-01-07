@@ -45,7 +45,19 @@ const SlideBoard = ({ isOpen, toggleBoard }) => {
         handleToggle();
     }
     const goToRenalApp = () =>{
-        navigate("/RentApp");
+      if (Object.keys(sessionStorage).length > 0) {
+        // sessionStorage에 저장된 값이 하나 이상 있을 때의 처리
+        const corp = sessionStorage.getItem("corp");
+        console.log(corp);
+        if(corp === 'true'){
+          navigate("/RentApp");
+        }else{
+          alert("법인회원이 아닙니다.");
+          navigate("/mypage");
+        }
+    } else {
+      navigate("/RentApp");
+    }        
     }
     const goToPlantList = () =>{
       navigate("/PlantList");

@@ -14,6 +14,9 @@ function RentalList(){
     const[Rental, setRental] = useState([]);
     // const[cpname, setcpname] = useState('1');
     const [open, setOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(1);;
     const token = sessionStorage.getItem("jwt");
     
 
@@ -54,13 +57,14 @@ function RentalList(){
 
     
     const fetchRentals= () => {
-        
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
         fetch(`http://localhost:8090/rentals/selectrent?id=${parseJwt(token)}`,{method:"GET"})
         .then(response => response.json())
         .then(data => {
-            // const filteredrental = data.filter((rental) => rental.rent_status === "wait");
                 
-                setRental(data);
+                setRental(data.slice(startIndex, endIndex));
+                setTotalPages(Math.ceil(data.length / pageSize));
             })
         .catch(err => console.error(err));
        
@@ -71,7 +75,7 @@ function RentalList(){
     useEffect(() => {
         fetchRentals();
         
-    },[rentref]);
+    },[rentref, currentPage, pageSize]);
 
     const onDelClick =(rentNo) => {
         // const updatedSatusData = {rent_status : "cancel"};
@@ -91,6 +95,23 @@ function RentalList(){
         .catch(err => console.error(err))
         }
     }
+    const renderPageButtons = () => {
+        const buttons = [];
+        for (let i = 1; i <= totalPages; i++) {
+          buttons.push(
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i)}
+              className={currentPage === i ? 'activeButton' : ''}
+            >
+              {i}
+            </button>
+          );
+        }
+        return buttons;
+      };  
+
+
     // `http://localhost:8090/rentals/updateStatus/?status="결제완료"&rentno=${rentNo}`
     const onPayClick = (rentNo) => {
         fetch(`http://localhost:8090/rentals/updateStatus/?status=결제완료&rentno=${rentNo}`, {
@@ -111,10 +132,10 @@ function RentalList(){
             }
           })
           .catch((err) => console.error(err));
-      };
+      }; 
 
     return(
-        <div className='Mytic_content' >
+        <div className='Rental_content' >
             <div className='contents'>
             <h1>대관 신청 목록</h1>
                 <DataGrid className='rentList'
@@ -122,6 +143,25 @@ function RentalList(){
                     columns={columns}
                     disableRowSelectionOnClick={true}
                     getRowId={row => row.cpNo}/>
+                    {/* 페이징버튼 */}
+                 <div className="pagination">
+                    {/* 가장 첫 페이지로 */}
+                    {currentPage > 1 && (
+                        <>
+                            <button onClick={() => setCurrentPage(1)}>{"<<"}</button>
+                            <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}>{"<"}</button>
+                        </>
+                    )}
+
+                    {renderPageButtons()}
+
+                    {currentPage < totalPages && (
+                        <>
+                            <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}>{">"}</button>
+                            <button onClick={() => setCurrentPage(totalPages)}>{">>"}</button>
+                        </>
+                    )}
+                </div>
                  <Snackbar
                     open={open}
                     autoHideDuration={2000}

@@ -12,6 +12,9 @@ function RentalListad(){
     const[Rental, setRental] = useState([]);
     // const[cpname, setcpname] = useState('1');
     const [open, setOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(1);;
     
 
     const columns = [ 
@@ -34,39 +37,45 @@ function RentalListad(){
          renderCell: row =>(
             <button onClick={() => onDelClick(row.row.rentNo)}>거절</button>
         ),}
-        // {field: 'rent_status',
-        //  headerName: '',
-        //  sortable:false,
-        //  filterable: false,
-        //  renderCell: row =>(
-        //     <React.Fragment>
-        //         {console.log(row.row.rent_status)} {/* 로그를 추가하여 데이터 확인 */}
-        //         {row.row.rent_status === '결제대기' && (
-        //             <button onClick={() => onPayClick(row.row.rentNo)}>결제</button>
-        //         )}
-        //     </React.Fragment>
-        //  )
-        // }
     ];
     
     const fetchRentals= () => {
+        const startIndex = (currentPage - 1) * pageSize;
+        const endIndex = startIndex + pageSize;
         fetch('http://localhost:8090/rentals/allrental',{method:"GET"})
         .then(response => response.json())
         .then(data => {
             // const filteredrental = data.filter((rental) => rental.rent_status === "wait");
                 
-                setRental(data);
+            setRental(data.slice(startIndex, endIndex));
+            setTotalPages(Math.ceil(data.length / pageSize));
             })
         .catch(err => console.error(err));
        
     };
+
+    const renderPageButtons = () => {
+        const buttons = [];
+        for (let i = 1; i <= totalPages; i++) {
+          buttons.push(
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i)}
+              className={currentPage === i ? 'activeButton' : ''}
+            >
+              {i}
+            </button>
+          );
+        }
+        return buttons;
+      };  
     const rentref = useRef()
 
 
     useEffect(() => {
         fetchRentals();
         
-    },[rentref]);
+    },[rentref,currentPage, pageSize]);
 
     const onDelClick =(rentNo) => {
         // const updatedSatusData = {rent_status : "cancel"};
@@ -111,12 +120,31 @@ function RentalListad(){
     return(
         <div className='contentsArea'>
             <div className='contents'>
-            <h1>대관 신청 목록</h1>
+            <h1>대관 전체신청 목록</h1>
                 <DataGrid className='rentList'
                     rows={Rental}
                     columns={columns}
                     disableRowSelectionOnClick={true}
                     getRowId={row => row.rentNo}/>
+                     {/* 페이징버튼 */}
+                 <div className="pagination">
+                    {/* 가장 첫 페이지로 */}
+                    {currentPage > 1 && (
+                        <>
+                            <button onClick={() => setCurrentPage(1)}>{"<<"}</button>
+                            <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}>{"<"}</button>
+                        </>
+                    )}
+
+                    {renderPageButtons()}
+
+                    {currentPage < totalPages && (
+                        <>
+                            <button onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}>{">"}</button>
+                            <button onClick={() => setCurrentPage(totalPages)}>{">>"}</button>
+                        </>
+                    )}
+                </div>
                  <Snackbar
                     open={open}
                     autoHideDuration={2000}

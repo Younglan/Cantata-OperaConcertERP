@@ -13,6 +13,7 @@ function PlantDetail(){
     const[plant, setPlant] = useState([]);
     const [imageIndex, setImageIndex] = useState(0);
     const [imageURLs, setImageURLs] = useState([]);
+    const token = sessionStorage.getItem("jwt");
 
   useEffect(() => {
     // 5초마다 이미지 변경
@@ -44,12 +45,24 @@ function PlantDetail(){
     };
 
     const rentap = () =>{
-        navigate('/RentApp')
+        if (Object.keys(sessionStorage).length > 0) {
+            // sessionStorage에 저장된 값이 하나 이상 있을 때의 처리
+            const corp = sessionStorage.getItem("corp");
+            console.log(corp);
+            if(corp === 'true'){
+              navigate("/RentApp");
+            }else{
+              alert("법인회원이 아닙니다.");
+              navigate("/mypage");
+            }
+        } else {
+          navigate("/RentApp");
+        }        
     };
 
     return(
-        <div className='contentsArea'>
-            <div className='contentsHeader'>
+        <div className='plantsArea'>
+            <div className='plantsHeader'>
                 <div className='headLevel'>
                 <div className='plantHead plantHeaderImg' id='plantHeaderImg'>
                          <img src={imageURLs[imageIndex]} alt={`Plant Image ${imageIndex + 1}`} />

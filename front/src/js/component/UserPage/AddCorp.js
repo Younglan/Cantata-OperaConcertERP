@@ -29,6 +29,13 @@ function AddCorp() {
             .then((response) => {
               
               if (response.ok) {
+                fetch("http://localhost:8090/corporations/filtercop"+`/?id=${corpdata.id.id}`,{
+                  headers:{'Authorization':token}
+                })
+                .then(response=>response.json())
+                .then(data=>{sessionStorage.setItem("corp", data);})
+                .catch((e)=>console.error(e));
+            
                 navigate("/");
               } else {
               }
