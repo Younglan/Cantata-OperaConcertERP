@@ -1,35 +1,57 @@
-/* .contentsArea {
-    margin: 20px;
-  } */
+.plantsArea {
+    min-height: 800px;
+    padding: 20px;
+    background-color: #071a52;
+    display: flex;/*크기에 따라 늘어남*/
+    /* margin-top: 20px; */
+  } 
   
-  .contentsHeader {
+  .plantsHeader {
     /* background-color: #f8f9fa; */
     padding: 20px;
     border-radius: 10px;
+    background-color: white;
+    margin: 0 auto;
+    width: 90%;
+    min-height: 700px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
   .headLevel {
-    display: flex;
+    /* display: flex; */
     align-items: center;
   }
-  
+/* .contentarea{
+    background-color: white;
+    margin: 0 auto;
+    width: 90%;
+    min-height: 800px;
+    padding-top: 10px;
+} */
   .plantHead {
-    margin-right: 20px;
+    margin-right: 0;
   }
-  
-  .plantHeaderImg img {
-    max-width: 50%;
-    height: 50%;
-    /* border-radius: 8px; */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  .plantHeaderImg img{
+    max-width: 1000%; /* 이미지가 너무 클 경우 가로 크기에 맞춤 */
+    max-height: 200px;
+    height: auto;
+    object-fit: cover;
   }
   
   .plantHeaderCon {
+    color: black;
     flex-grow: 1;
   }
   
+  li{
+    list-style: none;
+  }
   .detailContent {
-    line-height: 1.5;
+    width: 70%; /* 너비 조절 */
+    height: 100%; /* 높이 조절 */
+    /* overflow: hidden; 내용이 너무 커서 넘치는 경우를 대비하여 숨김 처리 */
+    border: 1px solid #ccc; /* 테두리 스타일 추가 */
+    padding: 10px; /* 내용과 테두리 사이의 간격을 설정 */
+    box-sizing: border-box; /* 패딩, 테두리를 포함하여 전체 크기를 계산하도록 설정 */
   }
   

@@ -30,7 +30,7 @@ function Newplant(props) {
     const [plExplan, setPlExplan] = React.useState('');
     //리다이렉션 핸들러
     const handleRedirect = () => {
-            navigate(-1);
+            navigate("/");
     };
 
     // 폼의 input 값 변경 핸들러
@@ -133,13 +133,13 @@ const modules = {
             <div className='contents'>
                 {/* <form> */}
                 <div>
-                    <h1>시설등록 폼</h1>
+                    <h1>시설등록</h1>
                 </div>
                 <div className="divrows">
                     <div className="formHeader">시설 용도</div>
                     <div className="divcolscont">
                     <Form.Select aria-label="Default select example" className="fullwidth" name="plantUse" value={plant.plantUse} onChange={handleChange}>
-                        <option value="무대">무대</option>
+                        <option value="공연장">공연장</option>
                         <option value="연습실">연습실</option>
                     </Form.Select>
                     </div>

@@ -68,7 +68,14 @@ function LoginPage() {
     .then(response=>response.json())
     .then(data=>sessionStorage.setItem("role", data.auth))
     .catch((e)=>console.error(e));
-  
+
+    fetch(SERVER_URL+"corporations/filtercop"+`/?id=${user.id}`,{
+      headers:{'Authorization':token}
+    })
+    .then(response=>response.json())
+    .then(data=>{console.log(data);sessionStorage.setItem("corp", data);})
+    .catch((e)=>console.error(e));
+
   };
   if (isAuthenticated) {
     return <Navigate to="/"/>
