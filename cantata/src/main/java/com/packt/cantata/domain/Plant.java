@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -32,13 +33,16 @@ public class Plant {
 	private long plantNo;
 	private String plantName;
 	private String plantUse;
+	@Lob
 	private String plantDetail;
+	@Lob
+	private String plantSub;
+	
 	private int capacity;
 	private String plantMainimg;
 	private String plantSubimg1;
 	private String plantSubimg2;
 	private long plantCharge;
-	private String plantSub;
 	private Boolean plantStatus;
 	private int floor;
 	
