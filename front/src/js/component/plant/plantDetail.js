@@ -80,7 +80,7 @@ function PlantDetail(){
                                 <span>{plant.plantSub}</span>
                             </li>
                         </ul>
-                        <div className='detailContent'>
+                        <div className='pldetailContent'>
                             <p dangerouslySetInnerHTML={{ __html: plant.plantDetail }} ></p>
                         </div>
                         {/* <p><Button  variant="secondary" onClick={() => pfTimeManage(pfCode)}>회차관리</Button><Button  variant="secondary" >내용수정</Button></p> */}

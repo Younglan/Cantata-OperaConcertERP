@@ -21,13 +21,6 @@
     /* display: flex; */
     align-items: center;
   }
-/* .contentarea{
-    background-color: white;
-    margin: 0 auto;
-    width: 90%;
-    min-height: 800px;
-    padding-top: 10px;
-} */
   .plantHead {
     margin-right: 0;
   }
@@ -46,7 +39,7 @@
   li{
     list-style: none;
   }
-  .detailContent {
+  .pldetailContent {
     width: 70%; /* 너비 조절 */
     height: 100%; /* 높이 조절 */
     /* overflow: hidden; 내용이 너무 커서 넘치는 경우를 대비하여 숨김 처리 */

@@ -63,7 +63,7 @@ function RentalList(){
         .then(response => response.json())
         .then(data => {
                 
-                setRental(data.slice(startIndex, endIndex));
+                setRental(data.slice(startIndex, endIndex).reverse());
                 setTotalPages(Math.ceil(data.length / pageSize));
             })
         .catch(err => console.error(err));

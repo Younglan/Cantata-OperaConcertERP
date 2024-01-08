@@ -59,7 +59,7 @@ function PlantList(){
         fetch('http://localhost:8090/plants/getplant',{method:"GET"})
         .then(response => response.json())
         .then(data => {
-            setPlant(data);
+            setPlant(data.reverse());
         })
         .catch(err => console.error(err));
     };
