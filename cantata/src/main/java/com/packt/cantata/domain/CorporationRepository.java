@@ -10,4 +10,7 @@ public interface CorporationRepository extends JpaRepository<Corporation, String
 	
 	@Query(value="SELECT * FROM Corporation WHERE id = (SELECT id From User WHERE id = :id);", nativeQuery=true)
 	Corporation findByCeo(@Param("id") String id);
+	
+	@Query(value="SELECT * FROM Corporation WHERE id = :id ;", nativeQuery=true)
+	Corporation findByCorp(@Param("id") String id);
 }

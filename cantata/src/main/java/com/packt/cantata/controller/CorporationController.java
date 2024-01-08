@@ -29,5 +29,18 @@ public class CorporationController {
 		System.out.println(id);
 		return corepo.findByCeo(id);
 	}
+	
+	@GetMapping("/filtercop")
+	public Boolean filteredCop(@RequestParam("id")String id){
+		
+		Corporation findCorps = corepo.findByCorp(id);
+		
+		if(findCorps != null) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
 
 }
