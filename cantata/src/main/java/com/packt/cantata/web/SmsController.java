@@ -31,7 +31,7 @@ public class SmsController {
 	private Map<String, String> phoneVerificationMap = new HashMap<>();
     public SmsController() {
         // 반드시 계정 내 등록된 유효한 API 키, API Secret Key를 입력해주셔야 합니다!
-        this.messageService = NurigoApp.INSTANCE.initialize("NCSPELRN2CTYS2KB", "XLATNVKBNEVGRL2R9GBKQY7FSHK1O812", "https://api.coolsms.co.kr");
+        this.messageService = NurigoApp.INSTANCE.initialize("api키", "토큰", "https://api.coolsms.co.kr");
     }
     
 	@RequestMapping(value="/tel")
